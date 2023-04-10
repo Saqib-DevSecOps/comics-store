@@ -6,37 +6,37 @@
         <button aria-label="Previous" class="slick-prev slick-arrow" style="display: block;" type="button">Previous
         </button>
         <div class="slick-list draggable">
-            <div class="slick-track" style="opacity: 1; width: 6830px; transform: translate3d(-1366px, 0px, 0px);">
+            <div class="slick-track" style="opacity: 1; width: 6830px; transform: translate3d(-2732px, 0px, 0px);">
                 <div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-1" style="width: 1366px;"
                      tabindex="-1">
                     <div>
                         <div style="width: 100%; display: inline-block;">
                             <div class="home text-center p-center bg-size blur-up lazyloaded"
-                                 style="background-image: url({% static 'website/img/42.jpg' %}); background-size: cover; background-position: center center; display: block;">
-                                <img alt="" class="bg-img blur-up lazyload" src="{% static 'website/img/42.jpg' %}"
+                                 style="background-image: url('{% static 'website/img/background.jpg' %}'); background-size: cover; background-position: center center; display: block;">
+                                <img alt="" class="bg-img blur-up lazyload" src="{% static 'website/img/background.jpg' %}"
                                      style="display: none;">
                             </div>
                         </div>
                     </div>
                 </div>
-                <div aria-hidden="false" class="slick-slide slick-current slick-active" data-slick-index="0"
+                <div aria-hidden="true" class="slick-slide" data-slick-index="0" style="width: 1366px;" tabindex="-1">
+                    <div>
+                        <div style="width: 100%; display: inline-block;">
+                            <div class="home text-center p-center bg-size blur-up lazyloaded"
+                                 style="background-image: url('{% static 'website/img/background.jpg' %}'); background-size: cover; background-position: center center; display: block;">
+                                <img alt="" class="bg-img blur-up lazyload" src="{% static 'website/img/background.jpg' %}"
+                                     style="display: none;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div aria-hidden="false" class="slick-slide slick-current slick-active" data-slick-index="1"
                      style="width: 1366px;">
                     <div>
                         <div style="width: 100%; display: inline-block;">
                             <div class="home text-center p-center bg-size blur-up lazyloaded"
-                                 style="background-image: url('{% static 'website/img/41.jpg' %}'); background-size: cover; background-position: center center; display: block;">
-                                <img alt="" class="bg-img blur-up lazyload" src="{% static 'website/img/41.jpg' %}"
-                                     style="display: none;">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div aria-hidden="true" class="slick-slide" data-slick-index="1" style="width: 1366px;" tabindex="-1">
-                    <div>
-                        <div style="width: 100%; display: inline-block;">
-                            <div class="home text-center p-center bg-size blur-up lazyloaded"
-                                 style="background-image: url('{% static 'website/img/42.jpg' %}'); background-size: cover; background-position: center center; display: block;">
-                                <img alt="" class="bg-img blur-up lazyload" src="{% static 'website/img/42.jpg' %}"
+                                 style="background-image: url('{% static 'website/img/background.jpg' %}'); background-size: cover; background-position: center center; display: block;">
+                                <img alt="" class="bg-img blur-up lazyload" src="{% static 'website/img/background.jpg' %}"
                                      style="display: none;">
                             </div>
                         </div>
@@ -46,9 +46,9 @@
                      tabindex="-1">
                     <div>
                         <div style="width: 100%; display: inline-block;">
-                            <div class="home text-center p-center bg-size blur-up lazyload"
-                                 style="background-image: url('{% static 'website/img/41.jpg' %}'); background-size: cover; background-position: center center; display: block;">
-                                <img alt="" class="bg-img blur-up lazyload" src="{% static 'website/img/41.jpg' %}"
+                            <div class="home text-center p-center bg-size blur-up lazyloaded"
+                                 style="background-image: url('{% static 'website/img/background.jpg' %}'); background-size: cover; background-position: center center; display: block;">
+                                <img alt="" class="bg-img blur-up lazyload" src="{% static 'website/img/background.jpg' %}"
                                      style="display: none;">
                             </div>
                         </div>
@@ -59,8 +59,8 @@
                     <div>
                         <div style="width: 100%; display: inline-block;">
                             <div class="home text-center p-center bg-size blur-up lazyload"
-                                 style="background-image: url('{% static 'website/img/42.jpg' %}'); background-size: cover; background-position: center center; display: block;">
-                                <img alt="" class="bg-img blur-up lazyload" src="{% static 'website/img/42.jpg' %}"
+                                 style="background-image: url('{% static 'website/img/background.jpg' %}'); background-size: cover; background-position: center center; display: block;">
+                                <img alt="" class="bg-img blur-up lazyload" src="{% static 'website/img/background.jpg' %}"
                                      style="display: none;">
                             </div>
                         </div>
@@ -548,8 +548,10 @@
         </div>
     </div>
 </section>
-
-<section class="p-0 game-parallax effect-cls ">
+<div class="text-center">
+    <a href="#" class="mt-4 mb-4 add-button btn btn-danger btn-rounded " >See More</a>
+</div>
+<section class="p-0 game-parallax effect-cls mt-4">
     <div class="full-banner parallax text-center p-center text-center bg-size blur-up lazyloaded"
          style="background-image: url(&quot;../assets/images/parallax/20.jpg&quot;); background-size: cover; background-position: center center; display: block;">
         <img alt="" class="bg-img blur-up lazyload" src="{% static 'website/img/20.jpg' %}" style="display: none;">
@@ -557,8 +559,7 @@
             <div class="row">
                 <div class="col">
                     <div class="banner-contain">
-                        <h2>2019</h2>
-                        <h3>xbox games</h3>
+                        <h3>Comics and Novels</h3>
                         <h4>special offer</h4>
                     </div>
                 </div>
@@ -783,36 +784,9 @@
         </div>
     </div>
 </section>
-<section class="section-b-space">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="slide-6 no-arrow slick-initialized slick-slider">
-                    <button aria-label="Previous" class="slick-prev slick-arrow" style="display: inline-block;"
-                            type="button">Previous
-                    </button>
-                    <div class="slick-list draggable">
-                        <div class="slick-track"
-                             style="opacity: 1; width: 4704px; transform: translate3d(-1120px, 0px, 0px);">
-                            <div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-5"
-                                 style="width: 224px;" tabindex="-1">
-                                <div>
-                                    <div style="width: 100%; display: inline-block;">
-                                        <div class="logo-block">
-                                            <a href="#" tabindex="-1">
-                                                <img alt="" src="{% static 'website/img/png/1.png' %}">
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+<div class="text-center">
+    <a href="#" class="mt-4 mb-4 add-button btn btn-danger btn-rounded " >See More</a>
+</div>
 
 
 {% endblock content %}

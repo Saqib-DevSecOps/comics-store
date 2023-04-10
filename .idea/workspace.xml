@@ -2,46 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1bc2c5b6-8c6a-4b13-980b-70f94fe3cb3a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/website/img/1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/website/img/10.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/website/img/11.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/website/img/12.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/website/img/13.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/website/img/14.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/website/img/15.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/website/img/16.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/website/img/17.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/website/img/18.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/website/img/19.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/website/img/2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/website/img/22.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/website/img/23.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/website/img/3.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/website/img/4.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/website/img/5.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/website/img/6.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/website/img/7.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/website/img/8.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/website/img/fashion-2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/website/img/fashion-3.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/website/img/fashion-4.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/website/img/fashion-5.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/website/img/fashion-6.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/website/img/fashion-7.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/website/img/fashion.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/website/img/furniture-dark.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/website/img/furniture.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/website/js/timer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/comics-store.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/comics-store.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/website/templates/website/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/website/templates/website/home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/website/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/website/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/website/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/website/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/website/css/vendors/themifi-icons.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/website/css/vendors/themifi-icons.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/website/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/website/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/website/include/header.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/website/include/header.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,6 +50,8 @@
       <recent name="$PROJECT_DIR$/static/website/img" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/templates" />
+      <recent name="$PROJECT_DIR$/templates/core" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
