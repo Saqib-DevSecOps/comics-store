@@ -25,7 +25,8 @@ DEBUG = True
 SERVER = False
 ROOT_URLCONF = 'core.urls'
 AUTH_USER_MODEL = 'accounts.User'
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 LOGOUT_REDIRECT_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/accounts/cross-auth/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
 
     # STARTER APPS
     'crispy_forms',
+    "crispy_bootstrap5",
     'ckeditor',
     'django_filters',
 

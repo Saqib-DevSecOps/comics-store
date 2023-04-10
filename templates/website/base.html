@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="multikart" name="description">
+    <meta content="multikart" name="keywords">
+    <meta content="multikart" name="author">
+    <link href="../assets/images/favicon/1.png" rel="icon" type="image/x-icon"/>
+    <link href="../assets/images/favicon/1.png" rel="shortcut icon" type="image/x-icon"/>
+
+    <title>{% block title %}
+
+        {% endblock %}
+    </title>
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Yellowtail&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="{% static 'website/css/vendors/slick.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'website/css/vendors/slick-theme.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'website/css/vendors/animate.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'website/css/vendors/themifi-icons.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'website/css/vendors/bootstrap.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'website/css/vendors/style.css' %}" rel="stylesheet" type="text/css">
+</head>
+
+<body class="theme-color-1 dark">
+{% include 'website/include/header.html' %}
+{% block content %}
+
+{% endblock content %}
+{% include 'website/include/footer.html' %}
+
+
+<script src="{% static 'website/js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'website/js/jquery-ui.min.js' %}"></script>
+<script src="{% static 'website/js/slick.js' %}"></script>
+<script src="{% static 'website/js/menu.js' %}"></script>
+<script src="{% static 'website/js/lazysizes.min.js' %}"></script>
+<script src="{% static 'website/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'website/js/bootstrap-notify.min.js' %}"></script>
+<script src="{% static 'website/js/fly-cart.js' %}"></script>
+<script src="{% static 'website/js/timer.js' %}"></script>
+<script src="{% static 'website/js/theme-setting.js' %}"></script>
+<script src="{% static 'website/js/script.js' %}"></script>
+
+</body>
+
+</html>

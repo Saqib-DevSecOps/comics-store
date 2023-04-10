@@ -42,8 +42,7 @@ urlpatterns += [
     path('404/', TemplateView.as_view(template_name='404.html')),  # use: for page 404
     path('500/', TemplateView.as_view(template_name='500.html')),  # use: for page 500
 
-    # REMOVE THIS WHEN HOME VIEW CREATED
-    path('', TemplateView.as_view(template_name='dev/starter-page.html')),  # use: for home page/remove this
+
 ]
 
 # your apps urls
@@ -51,6 +50,7 @@ urlpatterns += [
     # path('', include('src.website.urls', namespace='website')),
     path('accounts/', include('src.accounts.urls', namespace='accounts')),
     path('admins/', include('src.administration.admins.urls', namespace='admins')),
+    path('', include('src.website.urls', namespace='website')),
 ]
 
 if ENVIRONMENT != 'server':
