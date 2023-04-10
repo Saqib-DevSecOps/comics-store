@@ -10,4 +10,4 @@ class HomeTemplateView(TemplateView):
 
 
 class ShopTemplateView(TemplateView):
-    template_name = 'website/shop.html'
+    template_name = 'website/store.html'
