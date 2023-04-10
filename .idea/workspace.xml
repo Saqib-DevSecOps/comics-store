@@ -45,12 +45,13 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "E:/GIT/LEARN/comics-store/static/website/css/vendors/fonts",
+    "last_opened_file_path": "E:/GIT/LEARN/comics-store/static/website/images/payments",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\GIT\LEARN\comics-store\static\website\images\payments" />
       <recent name="E:\GIT\LEARN\comics-store\static\website\css\vendors\fonts" />
       <recent name="E:\GIT\LEARN\comics-store\static\website\logo" />
       <recent name="$PROJECT_DIR$/static/website/img" />
@@ -95,7 +96,7 @@
       <option name="presentableId" value="Default" />
       <updated>1681108712555</updated>
       <workItem from="1681148941490" duration="652000" />
-      <workItem from="1681149686192" duration="1857000" />
+      <workItem from="1681149686192" duration="2553000" />
     </task>
     <servers />
   </component>
