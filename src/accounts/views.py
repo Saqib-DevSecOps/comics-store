@@ -19,6 +19,8 @@ class LogoutView(View):
 class CrossAuthView(View):
 
     def get(self, request):
+        if request.user.is_superuser:
+            return redirect("/admin/")
         return redirect('admins:dashboard')
 
 

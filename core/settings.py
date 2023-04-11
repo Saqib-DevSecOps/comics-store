@@ -22,7 +22,6 @@ env = environ.Env(
 environ.Env.read_env(BASE_DIR / '.env')
 
 DEBUG = True
-SERVER = False
 ROOT_URLCONF = 'core.urls'
 AUTH_USER_MODEL = 'accounts.User'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
@@ -75,7 +74,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django_browser_reload.middleware.BrowserReloadMiddleware',
 
     # YOUR MIDDLEWARES
 ]
