@@ -4,6 +4,7 @@ pillow
 markdown
 python-dateutil
 
+
 django
 django-environ
 django-filter
@@ -12,6 +13,6 @@ django-resized
 python-decouple
 django-ckeditor
 django-crispy-forms
-
+django-bootstrap5
 
 django-browser-reload
