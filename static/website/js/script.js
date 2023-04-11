@@ -57,7 +57,7 @@
     });
 
 
-    /*=====================
+    /*=====================  
      02.Tap on Top
      ==========================*/
     $(window).on('scroll', function () {
@@ -214,7 +214,7 @@
         console.log("click");
         $('.top-panel-adv').addClass("hide");
     });
-
+    
 
     /*=========================
      09. left category slider height
@@ -597,37 +597,6 @@
             settings: {
                 slidesToShow: 2,
                 slidesToScroll: 2
-            }
-        }
-        ]
-    });
-
-    $('.product-4_2').slick({
-        infinite: true,
-        speed: 300,
-        slidesToShow: 4,
-        slidesToScroll: 4,
-        autoplay: true,
-        autoplaySpeed: 3000,
-        responsive: [{
-            breakpoint: 1200,
-            settings: {
-                slidesToShow: 3,
-                slidesToScroll: 3
-            }
-        },
-        {
-            breakpoint: 991,
-            settings: {
-                slidesToShow: 2,
-                slidesToScroll: 2
-            }
-        },
-        {
-            breakpoint: 576,
-            settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1
             }
         }
         ]
@@ -1602,11 +1571,11 @@
 
     $('.left-arrow').click(function () {
         $('.custom-arrow-3').slick('slickPrev');
-    })
-
-    $('.right-arrow').click(function () {
+      })
+      
+      $('.right-arrow').click(function () {
         $('.custom-arrow-3').slick('slickNext');
-    })
+      })
 
 
     /*=====================
