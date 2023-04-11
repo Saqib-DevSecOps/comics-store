@@ -41,19 +41,19 @@
                                         <ul class="onhover-show-div">
                                             {% if request.user.is_authenticated %}
                                                 <li>
-                                                    <a href="#" data-lng="en">
+                                                    <a href="{% url 'admins:dashboard' %}" data-lng="en">
                                                         Dashboard
                                                     </a>
                                                 </li>
                                             {% else %}
                                                 <li>
-                                                <a href="#" data-lng="en">
+                                                <a href="{% url 'account_login' %}" data-lng="en">
                                                     Login
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#" data-lng="es">
-                                                    Logout
+                                                <a href="{% url 'account_signup' %}" data-lng="es">
+                                                    Register
                                                 </a>
                                             </li>
                                             {% endif %}

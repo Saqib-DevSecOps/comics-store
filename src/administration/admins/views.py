@@ -14,7 +14,7 @@ from django.views.generic import (
 from src.accounts.models import User
 from src.administration.admins.filters import UserFilter
 
-admin_decorators = [login_required, user_passes_test(lambda u: u.is_superuser)]
+admin_decorators = [login_required, user_passes_test(lambda u: u.is_active)]
 
 
 @method_decorator(admin_decorators, name='dispatch')
