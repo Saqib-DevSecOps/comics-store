@@ -13,16 +13,21 @@ Including another URLconf
     1. Import the admin() function: from django.urls import admin, path
     2. Add a URL to urlpatterns:  path('blog/', admin('blog.urls'))
 """
-from django.conf.urls.static import static
 from django.contrib import admin
+from django.shortcuts import render
 from django.urls import path, include, re_path
+from django.views.static import serve
 from django.views.generic import TemplateView
+from core.settings import ENVIRONMENT, MEDIA_ROOT, STATIC_ROOT
 
-from core import settings
-from core.config import (
-    APP_NAME, APP_DESC, APP_VERSION, APP_TERMS, APP_CONTACT, APP_LICENSE
-)
-from core.settings import ENVIRONMENT
+
+def handler404(request, *args, **kwargs):
+    return render(request, "404.html")
+
+
+def handler500(request, *args, **kwargs):
+    return render(request, "500.html")
+
 
 # EXTERNAL APPS URLS
 urlpatterns = [
@@ -38,9 +43,6 @@ urlpatterns = [
 # universal urls
 urlpatterns += [
     path('under-construction/', TemplateView.as_view(template_name='under-construction.html')),
-    # use: for page under-construction
-    path('404/', TemplateView.as_view(template_name='404.html')),  # use: for page 404
-    path('500/', TemplateView.as_view(template_name='500.html')),  # use: for page 500
 
 ]
 
@@ -52,7 +54,10 @@ urlpatterns += [
     path('', include('src.website.urls', namespace='website')),
 ]
 
-urlpatterns +=  static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += [
+    re_path(r'^media/(?P<path>.*)$', serve, {'document_root': MEDIA_ROOT}),
+    re_path(r'^static/(?P<path>.*)$', serve, {'document_root': STATIC_ROOT}),
+]
 
 if ENVIRONMENT != 'server':
     urlpatterns += [
