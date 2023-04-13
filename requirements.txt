@@ -15,5 +15,6 @@ django-ckeditor
 django-crispy-forms
 django-bootstrap5
 crispy-bootstrap5
+django-tinymce
 
 django-browser-reload

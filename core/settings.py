@@ -50,8 +50,8 @@ INSTALLED_APPS = [
     # STARTER APPS
     'crispy_forms',
     "crispy_bootstrap5",
-    'ckeditor',
     'django_filters',
+    'tinymce',
 
     # WEB APPS
     'allauth',

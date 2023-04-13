@@ -36,6 +36,11 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
 
+    def name_or_username(self):
+        if self.first_name or self.last_name:
+            return f"{self.first_name} {self.last_name}"
+        return self.username
+
     def delete(self, *args, **kwargs):
         self.profile_image.delete(save=True)
         super(User, self).delete(*args, **kwargs)
