@@ -56,7 +56,6 @@ class Product(models.Model):
     book_type = models.CharField(max_length=15, default='novel', choices=BOOK_TYPE_CHOICE)
     categories = models.ManyToManyField(Category)
     languages = models.ManyToManyField(Language)
-    versions = models.ManyToManyField(Version, through='ProductVersion')
 
     pages = models.PositiveIntegerField(default=0)
     clicks = models.PositiveIntegerField(default=0)
@@ -95,7 +94,7 @@ class ProductVersion(models.Model):
         return f"{self.product.name} {self.version.name}"
 
 
-class ProductImages(models.Model):
+class ProductImage(models.Model):
     image = models.ImageField(upload_to='books/images/product_images', null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -126,7 +125,6 @@ class Order(models.Model):
     )
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    products = models.ManyToManyField(Product, through='Cart')
 
     name = models.CharField(max_length=255)
     street_address = models.CharField(max_length=255)
@@ -193,13 +191,14 @@ class Post(models.Model):
     title = models.CharField(max_length=255, unique=True)
     slug = models.SlugField(unique=True, null=False)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')
-    updated_on = models.DateTimeField(auto_now=True)
     content = HTMLField()
-    created_on = models.DateTimeField(auto_now_add=True)
-    status = models.IntegerField(choices=STATUS, default=0)
 
     read_time = models.PositiveIntegerField(default=0, help_text='read time in minutes')
     visits = models.PositiveIntegerField(default=0)
+
+    status = models.IntegerField(choices=STATUS, default=0)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ['-created_on']
