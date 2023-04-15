@@ -20,8 +20,8 @@
                         <li class="onhover-dropdown mobile-account">
                             <i class="fa fa-user" aria-hidden="true"></i> My Account
                             <ul class="onhover-show-div">
-                                <li><a href="#">Login</a></li>
-                                <li><a href="#">register</a></li>
+                                <li><a href="{% url 'account_login' %}">Login</a></li>
+                                <li><a href="{% url 'account_signup' %}">register</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -58,21 +58,21 @@
                                         <a href="/">Home</a>
                                     </li>
                                     <li class="mega" id="hover-cls">
-                                        <a href="#">Comics
+                                        <a href="{% url 'website:comic' %}">Comics
                                             <div class="lable-nav">new</div>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">Novels</a>
+                                        <a href="{% url 'website:novel' %}">Novels</a>
                                     </li>
                                     <li>
-                                        <a href="#">Stories</a>
+                                        <a href="{% url 'website:stories' %}">Stories</a>
                                     </li>
                                     <li>
-                                        <a href="#">About Us</a>
+                                        <a href="{% url 'website:about_us' %}">About Us</a>
                                     </li>
                                     <li>
-                                        <a href="#">Contact Us</a>
+                                        <a href="{% url 'website:contact_us' %}">Contact Us</a>
                                     </li>
                                 </ul>
                             </nav>
@@ -179,8 +179,8 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <div class="buttons"><a href="#" class="view-cart">view
-                                                    cart</a> <a href="#" class="checkout">checkout</a></div>
+                                                <div class="buttons"><a href="{% url 'website:cart' %}" class="view-cart">view
+                                                    cart</a> <a href="{% url 'website:cart' %}" class="checkout">checkout</a></div>
                                             </li>
                                         </ul>
                                     </li>

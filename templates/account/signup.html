@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'website/base.html' %}
 
 {% load i18n %}
 {% load crispy_forms_tags %}
@@ -9,40 +9,33 @@
 {% block subtitle %}Sign Up{% endblock %}
 
 
-{% block only-body %}
-
-    <div class="home-btn d-none d-sm-block">
-        <a href="/" class="text-dark">
-            <i class="fas fa-home h2"></i>
-        </a>
-    </div>
-
-    <div class="account-pages my-5 pt-sm-5">
+{% block content %}
+<div class="breadcrumb-section">
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-8 col-lg-6 col-xl-5">
-                    <div class="card overflow-hidden">
-                        <div class="bg-soft-primary">
-                            <div class="row">
-                                <div class="col-7">
-                                    <div class="text-primary p-4">
-                                        <h5 class="text-primary">Free Register</h5>
-                                        <p>Get your free account now.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body pt-0">
-                            <div>
-                                <a href="/">
-                                    <div class="avatar-md profile-user-wid mb-4">
-                                            <span class="avatar-title rounded-circle bg-light">
-                                                <img src="{% static 'admin/images/logos/logo-red.png' %}"
-                                                     alt="" class="rounded-circle" height="45">
-                                            </span>
-                                    </div>
-                                </a>
-                            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="page-title">
+                        <h2>create account</h2>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <nav aria-label="breadcrumb" class="theme-breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">create account</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+<section class="register-page section-b-space">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+<div class="row">
+    <div class="col-3"></div>
+<div class="col-6 card">
                             <div class="p-2">
                                 <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
                                     {% csrf_token %}
@@ -106,13 +99,12 @@
                                 </div>
                             </div>
 
-                        </div>
-                    </div>
-
+</div>
+</div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 {% endblock %}
 
 

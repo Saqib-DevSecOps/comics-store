@@ -9,5 +9,29 @@ class HomeTemplateView(TemplateView):
     template_name = 'website/home.html'
 
 
-class ShopTemplateView(TemplateView):
-    template_name = 'website/store.html'
+class ComicsTemplateView(TemplateView):
+    template_name = 'website/comic.html'
+
+
+class NovelTemplateView(TemplateView):
+    template_name = 'website/novel.html'
+
+
+class BlogTemplateView(TemplateView):
+    template_name = 'website/blog.html'
+
+
+class AboutUsTemplateView(TemplateView):
+    template_name = 'website/about.html'
+
+
+class BlogDetailTemplateView(TemplateView):
+    template_name = 'website/about_us_detail.html'
+
+
+class ContactUsTemplateView(TemplateView):
+    template_name = 'website/contact_us.html'
+
+
+class CartTemplateView(TemplateView):
+    template_name = 'website/cart.html'
