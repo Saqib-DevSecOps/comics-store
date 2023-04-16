@@ -1,17 +1,16 @@
 from django.urls import path
 
-from src.website.views import HomeTemplateView, ComicsTemplateView, NovelTemplateView, \
-    BlogDetailTemplateView, ContactUsTemplateView, BlogTemplateView, CartTemplateView, AboutUsTemplateView, \
-    ProductListView
+from src.website.views import HomeTemplateView, \
+    ContactUsTemplateView, PostListView, CartTemplateView, AboutUsTemplateView, \
+    ProductListView, PostDetailView
 
 app_name = "website"
 urlpatterns = [
     path('', HomeTemplateView.as_view(), name='home'),
     path('shop/', ProductListView.as_view(), name='shop'),
-    path('novels/', NovelTemplateView.as_view(), name='novel'),
 
-    path('stories/', BlogTemplateView.as_view(), name='stories'),
-    path('story-detail/', BlogDetailTemplateView.as_view(), name='stories-detail'),
+    path('stories/', PostListView.as_view(), name='posts'),
+    path('story-detail/<str:slug>', PostDetailView.as_view(), name='post-detail'),
 
     path('about-us/', AboutUsTemplateView.as_view(), name='about_us'),
     path('contact-us/', ContactUsTemplateView.as_view(), name='contact_us'),
