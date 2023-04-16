@@ -31,7 +31,7 @@ class AboutUsTemplateView(TemplateView):
 
 
 class ProductListView(ListView):
-    template_name = ''
+    template_name = 'website/product_list.html'
     queryset = Product.objects.all()
     paginate_by = 24
 
@@ -41,7 +41,7 @@ class ProductListView(ListView):
 
 
 class ProductDetailView(DetailView):
-    template_name = ''
+    template_name = 'website/product_detail.html'
     model = Product
     pk_url_kwarg = "product_id"
     slug_url_kwarg = 'slug'
@@ -53,7 +53,7 @@ class ProductDetailView(DetailView):
 
 
 class PostListView(ListView):
-    template_name = ''
+    template_name = 'website/post_list.html'
     queryset = Post.objects.all()
     paginate_by = 24
 
@@ -63,7 +63,7 @@ class PostListView(ListView):
 
 
 class PostDetailView(DetailView):
-    template_name = ''
+    template_name = 'website/post_detail.html'
     model = Post
     pk_url_kwarg = "post_id"
     slug_url_kwarg = 'slug'
