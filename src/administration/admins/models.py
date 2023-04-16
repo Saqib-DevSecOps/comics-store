@@ -80,6 +80,12 @@ class Product(models.Model):
             self.slug = slugify(self.name)
         return super().save(*args, **kwargs)
 
+    def get_images(self):
+        return ProductImage.objects.filter(product=self)
+
+    def get_versions(self):
+        return ProductVersion.objects.filter(product=self)
+
 
 class ProductVersion(models.Model):
     version = models.ForeignKey(Version, on_delete=models.SET_NULL, null=True, blank=False)
