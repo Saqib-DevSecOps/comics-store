@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, ListView, DetailView, UpdateView, DeleteView, CreateView
@@ -6,7 +7,7 @@ from django.views.generic import TemplateView, ListView, DetailView, UpdateView,
 from src.administration.admins.models import (
     Product, ProductVersion, Version, ProductImage, Post, PostCategory, Category, Order, Cart, Language
 )
-
+from src.website.filters import ProductFilter
 
 """ BASIC PAGES ---------------------------------------------------------------------------------------------- """
 
@@ -16,6 +17,9 @@ class HomeTemplateView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomeTemplateView, self).get_context_data(**kwargs)
+        context['new_products'] = Product.objects.order_by('-created_on')[:10]
+        context['most_like'] = Product.objects.order_by('-likes')[:10]
+        context['most_saled'] = Product.objects.order_by('-sales')[:10]
         return context
 
 
@@ -37,6 +41,17 @@ class ProductListView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(ProductListView, self).get_context_data(**kwargs)
+        category = self.request.GET.get('category')
+        if category and self.request is not None:
+            product = Product.objects.prefetch_related('category').filter(categories__name=category)
+        else:
+            product = Product.objects.all().order_by('-created_at')
+        filter_product = ProductFilter(self.request.GET, queryset=product)
+        pagination = Paginator(filter_product.qs, 10)
+        page_number = self.request.GET.get('page')
+        page_obj = pagination.get_page(page_number)
+        context['products'] = page_obj
+        context['filter_form'] = filter_product
         return context
 
 

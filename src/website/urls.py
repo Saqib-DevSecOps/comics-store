@@ -7,7 +7,7 @@ from src.website.views import HomeTemplateView, ComicsTemplateView, NovelTemplat
 app_name = "website"
 urlpatterns = [
     path('', HomeTemplateView.as_view(), name='home'),
-    path('comics/', ComicsTemplateView.as_view(), name='comic'),
+    path('shop/', ProductListView.as_view(), name='shop'),
     path('novels/', NovelTemplateView.as_view(), name='novel'),
 
     path('stories/', BlogTemplateView.as_view(), name='stories'),
@@ -18,5 +18,4 @@ urlpatterns = [
 
     path('cart/', CartTemplateView.as_view(), name='cart'),
 
-    path('product/', ProductListView.as_view(), name='product_list')
 ]
