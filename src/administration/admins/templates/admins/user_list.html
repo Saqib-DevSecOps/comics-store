@@ -1,152 +1,192 @@
-{% extends 'base.html' %}
-{% load crispy_forms_tags %}
+{% extends 'admins/base.html' %}
+{% load static %}
 {% load custom_tags %}
 
-{% block subtitle %}
-    Users List
+{% block base_subtitle %} User Management{% endblock %}
+{% block base_subhead_heading %} Users &rAarr; List{% endblock %}
+{% block base_subhead_paragraph %}List of all available users{% endblock %}
+
+
+{% block base_subhead_button %}
+    <a class="btn btn-primary" href="{% url 'admins:user-add' %}">
+        Add User
+    </a>
 {% endblock %}
 
-{% block content %}
+{% block base_content %}
 
     <div class="row">
         <div class="col-12">
-            <form method="get">
-                <div class="input-group mb-3">
-                    {{ user_filter_form }}
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="submit">
-                            <i class="fa fa-search"></i> Search
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
-
-    <div class="row">
-        <div class="col-md-12">
             <div class="card">
+
                 <div class="card-body">
+                    <form method="get">
+                        <div class="input-group">
+                            {{ filter_form }}
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fa fa-search"></i> Search
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
 
-
+                {% if object_list %}
                     <div class="table-responsive">
-                        <table class="table table-borderless">
-                            {% if user_list %}
-                                <thead class="border-bottom">
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Username</th>
-                                    <th>Email</th>
-                                    <th>
-                                        Package
-                                    </th>
-                                    <th>Referred By</th>
-                                    <th>Active</th>
-                                    <th>Action</th>
+                        <table class="table table-hover card-table table-vcenter text-nowrap datatable">
+                            <thead class="thead-light">
+                            <tr>
+                                <th>Username</th>
+                                <th>FirstName</th>
+                                <th>LastName</th>
+                                <th>Email</th>
+                                <th>Type</th>
+                                <th>Joined</th>
+                                <th>Last Login</th>
+                                <th>Status</th>
+                                <th>-</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for object in object_list %}
+                                <tr class="">
+                                    <td>
+                                        <a href="{% url 'admins:user-detail' object.pk %}">{{ object.username }}</a>
+
+                                    </td>
+                                    <td>{{ object.first_name }}</td>
+                                    <td>{{ object.last_name }}</td>
+                                    <td>
+                                        {% if object.email %}
+                                            <a href="mailto:{{ object.email }}">{{ object.email }}</a>
+                                        {% else %}
+                                            <b class="text-danger">-</b>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if object.is_superuser %}
+                                            <span class="badge bg-danger-lt">Admin</span>
+                                        {% else %}
+                                            {% if object.is_staff %}
+                                                <span class="badge bg-purple-lt">
+                                                    Staff
+                                                </span>
+                                            {% elif object.is_employee %}
+                                                <b class="badge bg-success-lt">
+                                                    Employee
+                                                </b>
+                                                {% if object.get_employee_profile.is_sia_expired %}
+                                                    <i class="fa fa-exclamation-circle text-danger"
+                                                       data-bs-toggle="tooltip"
+                                                       data-bs-placement="right" data-bs-title="SIA License Expired">
+                                                    </i>
+                                                {% endif %}
+                                            {% else %}
+                                                <b class="badge bg-warning-lt">
+                                                    Undefined
+                                                </b>
+                                            {% endif %}
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ object.date_joined }}</td>
+                                    <td>{{ object.last_login }}</td>
+                                    <td>
+                                        {% if object.is_active %}
+                                            <b class="text-success">
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                     class="icon icon-tabler icon-tabler-check text-success" width="24"
+                                                     height="24"
+                                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                                     fill="none"
+                                                     stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <path d="M5 12l5 5l10 -10"></path>
+                                                </svg>
+                                            </b>
+                                        {% else %}
+                                            <b class="text-danger">
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                     class="icon icon-tabler icon-tabler-x text-danger" width="24"
+                                                     height="24"
+                                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                                     fill="none"
+                                                     stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                                </svg>
+                                            </b>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'admins:user-detail' object.pk %}">
+                                            <b class="text-primary">
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                     class="icon icon-tabler icon-tabler-eye" width="24" height="24"
+                                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                                     fill="none"
+                                                     stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <circle cx="12" cy="12" r="2"></circle>
+                                                    <path d="M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7"></path>
+                                                </svg>
+                                            </b>
+                                        </a>
+                                    </td>
                                 </tr>
-                                </thead>
+                            {% endfor %}
 
-                                <tbody>
-
-                                {% for user in user_list %}
-                                    <tr>
-                                        <td>{{ user.pk }}</td>
-                                        <td>{{ user.first_name }} {{ user.last_name }}</td>
-                                        <td>{{ user.username }}</td>
-                                        <td>{{ user.email }}</td>
-                                        <td>
-                                            {% if not user.current_subscription %}
-                                                <b class="text-danger"><i class="fa fa-times-circle"></i> Free</b>
-                                            {% else %}
-                                                <b class="text-success">
-                                                    <i class="fa fa-check-circle"></i> {{ user.current_subscription.package.name }}
-                                                </b>
-                                            {% endif %}
-                                        </td>
-                                        <td>
-
-                                            {% if user.referred_by %}
-                                                <b>
-                                                    <a href="{% url 'admins:user-detail' user.referred_by.pk %}">
-                                                        {{ user.referred_by.username }}
-                                                    </a>
-                                                </b>
-                                            {% else %}
-                                                <b class="text-danger">
-                                                    None
-                                                </b>
-                                            {% endif %}
-
-                                        </td>
-                                        <td>
-                                            {% if user.is_active %}
-                                                <b class="text-success"><i class="fa fa-check-circle"></i></b>
-
-                                            {% else %}
-                                                <b class="text-danger"><i class="fa fa-times-circle"></i></b>
-
-                                            {% endif %}
-                                        </td>
-
-                                        <td>
-                                            <a href="{% url 'admins:user-detail' user.pk %}"
-                                               class="text-decoration-none"><i
-                                                    class="mdi mdi-eye icon-sm"></i> View
-                                            </a>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-
-                                </tbody>
-                            {% else %}
-                                <th class="text-danger">No users data available.</th>
-                            {% endif %}
+                            </tbody>
                         </table>
                     </div>
 
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="mt-4">
-                <ul class="pagination">
-                    {% if user_list.has_previous %}
-                        <li>
+                    <div class="card-body border-top">
+                        <ul class="pagination">
+                            {% if object_list.has_previous %}
+                                <li>
                             <span>
-                                <a href="{% relative_url user_list.previous_page_number 'page' request.GET.urlencode %}">
+                                <a href="{% relative_url object_list.previous_page_number 'page' request.GET.urlencode %}">
                                     Previous
                                 </a>
                             </span>
-                        </li>
-                    {% endif %}
-                    <li class="">
-                        <span>Page {{ user_list.number }} of {{ user_list.paginator.num_pages }}.</span>
-                    </li>
-                    {% if user_list.has_next %}
-                        <li>
+                                </li>
+                            {% endif %}
+                            <li class="">
+                                <span>Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}.</span>
+                            </li>
+                            {% if object_list.has_next %}
+                                <li>
                             <span>
-                                <a href="{% relative_url user_list.next_page_number 'page' request.GET.urlencode %}">
+                                <a href="{% relative_url object_list.next_page_number 'page' request.GET.urlencode %}">
                                     Next
                                 </a>
                             </span>
-                        </li>
-                    {% endif %}
-                </ul>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                {% else %}
+                    <div class="card-body">
+                        <p class="text-danger mb-0"><b>No objects available</b></p>
+                    </div>
+                {% endif %}
+
             </div>
         </div>
     </div>
 
-{% endblock %}
 
-{% block js_code %}
+{% endblock %}
+<script src="{% static 'dialog.js' %}"></script>
+
+{% block base_external_scripts %}
     <script>
         $(document).ready(function () {
+
+            $("#id_is_active option:first").text("-- Is Active --");
+            $("#id_is_employee option:first").text("-- Is Employee --");
 
             $('label').hide();
             $('input').addClass('form-control');
@@ -155,5 +195,3 @@
         });
     </script>
 {% endblock %}
-
-

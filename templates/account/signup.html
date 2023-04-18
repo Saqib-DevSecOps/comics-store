@@ -1,110 +1,41 @@
-{% extends 'website/base.html' %}
-
-{% load i18n %}
-{% load crispy_forms_tags %}
+{% extends 'core/../../src/administration/admins/templates/admins/base.html' %}
 {% load static %}
-{% load account socialaccount %}
-{% load socialaccount %}
 
-{% block subtitle %}Sign Up{% endblock %}
+{% block base_subtitle %} Sign up{% endblock %}
 
-
-{% block content %}
-<div class="breadcrumb-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="page-title">
-                        <h2>create account</h2>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <nav aria-label="breadcrumb" class="theme-breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">create account</li>
-                        </ol>
-                    </nav>
+{% block base_no_body %}
+    <body class=" border-top-wide border-danger d-flex flex-column">
+    <div class="page page-center">
+        <div class="container container-tight py-2">
+            <div class="empty">
+                <iframe src="https://embed.lottiefiles.com/animation/66761"></iframe>
+{#                <div class="empty-header">Failed</div>#}
+                <p class="empty-title">Registration is closed.</p>
+                <p class="empty-subtitle text-muted">
+                    You are not allowed to register via organization profile, please contact organizational owner if you are an <b>Employee</b>
+                </p>
+                <div class="empty-action">
+                    <a href="{% url 'account-auth:who-am-i' %}" class="btn btn-danger">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
+                             stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                             stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <line x1="5" y1="12" x2="19" y2="12"/>
+                            <line x1="5" y1="12" x2="11" y2="18"/>
+                            <line x1="5" y1="12" x2="11" y2="6"/>
+                        </svg>
+                        Lets Find your organization
+                    </a>
                 </div>
             </div>
         </div>
     </div>
-<section class="register-page section-b-space">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-<div class="row">
-    <div class="col-3"></div>
-<div class="col-6 card">
-                            <div class="p-2">
-                                <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
-                                    {% csrf_token %}
-                                    <h1>{% trans "Sign Up" %}</h1>
 
-                                    <p>{% blocktrans %}Already have an account? Then please
-                                        <a href="{{ login_url }}">sign in</a>
-                                        .{% endblocktrans %}</p>
+    <!-- Tabler Core -->
+    <script src="{% static 'admin/js/tabler.min.js' %}?1668287865" defer></script>
+    <script src="{% static 'admin/js/demo.min.js' %}?1668287865" defer></script>
 
-
-                                    {{ form | crispy }}
-                                    {% if redirect_field_value %}
-                                        <input type="hidden" name="{{ redirect_field_name }}"
-                                               value="{{ redirect_field_value }}"/>
-                                    {% endif %}
-
-                                    <div class="mt-4">
-                                        <button class="btn btn-success btn-block waves-effect waves-light"
-                                                type="submit">Register
-                                        </button>
-                                    </div>
-
-                                </form>
-
-                                {% get_providers as socialaccount_providers %}
-                                {% if socialaccount_providers %}
-                                    <hr>
-                                    <ul class="list-unstyled">
-                                        {% for provider in socialaccount_providers %}
-                                            {% if provider.id == "openid" %}
-                                                {% for brand in provider.get_brands %}
-                                                    <li>
-                                                        <a title="{{ brand.name }}"
-                                                           class="socialaccount_provider {{ provider.id }} {{ brand.id }}"
-                                                           href="{% provider_login_url provider.id openid=brand.openid_url process=process %}"
-                                                        >{{ brand.name }}</a>
-                                                    </li>
-                                                {% endfor %}
-                                            {% endif %}
-                                            {% if forloop.counter == 1 %}
-                                                <li class="mb-2">
-                                                    <a class="btn btn-block btn-danger" title="{{ provider.name }}"
-                                                       class="socialaccount_provider {{ provider.id }}"
-                                                       href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">{{ provider.name }}</a>
-                                                </li>
-                                            {% else %}
-                                                <li class="mb-2">
-                                                    <a class="btn btn-block btn-primary" title="{{ provider.name }}"
-                                                       class="socialaccount_provider {{ provider.id }}"
-                                                       href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">{{ provider.name }}</a>
-                                                </li>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </ul>
-                                {% endif %}
-
-                                <div class="mt-4 text-center">
-                                    <p class="mb-0">By registering you agree to the <a href="#"
-                                                                                       class="text-primary">Terms
-                                        of Use</a></p>
-                                </div>
-                            </div>
-
-</div>
-</div>
-                </div>
-            </div>
-        </div>
-    </section>
+    </body>
 {% endblock %}
 
 
