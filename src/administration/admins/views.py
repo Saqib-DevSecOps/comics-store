@@ -18,6 +18,11 @@ from src.administration.admins.filters import UserFilter
 
 
 @method_decorator(admin_protected, name='dispatch')
+class DashboardView(TemplateView):
+    template_name = 'admins/dashboard.html'
+
+
+@method_decorator(admin_protected, name='dispatch')
 class UserListView(ListView):
     queryset = User.objects.all()
     template_name = 'admins/user_list.html'

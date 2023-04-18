@@ -25,7 +25,7 @@ class User(AbstractUser):
         help_text='size of logo must be 250*250 and format must be png image file', crop=['middle', 'center']
     )
     phone_number = models.CharField(max_length=30, null=True, blank=True)
-    is_employee = models.BooleanField(default=True)
+    is_client = models.BooleanField(default=True)
 
     REQUIRED_FIELDS = ["username"]
     USERNAME_FIELD = "email"
