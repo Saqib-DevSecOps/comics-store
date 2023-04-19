@@ -13,6 +13,7 @@ from django.views.generic import (
 from src.accounts.decorators import admin_protected
 from src.accounts.models import User
 from src.administration.admins.filters import UserFilter
+from src.administration.admins.models import Category, PostCategory
 
 """ MAIN """
 
@@ -89,3 +90,57 @@ class UserPasswordResetView(View):
             form.save(commit=True)
             messages.success(request, f"{user.get_full_name()}'s password changed successfully.")
         return render(request, self.template_name, {'form': form})
+
+
+""" MANAGEMENT """
+
+
+@method_decorator(admin_protected, name='dispatch')
+class CategoryListView(ListView):
+    queryset = Category.objects.all()
+
+
+@method_decorator(admin_protected, name='dispatch')
+class CategoryUpdateView(UpdateView):
+    model = Category
+    fields = ['name', 'parent', 'is_active']
+    success_url = reverse_lazy('admins:category-list')
+
+
+@method_decorator(admin_protected, name='dispatch')
+class CategoryCreateView(CreateView):
+    model = Category
+    fields = ['name', 'parent', 'is_active']
+    success_url = reverse_lazy('admins:category-list')
+
+
+@method_decorator(admin_protected, name='dispatch')
+class CategoryDeleteView(DeleteView):
+    model = Category
+    success_url = reverse_lazy('admins:category-list')
+
+
+@method_decorator(admin_protected, name='dispatch')
+class PostCategoryListView(ListView):
+    queryset = PostCategory.objects.all()
+
+
+@method_decorator(admin_protected, name='dispatch')
+class PostCategoryUpdateView(UpdateView):
+    model = PostCategory
+    fields = ['name', 'parent', 'is_active']
+    success_url = reverse_lazy('admins:post-category-list')
+
+
+@method_decorator(admin_protected, name='dispatch')
+class PostCategoryCreateView(CreateView):
+    model = PostCategory
+    fields = ['name', 'parent', 'is_active']
+    success_url = reverse_lazy('admins:post-category-list')
+
+
+@method_decorator(admin_protected, name='dispatch')
+class PostCategoryDeleteView(DeleteView):
+    model = PostCategory
+    success_url = reverse_lazy('admins:post-category-list')
+
