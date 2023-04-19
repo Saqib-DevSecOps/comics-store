@@ -12,8 +12,9 @@ from django.views.generic import (
 
 from src.accounts.decorators import admin_protected
 from src.accounts.models import User
-from src.administration.admins.filters import UserFilter
-from src.administration.admins.models import Category, PostCategory, Product
+from src.administration.admins.filters import UserFilter, ProductFilter
+from src.administration.admins.forms import ProductVersionForm, ProductImageForm
+from src.administration.admins.models import Category, PostCategory, Product, ProductVersion, ProductImage
 
 """ MAIN """
 
@@ -145,5 +146,144 @@ class PostCategoryDeleteView(DeleteView):
     success_url = reverse_lazy('admins:post-category-list')
 
 
+""" INVENTORY """
+
+
+@method_decorator(admin_protected, name='dispatch')
 class ProductListView(ListView):
     queryset = Product.objects.all()
+    paginate_by = 16
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductListView, self).get_context_data(**kwargs)
+        _filter = ProductFilter(self.request.GET, queryset=Product.objects.filter())
+        context['filter_form'] = _filter.form
+
+        paginator = Paginator(_filter.qs, 16)
+        page_number = self.request.GET.get('page')
+        page_object = paginator.get_page(page_number)
+
+        context['object_list'] = page_object
+        return context
+
+
+@method_decorator(admin_protected, name='dispatch')
+class ProductUpdateView(UpdateView):
+    model = Product
+    fields = [
+            'thumbnail_image', 'name',
+            'book_type', 'categories', 'languages', 'pages',
+            'artist', 'author', 'translator', 'illustrator',
+            'description', 'is_active'
+        ]
+    success_url = reverse_lazy('admins:product-list')
+
+
+@method_decorator(admin_protected, name='dispatch')
+class ProductCreateView(CreateView):
+    model = Product
+    fields = [
+            'thumbnail_image', 'name',
+            'book_type', 'categories', 'languages', 'pages',
+            'artist', 'author', 'translator', 'illustrator',
+            'description', 'is_active'
+        ]
+    success_url = reverse_lazy('admins:product-list')
+
+
+@method_decorator(admin_protected, name='dispatch')
+class ProductDetailView(DetailView):
+    model = Product
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductDetailView, self).get_context_data(**kwargs)
+        product_version_forms = []
+        for obj in self.object.get_versions():
+            product_version_forms.append(ProductVersionForm(instance=obj))
+
+        context['product_version_add_form'] = ProductVersionForm()
+        context['product_image_add_form'] = ProductImageForm()
+        context['product_version_forms'] = product_version_forms
+        return context
+
+
+@method_decorator(admin_protected, name='dispatch')
+class ProductDeleteView(DeleteView):
+    model = Product
+    success_url = reverse_lazy('admins:product-list')
+
+
+@method_decorator(admin_protected, name='dispatch')
+class ProductVersionAddView(View):
+
+    def post(self, request, product_id):
+        product = get_object_or_404(Product, pk=product_id)
+        form = ProductVersionForm(request.POST)
+        if form.is_valid():
+            form.instance.product = product
+            form.save()
+            messages.success(request, "Product Version added successfully")
+        return redirect("admins:product-detail", product_id)
+
+
+@method_decorator(admin_protected, name='dispatch')
+class ProductVersionUpdateView(View):
+
+    def post(self, request, product_id, pk):
+        product = get_object_or_404(Product, pk=product_id)
+        product_version = get_object_or_404(ProductVersion.objects.filter(product=product), pk=pk)
+        form = ProductVersionForm(instance=product_version, data=request.POST)
+        if form.is_valid():
+            form.instance.product = product
+            form.save()
+            messages.success(request, "Product Version updated successfully")
+        return redirect("admins:product-detail", product_id)
+
+
+@method_decorator(admin_protected, name='dispatch')
+class ProductVersionDeleteView(View):
+
+    def get(self, request, product_id, pk):
+        product = get_object_or_404(Product, pk=product_id)
+        product_version = get_object_or_404(ProductVersion.objects.filter(product=product), pk=pk)
+        product_version.delete()
+        messages.success(request, "Product Version deleted successfully")
+        return redirect("admins:product-detail", product_id)
+
+    def post(self, request, product_id, pk):
+        product = get_object_or_404(Product, pk=product_id)
+        product_version = get_object_or_404(ProductVersion.objects.filter(product=product), pk=pk)
+        product_version.delete()
+        messages.success(request, "Product Version deleted successfully")
+        return redirect("admins:product-detail", product_id)
+
+
+@method_decorator(admin_protected, name='dispatch')
+class ProductImageAddView(View):
+
+    def post(self, request, product_id):
+        product = get_object_or_404(Product, pk=product_id)
+        form = ProductImageForm(data=request.POST, files=request.FILES)
+        if form.is_valid():
+            form.instance.product = product
+            form.save()
+            messages.success(request, "Product Image added successfully")
+        return redirect("admins:product-detail", product_id)
+
+
+@method_decorator(admin_protected, name='dispatch')
+class ProductImageDeleteView(View):
+
+    def get(self, request, product_id, pk):
+        product = get_object_or_404(Product, pk=product_id)
+        product_image = get_object_or_404(ProductImage.objects.filter(product=product), pk=pk)
+        product_image.delete()
+        messages.success(request, "Product Image deleted successfully")
+        return redirect("admins:product-detail", product_id)
+
+    def post(self, request, product_id, pk):
+        product = get_object_or_404(Product, pk=product_id)
+        product_image = get_object_or_404(ProductImage.objects.filter(product=product), pk=pk)
+        product_image.delete()
+        messages.success(request, "Product Image deleted successfully")
+        return redirect("admins:product-detail", product_id)

@@ -80,6 +80,10 @@ class Product(models.Model):
             self.slug = slugify(self.name)
         return super().save(*args, **kwargs)
 
+    def delete(self, *args, **kwargs):
+        self.thumbnail_image.delete(save=True)
+        super(Product, self).delete(*args, **kwargs)
+
     def get_images(self):
         return ProductImage.objects.filter(product=self)
 
@@ -111,6 +115,10 @@ class ProductImage(models.Model):
 
     def __str__(self):
         return self.product.name
+
+    def delete(self, *args, **kwargs):
+        self.image.delete(save=True)
+        super(ProductImage, self).delete(*args, **kwargs)
 
 
 """ ORDERS """
