@@ -10,5 +10,5 @@ class UserFilter(django_filters.FilterSet):
 
     class Meta:
         model = User
-        fields = {'is_active', 'is_employee'}
+        fields = {'is_active', 'is_client'}
 
