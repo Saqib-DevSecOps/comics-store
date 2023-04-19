@@ -1,0 +1,120 @@
+{% extends  'website/base.html' %}
+{% load static %}
+{% block content %}
+<div class="breadcrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="page-title">
+                    <h2>dashboard</h2>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <nav aria-label="breadcrumb" class="theme-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li aria-current="page" class="breadcrumb-item active">dashboard</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="dashboard-section section-b-space user-dashboard-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                {% include 'client/include/dashboard_navbar.html' %}
+            </div>
+            <div class="col-lg-9">
+                <div class="faq-content tab-content" id="top-tabContent">
+                    <div class="tab-pane fade show active" id="info">
+                        <div class="counter-section">
+                            <div class="welcome-msg">
+                                <h4 class="text-white">Hello ! {{request..user.name_or_username}}</h4>
+                                <p>From your My Account Dashboard you have the ability to view a snapshot of your
+                                    recent
+                                    account activity and update your account information. Select a link below to
+                                    view or
+                                    edit information.</p>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="counter-box">
+                                        <img class="img-fluid"
+                                             src="{% static 'website/images/icon/dashboard/sale.png' %}">
+                                        <div>
+                                            <h3>25</h3>
+                                            <h5>Total Order</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="counter-box">
+                                        <img class="img-fluid"
+                                             src="{% static 'website/images/icon/dashboard/homework.png' %}">
+                                        <div>
+                                            <h3>5</h3>
+                                            <h5>Pending Orders</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="counter-box">
+                                        <img class="img-fluid"
+                                             src="{% static 'website/images/icon/dashboard/order.png' %}">
+                                        <div>
+                                            <h3>50</h3>
+                                            <h5>Wishlist</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-account box-info">
+                                <div class="box mt-3">
+                                    <div class="box-title">
+                                        <h3>Accounts Information</h3><a href="#"></a>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <h6>First Name : {{request.user.first_name}}</h6>
+                                            <h6>Last Name : {{request.user.last_name}}</h6>
+                                            <h6>Username : {{request.user.name_or_username}}</h6>
+                                            <h6><a href="{% url 'account_change_password' %}">Change Password</a></h6>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <h6>Email : {{request.user.email}}</h6>
+                                            <h6>Phone Number : {{request.user.phone_number}}</h6>
+                                            <h6><a href="{% url 'accounts:user-change' %}">Update Profile</a></h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box mt-3">
+                                    <div class="box-title">
+                                        <h3>Address Book</h3><a href="{% url 'accounts:user-address-update' %}">Edit Address</a>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <h6>Default Billing Address</h6>
+                                            <h6>Country : {{request.user.address_set.country}}</h6>
+                                            <h6>Province : {{request.user.last_name}}</h6>
+                                            <h6>City : {{request.user.last_name}}</h6>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <h6>Street Address 1 : {{request.user.address_set.street_address_1}}</h6>
+                                            <h6>Street Address 2 : {{request.user.address_set.street_address_2}}</h6>
+                                            <h6>Postal Code : {{request.user.address_set.street_address_2}}</h6>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

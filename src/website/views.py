@@ -1,13 +1,18 @@
+import json
+
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.shortcuts import render
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
+from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView, UpdateView, DeleteView, CreateView
 
 from src.administration.admins.models import (
-    Product, ProductVersion, Version, ProductImage, Post, PostCategory, Category, Order, Cart, Language
+    Product, ProductVersion, Version, ProductImage, Post, PostCategory, Category, Order, Language,
 )
 from src.website.filters import ProductFilter, PostFilter
+from src.website.utility import session_id
 
 """ BASIC PAGES ---------------------------------------------------------------------------------------------- """
 
@@ -19,7 +24,7 @@ class HomeTemplateView(TemplateView):
         context = super(HomeTemplateView, self).get_context_data(**kwargs)
         context['new_products'] = Product.objects.order_by('-created_on')[:10]
         context['most_like'] = Product.objects.order_by('-likes')[:10]
-        context['most_saled'] = Product.objects.order_by('-sales')[:10]
+        context['most_sale'] = Product.objects.order_by('-sales')[:10]
         return context
 
 
@@ -112,24 +117,61 @@ class PostDetailView(DetailView):
 
 """ ORDER AND CART  ------------------------------------------------------------------------------------------ """
 
+import json
+
+
+def add_to_cart(request, product_id, version):
+    # Retrieve the cart data from the cookie
+    cart_json = request.COOKIES.get('cart', '{}')
+    cart_json = cart_json.replace("'", "\"")
+    cart = json.loads(cart_json)
+    print(cart)
+    print(cart.keys())
+    print(type(cart))
+    product_id  = str(product_id + product_id + int(version))
+    # Add the product to the cart
+    if product_id in cart:
+        print('inside cart')
+        # Check if the same version of the product is already in the cart
+        if cart[product_id]['version'] == version:
+            print('inside more')
+            cart[product_id]['quantity'] += 1
+        else:
+            # Add new product version to the cart
+            print('inside else')
+            product = {
+                'id': product_id,
+                'name': 'Product name',
+                'version': version,
+                'quantity': 1,
+                # Add any other relevant product information
+            }
+            cart[product_id] = product
+    else:
+        # Add new product to the cart
+        print('else')
+        product = {
+            'id': product_id,
+            'name': 'Product name',
+            'version': version,
+            'quantity': 1,
+            # Add any other relevant product information
+        }
+        cart[product_id] = product
+
+    # Set the cart data as a cookie
+    response = redirect('website:home')
+    response.set_cookie('cart', json.dumps(cart))
+
+    return response
+
+
+class RemoveFromCartView(View):
+    pass
+
 
 @method_decorator(login_required, name='dispatch')
 class OrderDetail(DetailView):
-    pass
-
-
-@method_decorator(login_required, name='dispatch')
-class AddToCartView(CreateView):
-    pass
-
-
-@method_decorator(login_required, name='dispatch')
-class RemoveFromCartView(DeleteView):
-    pass
-
-
-@method_decorator(login_required, name='dispatch')
-class UpdateCartQuantityView(UpdateView):
     pass
 
 

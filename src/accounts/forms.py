@@ -1,9 +1,8 @@
 from django.forms import ModelForm
-from src.accounts.models import User
+from src.accounts.models import User, Address
 
 
 class UserProfileForm(ModelForm):
-
     class Meta:
         model = User
         fields = [
@@ -12,3 +11,8 @@ class UserProfileForm(ModelForm):
         ]
 
 
+class AddressForm(ModelForm):
+    class Meta:
+        model = Address
+        fields = "__all__"
+        exclude = ['user', ]

@@ -2,7 +2,7 @@ from django.urls import path
 
 from src.website.views import HomeTemplateView, \
     ContactUsTemplateView, PostListView, CartTemplateView, AboutUsTemplateView, \
-    ProductListView, PostDetailView
+    ProductListView, PostDetailView, add_to_cart
 
 app_name = "website"
 urlpatterns = [
@@ -16,5 +16,5 @@ urlpatterns = [
     path('contact-us/', ContactUsTemplateView.as_view(), name='contact_us'),
 
     path('cart/', CartTemplateView.as_view(), name='cart'),
-
+    path('add_to_cart/<int:product_id>/<str:version>/', add_to_cart, name='add_to_cart'),
 ]

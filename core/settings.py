@@ -62,7 +62,8 @@ INSTALLED_APPS = [
     # YOUR APPS
     'src.website.apps.WebsiteConfig',
     'src.accounts.apps.AccountsConfig',
-    'src.administration.admins.apps.AdministrationAdminConfig'
+    'src.administration.admins.apps.AdministrationAdminConfig',
+    'src.administration.client.apps.ClientConfig'
 ]
 
 MIDDLEWARE = [
