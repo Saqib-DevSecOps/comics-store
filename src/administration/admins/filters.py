@@ -2,7 +2,7 @@ import django_filters
 from django.forms import TextInput
 
 from src.accounts.models import User
-from src.administration.admins.models import Product
+from src.administration.admins.models import Product, Order
 
 
 class UserFilter(django_filters.FilterSet):
@@ -22,4 +22,12 @@ class ProductFilter(django_filters.FilterSet):
     class Meta:
         model = Product
         fields = {'book_type'}
+
+
+class OrderFilter(django_filters.FilterSet):
+    user = django_filters.CharFilter(widget=TextInput(attrs={'placeholder': 'User'}), lookup_expr='icontains')
+
+    class Meta:
+        model = Order
+        fields = {'payment_status', 'order_status'}
 

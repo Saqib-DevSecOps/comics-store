@@ -148,8 +148,8 @@ class Order(models.Model):
     phone = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
 
-    total = models.FloatField()
-    paid = models.FloatField()
+    total = models.FloatField(default=0)
+    paid = models.FloatField(default=0)
 
     stripe_payment_id = models.CharField(max_length=1000)
     payment_status = models.CharField(max_length=15, choices=PAYMENT_STATUS_CHOICE, default='pending')
