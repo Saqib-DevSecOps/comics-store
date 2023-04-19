@@ -10,5 +10,113 @@
 
 {% block base_content %}
 
+    {# TOP STATISTICS #}
+    <div class="row">
+        <div class="col">
+            <div class="card card-sm">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <span class="bg-success text-white avatar">
+                              <i class="bx bx-user"></i>
+                            </span>
+                        </div>
+                        <div class="col">
+                            <div class="font-weight-medium">
+                                00 Users
+                            </div>
+                            <div class="text-muted">
+                                <a href="{% url 'admins:user-list' %}"><i class="fa fa-eye"></i> view</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card card-sm">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <span class="bg-warning text-white avatar">
+                              <i class="bx bxs-truck"></i>
+                            </span>
+                        </div>
+                        <div class="col">
+                            <div class="font-weight-medium">
+                                00 Orders
+                            </div>
+                            <div class="text-muted">
+                                <a href="#"><i class="fa fa-eye"></i> view</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card card-sm">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <span class="bg-primary text-white avatar">
+                              <i class="bx bx-pen"></i>
+                            </span>
+                        </div>
+                        <div class="col">
+                            <div class="font-weight-medium">
+                                00 Blogs
+                            </div>
+                            <div class="text-muted">
+                                <a href="#"><i class="fa fa-eye"></i> view</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card card-sm">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <span class="bg-danger text-white avatar">
+                              <i class="bx bxs-smile"></i>
+                            </span>
+                        </div>
+                        <div class="col">
+                            <div class="font-weight-medium">
+                                00 Comics
+                            </div>
+                            <div class="text-muted">
+                                <a href="#"><i class="fa fa-eye"></i> view</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card card-sm">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <span class="bg-azure-lt text-white avatar">
+                              <i class="bx bx-history"></i>
+                            </span>
+                        </div>
+                        <div class="col">
+                            <div class="font-weight-medium">
+                                00 Stories
+                            </div>
+                            <div class="text-muted">
+                                <a href="#"><i class="fa fa-eye"></i> view</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

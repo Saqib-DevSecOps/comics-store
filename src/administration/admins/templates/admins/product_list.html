@@ -1,0 +1,68 @@
+{% extends 'admins/base.html' %}
+{% load static %}
+
+{% block base_subtitle %}
+    Dashboard
+{% endblock %}
+
+{% block base_subhead_heading %} Product &rAarr; Management{% endblock %}
+{% block base_subhead_paragraph %}All available products inside your inventory{% endblock %}
+
+{% block base_subhead_button %}
+    <a class="btn btn-primary" href="#">
+        <i class="fa fa-plus"></i>&nbsp;Add New
+    </a>
+{% endblock %}
+
+{% block base_content %}
+
+    <div class="row">
+
+        {% if 1 is 1 %}
+            {% for object in '12345678'|make_list %}
+                <div class="col-md-6 col-lg-3">
+                    <div class="card mb-3">
+                        <!-- Photo -->
+                        <a href="#">
+                            <div class="img-responsive card-img-top"
+                                 style="background-image: url('https://picsum.photos/600/400')">
+                            </div>
+                        </a>
+                        <div class="card-body">
+                            <h3 class="card-title mb-0">Product Name <a href="#"><i class="bx bx-edit"></i></a></h3>
+                            <div class="col-auto d-flex align-items-center pe-2">
+                                <span class="legend me-2 bg-primary"></span>
+                                <span>Regular</span>
+                            </div>
+                            <p class="text-muted mt-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam
+                                deleniti fugit incidunt, iste, itaque minima
+                                neque pariatur perferendis sed suscipit velit vitae voluptatem.</p>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <div class="text-muted">
+                                        <span class="badge bg-danger">Comic</span>
+                                        <span class="badge bg-azure">Story</span>
+                                    </div>
+                                </div>
+                                <div class="ms-auto">
+                                    <a href="#" class="text-muted">
+                                        <i class="mdi mdi-sale"></i>
+                                        496
+                                    </a>
+                                    <a href="#" class="ms-3 text-muted">
+                                        <i class="mdi mdi-eye"></i>
+                                        64
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+    </div>
+
+{% endblock %}

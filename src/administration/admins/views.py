@@ -13,7 +13,7 @@ from django.views.generic import (
 from src.accounts.decorators import admin_protected
 from src.accounts.models import User
 from src.administration.admins.filters import UserFilter
-from src.administration.admins.models import Category, PostCategory
+from src.administration.admins.models import Category, PostCategory, Product
 
 """ MAIN """
 
@@ -144,3 +144,6 @@ class PostCategoryDeleteView(DeleteView):
     model = PostCategory
     success_url = reverse_lazy('admins:post-category-list')
 
+
+class ProductListView(ListView):
+    queryset = Product.objects.all()
