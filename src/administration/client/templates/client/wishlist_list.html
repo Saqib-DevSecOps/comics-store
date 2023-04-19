@@ -1,0 +1,89 @@
+
+{% extends  'website/base.html' %}
+{% load static %}
+{% block content %}
+<div class="breadcrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="page-title">
+                    <h2>dashboard</h2>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <nav aria-label="breadcrumb" class="theme-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li aria-current="page" class="breadcrumb-item active">dashboard</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="dashboard-section section-b-space user-dashboard-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                {% include 'client/include/dashboard_navbar.html' %}
+            </div>
+            <div class="col-lg-9">
+<div class="tab-pane fade active show" id="wishlist">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card dashboard-table mt-0">
+                                        <div class="card-body table-responsive-sm">
+                                            <div class="top-sec">
+                                                <h3>My Wishlist</h3>
+                                            </div>
+                                            <div class="table-responsive-xl">
+                                                {% if objects %}
+                                                <table class="table cart-table wishlist-table">
+                                                    <thead>
+                                                        <tr class="table-head">
+                                                            <th scope="col">image</th>
+                                                            <th scope="col">Product Name</th>
+                                                            <th scope="col">Author</th>
+                                                            <th scope="col">Artist</th>
+                                                            <th scope="col">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for object in objects %}
+                                                        <tr>
+                                                            <td>
+                                                                <a href="javascript:void(0)">
+                                                                    <img src="{{object.product.thumbnail_image.url}}" class="blur-up lazyloaded" alt="">
+                                                                </a>
+                                                            </td>
+                                                            <td>
+                                                                <span class="mt-0">{{object.product.name}}</span>
+                                                            </td>
+                                                            <td>
+                                                                <span>{{object.product.author}}</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="theme-color fs-6">{{object.product.artist}}</span>
+                                                            </td>
+                                                            <td>
+                                                                <a href="" ><i class="fa fa-eye"></i></a>&nbsp;&nbsp;
+                                                                <a href="{% url 'client:wishlist-delete' object.product.id %}" class="btn "><i class="fa fa-trash"></i></a>&nbsp;&nbsp;
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                                {% else %}
+                                                <h3 class="mt-4 text-danger">WishList Empty</h3>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

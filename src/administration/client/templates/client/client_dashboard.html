@@ -31,7 +31,7 @@
                     <div class="tab-pane fade show active" id="info">
                         <div class="counter-section">
                             <div class="welcome-msg">
-                                <h4 class="text-white">Hello ! {{request..user.name_or_username}}</h4>
+                                <h4 class="text-white">Hello ! {{request.user.name_or_username}}</h4>
                                 <p>From your My Account Dashboard you have the ability to view a snapshot of your
                                     recent
                                     account activity and update your account information. Select a link below to
@@ -44,7 +44,7 @@
                                         <img class="img-fluid"
                                              src="{% static 'website/images/icon/dashboard/sale.png' %}">
                                         <div>
-                                            <h3>25</h3>
+                                            <h3>{{total_orders}}</h3>
                                             <h5>Total Order</h5>
                                         </div>
                                     </div>
@@ -54,7 +54,7 @@
                                         <img class="img-fluid"
                                              src="{% static 'website/images/icon/dashboard/homework.png' %}">
                                         <div>
-                                            <h3>5</h3>
+                                            <h3>{{pending_orders}}</h3>
                                             <h5>Pending Orders</h5>
                                         </div>
                                     </div>
@@ -64,7 +64,7 @@
                                         <img class="img-fluid"
                                              src="{% static 'website/images/icon/dashboard/order.png' %}">
                                         <div>
-                                            <h3>50</h3>
+                                            <h3>{{wishlist}}</h3>
                                             <h5>Wishlist</h5>
                                         </div>
                                     </div>
