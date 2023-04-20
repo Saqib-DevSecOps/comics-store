@@ -198,10 +198,11 @@ class PostCategory(models.Model):
 
 class Post(models.Model):
     STATUS = (
-        (0, "Draft"),
-        (1, "Publish")
+        ('draft', "Draft"),
+        ('publish', "Publish")
     )
 
+    image = models.ImageField(upload_to='books/images/posts', null=True, blank=True)
     title = models.CharField(max_length=255, unique=True)
     slug = models.SlugField(unique=True, null=False)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')
@@ -210,7 +211,7 @@ class Post(models.Model):
     read_time = models.PositiveIntegerField(default=0, help_text='read time in minutes')
     visits = models.PositiveIntegerField(default=0)
 
-    status = models.IntegerField(choices=STATUS, default=0)
+    status = models.CharField(max_length=15, choices=STATUS, default='publish')
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 

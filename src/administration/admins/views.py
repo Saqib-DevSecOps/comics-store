@@ -13,9 +13,9 @@ from django.views.generic import (
 from src.accounts.decorators import admin_protected
 from src.accounts.forms import UserProfileForm
 from src.accounts.models import User
-from src.administration.admins.filters import UserFilter, ProductFilter, OrderFilter
+from src.administration.admins.filters import UserFilter, ProductFilter, OrderFilter, PostFilter
 from src.administration.admins.forms import ProductVersionForm, ProductImageForm
-from src.administration.admins.models import Category, PostCategory, Product, ProductVersion, ProductImage, Order
+from src.administration.admins.models import Category, PostCategory, Product, ProductVersion, ProductImage, Order, Post
 
 """ MAIN """
 
@@ -363,3 +363,52 @@ class OrderStatusChangeView(View):
 
     def get(self, request, pk):
         pass
+
+
+""" BLOG """
+
+@method_decorator(admin_protected, name='dispatch')
+class PostListView(ListView):
+    queryset = Post.objects.all()
+    paginate_by = 25
+
+    def get_context_data(self, **kwargs):
+        context = super(PostListView, self).get_context_data(**kwargs)
+        _filter = PostFilter(self.request.GET, queryset=Post.objects.filter())
+        context['filter_form'] = _filter.form
+
+        paginator = Paginator(_filter.qs, 16)
+        page_number = self.request.GET.get('page')
+        page_object = paginator.get_page(page_number)
+
+        context['object_list'] = page_object
+        return context
+
+
+@method_decorator(admin_protected, name='dispatch')
+class PostDetailView(DetailView):
+    model = Post
+
+
+@method_decorator(admin_protected, name='dispatch')
+class PostDeleteView(DeleteView):
+    model = Post
+    success_url = reverse_lazy('admins:post-list')
+
+
+@method_decorator(admin_protected, name='dispatch')
+class PostUpdateView(UpdateView):
+    model = Post
+    fields = [
+        'image', 'title', 'author', 'read_time', 'content', 'status'
+    ]
+    success_url = reverse_lazy('admins:post-list')
+
+
+@method_decorator(admin_protected, name='dispatch')
+class PostCreateView(CreateView):
+    model = Post
+    fields = [
+        'image', 'title', 'author', 'read_time', 'content', 'status'
+    ]
+    success_url = reverse_lazy('admins:post-list')

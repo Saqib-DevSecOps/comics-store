@@ -2,7 +2,7 @@ import django_filters
 from django.forms import TextInput
 
 from src.accounts.models import User
-from src.administration.admins.models import Product, Order
+from src.administration.admins.models import Product, Order, Post
 
 
 class UserFilter(django_filters.FilterSet):
@@ -30,4 +30,13 @@ class OrderFilter(django_filters.FilterSet):
     class Meta:
         model = Order
         fields = {'payment_status', 'order_status'}
+
+
+class PostFilter(django_filters.FilterSet):
+    title = django_filters.CharFilter(widget=TextInput(attrs={'placeholder': 'User'}), lookup_expr='icontains')
+    author = django_filters.CharFilter(widget=TextInput(attrs={'placeholder': 'Author'}), lookup_expr='icontains')
+
+    class Meta:
+        model = Post
+        fields = {'status'}
 
