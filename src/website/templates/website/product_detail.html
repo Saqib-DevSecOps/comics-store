@@ -1,10 +1,347 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends  'website/base.html' %}
+{% load static %}
+{% block content %}
+<div class="breadcrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="page-title">
+                    <h2>product</h2>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <nav aria-label="breadcrumb" class="theme-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li aria-current="page" class="breadcrumb-item active">product</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<section>
+    <div class="collection-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="product-slick slick-initialized slick-slider">
+                        <button aria-label="Previous" class="slick-prev slick-arrow" style="display: block;"
+                                type="button">Previous
+                        </button>
+                        <div class="slick-list draggable">
+                            <div class="slick-track" style="opacity: 1; width: 2184px;">
+                                <div aria-hidden="false" class="slick-slide slick-current slick-active"
+                                     data-slick-index="0"
+                                     style="width: 546px; position: relative; left: 0px; top: 0px; z-index: 999; opacity: 1;">
+                                    <div>
+                                        <div style="width: 100%; display: inline-block;"><img
+                                                alt="" class="img-fluid blur-up image_zoom_cls-0 lazyloaded"
+                                                src="{{object.thumbnail_image.url}}"></div>
+                                    </div>
+                                </div>
+                                <div aria-hidden="true" class="slick-slide" data-slick-index="1"
+                                     style="width: 546px; position: relative; left: -546px; top: 0px; z-index: 998; opacity: 0;"
+                                     tabindex="-1">
+                                    <div>
+                                        <div style="width: 100%; display: inline-block;"><img
+                                                alt="" class="img-fluid blur-up image_zoom_cls-1 lazyloaded"
+                                                src="{{object.thumbnail_image.url}}"></div>
+                                    </div>
+                                </div>
+                                <div aria-hidden="true" class="slick-slide" data-slick-index="2"
+                                     style="width: 546px; position: relative; left: -1092px; top: 0px; z-index: 998; opacity: 0;"
+                                     tabindex="-1">
+                                    <div>
+                                        <div style="width: 100%; display: inline-block;"><img
+                                                alt="" class="img-fluid blur-up image_zoom_cls-2 lazyloaded"
+                                                src="{{object.thumbnail_image.url}}"></div>
+                                    </div>
+                                </div>
+                                <div aria-hidden="true" class="slick-slide" data-slick-index="3"
+                                     style="width: 546px; position: relative; left: -1638px; top: 0px; z-index: 998; opacity: 0;"
+                                     tabindex="-1">
+                                    <div>
+                                        <div style="width: 100%; display: inline-block;"><img
+                                                alt="" class="img-fluid blur-up image_zoom_cls-3 lazyloaded"
+                                                src="{{object.thumbnail_image.url}}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button aria-label="Next" class="slick-next slick-arrow" style="display: block;" type="button">
+                            Next
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-6 rtl-text">
+                    <div class="product-right">
+                        <h2>{{object.name}}</h2>
+                        <div class="row">
+                            {% for version in object.get_versions %}
 
-</body>
-</html>
+                            <div class="col-sm-6">
+                                <h4 class="price-detail">{{version.version.name}} Version </h4>
+                                <hr>
+                                <h4 class="price-detail"> Price : ${{version.price}}</h4>
+                                <h4 class="price-detail"> ISBN : ${{version.isbn}}</h4>
+                                <hR>
+
+                            </div>
+                            {% endfor %}
+
+                        </div>
+                        <h4>Version</h4>
+                        <form action="{% url 'website:add-to-cart' %}" method="post">
+                            {% csrf_token %}
+                            <input name="product_id" type="hidden" value="{{object.id}}">
+                            <select class="form-select mb-4 mt-3" id="dropdown" name="version_id"
+                                    onchange="enableButton()">
+                                <option selected value="default">Choose an Option</option>
+                                {% for version in object.get_versions %}
+                                <option value="{{version.id}}">{{version.version.name}}</option>
+                                {% endfor %}
+                            </select>
+
+                            <div class="product-buttons">
+                                <button class="btn btn-solid hover-solid btn-animation" disabled id="seedoc"
+                                        type="submit">
+                                    <i aria-hidden="true" class="fa fa-shopping-cart me-1"></i> add to cart
+                                </button>
+                        </form>
+
+                        <a
+                                class="btn btn-solid"
+                                href="#"><i
+                                aria-hidden="true" class="fa fa-bookmark fz-16 me-2"></i>wishlist</a>
+                    </div>
+
+
+                    <div class="product-count">
+                        <ul>
+                            <li>
+                                <img alt="image" class="img-fluid" src="{% static 'website/images/icon/truck.png' %}">
+                                <span class="lang">Free shipping for orders above $500 USD</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="border-product">
+                        <h6 class="product-title">shipping info</h6>
+                        <ul class="shipping-info">
+                            <li>100% Original Products</li>
+                            <li>Free Delivery on order above Rs. 799</li>
+                            <li>Pay on delivery is available</li>
+                            <li>Easy 30 days returns and exchanges</li>
+                        </ul>
+                    </div>
+                    <div class="border-product">
+                        <h6 class="product-title">share it</h6>
+                        <div class="product-icon">
+                            <ul class="product-social">
+                                <li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
+                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="border-product">
+                        <h6 class="product-title">100% secure payment</h6>
+                        <img alt="" class="img-fluid mt-1" src="../assets/images/payment.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+<section class="tab-product m-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-lg-12">
+                <ul class="nav nav-tabs nav-material" id="top-tab" role="tablist">
+                    <li class="nav-item"><a aria-selected="true" class="nav-link active" data-bs-toggle="tab"
+                                            href="#top-home" id="top-home-tab" role="tab"><i
+                            class="icofont icofont-ui-home"></i>Details</a>
+                        <div class="material-border"></div>
+                    </li>
+                    <li class="nav-item"><a aria-selected="false" class="nav-link" data-bs-toggle="tab"
+                                            href="#top-profile" id="profile-top-tab" role="tab"><i
+                            class="icofont icofont-man-in-glasses"></i>Specification</a>
+                        <div class="material-border"></div>
+                    </li>
+                    <li class="nav-item"><a aria-selected="false" class="nav-link" data-bs-toggle="tab"
+                                            href="#top-contact" id="contact-top-tab" role="tab"><i
+                            class="icofont icofont-contacts"></i>Video</a>
+                        <div class="material-border"></div>
+                    </li>
+                    <li class="nav-item"><a aria-selected="false" class="nav-link" data-bs-toggle="tab"
+                                            href="#top-review"
+                                            id="review-top-tab" role="tab"><i class="icofont icofont-contacts"></i>Write
+                        Review</a>
+                        <div class="material-border"></div>
+                    </li>
+                </ul>
+                <div class="tab-content nav-material" id="top-tabContent">
+                    <div aria-labelledby="top-home-tab" class="tab-pane fade show active" id="top-home" role="tabpanel">
+                        <div class="product-tab-discription">
+                            <div class="part">
+                                <p>The Model is wearing a white blouse from our stylist's collection, see the image
+                                    for a mock-up of what the actual blouse would look like.it has text written on
+                                    it in a black cursive language which looks great on a white color.</p>
+                            </div>
+                            <div class="part">
+                                <h5 class="inner-title">fabric:</h5>
+                                <p>Art silk is manufactured by synthetic fibres like rayon. It's light in weight and
+                                    is soft on the skin for comfort in summers.Art silk is manufactured by synthetic
+                                    fibres like rayon. It's light in weight and is soft on the skin for comfort in
+                                    summers.</p>
+                            </div>
+                            <div class="part">
+                                <h5 class="inner-title">size &amp; fit:</h5>
+                                <p>The model (height 5'8") is wearing a size S</p>
+                            </div>
+                            <div class="part">
+                                <h5 class="inner-title">Material &amp; Care:</h5>
+                                <p>Top fabric: pure cotton</p>
+                                <p>Bottom fabric: pure cotton</p>
+                                <p>Hand-wash</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div aria-labelledby="profile-top-tab" class="tab-pane fade" id="top-profile" role="tabpanel">
+                        <p>The Model is wearing a white blouse from our stylist's collection, see the image for a
+                            mock-up of what the actual blouse would look like.it has text written on it in a black
+                            cursive language which looks great on a white color.</p>
+                        <div class="single-product-tables">
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td>Artist</td>
+                                    <td>{{object.artist}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Author</td>
+                                    <td>{{object.author}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Translator</td>
+                                    <td>{{object.translator}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td>Illustrator</td>
+                                    <td>{{object.illustrator}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Book Type</td>
+                                    <td>{{object.book_type}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Book Pages</td>
+                                    <td>{{object.pages}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td>Category</td>
+                                    {% for category in object.categories.all %}
+                                    <td>{{category.name}}</td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Languages</td>
+                                    {% for language in object.languages.all %}
+
+                                    <td>{{language.name}}</td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Book Pages</td>
+                                    <td>{{object.pages}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div aria-labelledby="contact-top-tab" class="tab-pane fade" id="top-contact" role="tabpanel">
+                        <div class="">
+                            <iframe allow="autoplay; encrypted-media" allowfullscreen="" height="315"
+                                    src="https://www.youtube.com/embed/BUWzX78Ye_8" width="560"></iframe>
+                        </div>
+                    </div>
+                    <div aria-labelledby="review-top-tab" class="tab-pane fade" id="top-review" role="tabpanel">
+                        <form class="theme-form">
+                            <div class="form-row row">
+                                <div class="col-md-12">
+                                    <div class="media">
+                                        <label>Rating</label>
+                                        <div class="media-body ms-3">
+                                            <div class="rating three-star"><i class="fa fa-star"></i> <i
+                                                    class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+                                                    class="fa fa-star"></i> <i class="fa fa-star"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="name">Name</label>
+                                    <input class="form-control" id="name" placeholder="Enter Your name" required=""
+                                           type="text">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="email">Email</label>
+                                    <input class="form-control" id="email" placeholder="Email" required="" type="text">
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="review">Review Title</label>
+                                    <input class="form-control" id="review" placeholder="Enter your Review Subjects"
+                                           required="" type="text">
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="review">Review Title</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1"
+                                              placeholder="Wrire Your Testimonial Here" rows="6"></textarea>
+                                </div>
+                                <div class="col-md-12">
+                                    <button class="btn btn-solid" type="submit">Submit YOur
+                                        Review
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="zoomContainer"
+     style="-webkit-transform: translateZ(0);position:absolute;left:117.5px;top:335px;height:742px;width:546px;">
+    <div class="zoomWindowContainer" style="width: 400px;">
+        <div class="zoomWindow"
+             style="z-index: 999; overflow: hidden; margin-left: 0px; margin-top: 0px; background-position: -32.3187px -258px; width: 546px; height: 742px; float: left; cursor: crosshair; background-repeat: no-repeat; position: absolute; background-image: url(&quot;../assets/images/pro3/1.jpg&quot;); top: 0px; left: 0px; display: none;">
+            &nbsp;
+        </div>
+    </div>
+</div>
+<script>
+function enableButton() {
+  var selectelem = document.getElementById('dropdown');
+  var btnelem = document.getElementById('seedoc');
+  if (selectelem.value === "default") {
+    btnelem.disabled = true;
+  } else {
+    btnelem.disabled = false;
+  }
+}
+
+
+
+</script>
+{% endblock content %}

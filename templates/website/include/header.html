@@ -20,8 +20,13 @@
                         <li class="onhover-dropdown mobile-account">
                             <i class="fa fa-user" aria-hidden="true"></i> My Account
                             <ul class="onhover-show-div">
+                                {% if request.user.is_authenticated %}
+                                           <li><a href="{% url 'accounts:cross-auth' %}">Dashboard</a></li>
+                                <li><a href="{% url 'account_logout' %}">Logout</a></li>
+                                {% else %}
                                 <li><a href="{% url 'account_login' %}">Login</a></li>
                                 <li><a href="{% url 'account_signup' %}">register</a></li>
+                                {% endif %}
                             </ul>
                         </li>
                     </ul>

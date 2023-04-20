@@ -3,13 +3,13 @@ import json
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView, UpdateView, DeleteView, CreateView
 
 from src.administration.admins.models import (
-    Product, ProductVersion, Version, ProductImage, Post, PostCategory, Category, Order, Language,
+    Product, ProductVersion, Version, ProductImage, Post, PostCategory, Category, Order, Language, Cart,
 )
 from src.website.filters import ProductFilter, PostFilter
 from src.website.utility import session_id
@@ -48,7 +48,7 @@ class ProductListView(ListView):
         context = super(ProductListView, self).get_context_data(**kwargs)
         category = self.request.GET.get('category')
         if category and self.request is not None:
-            product = Product.objects.prefetch_related('category').filter(categories__name=category)
+            product = Product.objects.prefetch_related('categories').filter(categories__name=category)
         else:
             product = Product.objects.all().order_by('-created_at')
         filter_product = ProductFilter(self.request.GET, queryset=product)
@@ -117,57 +117,68 @@ class PostDetailView(DetailView):
 
 """ ORDER AND CART  ------------------------------------------------------------------------------------------ """
 
-import json
+
+class CartTemplateView(TemplateView):
+    template_name = 'website/cart.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CartTemplateView, self).get_context_data(**kwargs)
+        cart = Cart.objects.filter(user=self.request.user)
+        context['cart'] = cart
+        total_price = 0
+        for cart in cart:
+            total_price += float(cart.get_item_price())
+        context['total_amount'] = total_price
+        return context
 
 
-def add_to_cart(request, product_id, version):
-    # Retrieve the cart data from the cookie
-    cart_json = request.COOKIES.get('cart', '{}')
-    cart_json = cart_json.replace("'", "\"")
-    cart = json.loads(cart_json)
-    print(cart)
-    print(cart.keys())
-    print(type(cart))
-    product_id  = str(product_id + product_id + int(version))
-    # Add the product to the cart
-    if product_id in cart:
-        print('inside cart')
-        # Check if the same version of the product is already in the cart
-        if cart[product_id]['version'] == version:
-            print('inside more')
-            cart[product_id]['quantity'] += 1
+@method_decorator(login_required, name='dispatch')
+class AddToCart(View):
+    def post(self, request, *args, **kwargs):
+        product_id = request.POST.get('product_id')
+        version = request.POST.get('version_id')
+        cart, created = Cart.objects.get_or_create(user=self.request.user, product_id=product_id,
+                                                   product_version_id=version)
+        if not created:
+            cart.quantity += 1
         else:
-            # Add new product version to the cart
-            print('inside else')
-            product = {
-                'id': product_id,
-                'name': 'Product name',
-                'version': version,
-                'quantity': 1,
-                # Add any other relevant product information
-            }
-            cart[product_id] = product
-    else:
-        # Add new product to the cart
-        print('else')
-        product = {
-            'id': product_id,
-            'name': 'Product name',
-            'version': version,
-            'quantity': 1,
-            # Add any other relevant product information
-        }
-        cart[product_id] = product
+            cart.quantity = 1
+        cart.save()
+        return redirect('website:cart')
 
-    # Set the cart data as a cookie
-    response = redirect('website:home')
-    response.set_cookie('cart', json.dumps(cart))
 
-    return response
+@method_decorator(login_required, name='dispatch')
+class IncrementCart(View):
+    def get(self, request, *args, **kwargs):
+        product_id = request.GET.get('product_id')
+        version = request.GET.get('version_id')
+        cart = get_object_or_404(Cart, product_id=product_id, user=self.request.user, product_version_id=version)
+        cart.quantity += 1
+        cart.save()
+        return redirect('website:cart')
+
+
+@method_decorator(login_required, name='dispatch')
+class DecrementCart(View):
+    def get(self, request, *args, **kwargs):
+        product_id = request.GET.get('product_id')
+        version = request.GET.get('version_id')
+        cart = get_object_or_404(Cart, product_id=product_id, user=self.request.user, product_version_id=version)
+        if str(cart.quantity) == "1":
+            cart.delete()
+            return redirect('website:cart')
+        cart.quantity -= 1
+        cart.save()
+        return redirect('website:cart')
 
 
 class RemoveFromCartView(View):
-    pass
+    def get(self, request, *args, **kwargs):
+        product_id = request.GET.get('product_id')
+        version = request.GET.get('version_id')
+        cart = get_object_or_404(Cart, product_id=product_id, user=self.request.user, product_version_id=version)
+        cart.delete()
+        return redirect('website:cart')
 
 
 @method_decorator(login_required, name='dispatch')
@@ -176,7 +187,3 @@ class OrderDetail(DetailView):
 
 
 """ ISSUES PAGES ---------------------------------------------------------------------------------------------- """
-
-
-class CartTemplateView(TemplateView):
-    template_name = 'website/cart.html'

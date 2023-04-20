@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import (
-    OrderItem, Product, ProductVersion, Version, ProductImage, Language, Category, Order, Post, PostCategory, Wishlist
+    OrderItem, Product, ProductVersion, Version, ProductImage, Language, Category, Order, Post, PostCategory, Wishlist,
+    Cart
 )
 
 
@@ -109,4 +110,5 @@ admin.site.register(OrderItem, OrderItemAdmin)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(PostCategory, PostCategoryAdmin)
 admin.site.register(Post, PostAdmin)
+admin.site.register(Cart)
 admin.site.register(Wishlist)
