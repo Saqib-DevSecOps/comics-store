@@ -151,7 +151,7 @@ class Order(models.Model):
     total = models.FloatField(default=0)
     paid = models.FloatField(default=0)
 
-    stripe_payment_id = models.CharField(max_length=1000)
+    stripe_payment_id = models.CharField(max_length=1000, null=True, blank=True)
     payment_status = models.CharField(max_length=15, choices=PAYMENT_STATUS_CHOICE, default='pending')
     order_status = models.CharField(max_length=15, choices=ORDER_STATUS_CHOICE, default='pending')
 
