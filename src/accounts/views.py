@@ -1,10 +1,8 @@
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 from django.contrib.auth import logout
-from src.accounts.forms import UserProfileForm
 
 
 @method_decorator(login_required, name='dispatch')
