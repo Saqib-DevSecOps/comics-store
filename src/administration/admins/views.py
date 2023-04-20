@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.forms import AdminPasswordChangeForm
+from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import View
@@ -11,6 +11,7 @@ from django.views.generic import (
 )
 
 from src.accounts.decorators import admin_protected
+from src.accounts.forms import UserProfileForm
 from src.accounts.models import User
 from src.administration.admins.filters import UserFilter, ProductFilter, OrderFilter
 from src.administration.admins.forms import ProductVersionForm, ProductImageForm
@@ -22,6 +23,39 @@ from src.administration.admins.models import Category, PostCategory, Product, Pr
 @method_decorator(admin_protected, name='dispatch')
 class DashboardView(TemplateView):
     template_name = 'admins/dashboard.html'
+
+
+@method_decorator(admin_protected, name='dispatch')
+class UserOwnUpdateView(View):
+    def get(self, request):
+        form = UserProfileForm(instance=request.user)
+        context = {'form': form}
+        return render(request, template_name='admins/my-profile-change.html', context=context)
+
+    def post(self, request):
+        form = UserProfileForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            messages.success(request, "Your profile updated successfully")
+            form.save(commit=True)
+        context = {'form': form}
+        return render(request, template_name='admins/my-profile-change.html', context=context)
+
+
+@method_decorator(admin_protected, name='dispatch')
+class UserOwnPasswordChangeView(View):
+
+    def get(self, request):
+        form = PasswordChangeForm(request.user)
+        context = {'form': form}
+        return render(request, template_name='admins/my-password-change.html', context=context)
+
+    def post(self, request):
+        form = PasswordChangeForm(user=request.user, data=request.POST or None)
+        if form.is_valid():
+            messages.success(request, "Your password changed successfully")
+            form.save(commit=True)
+        context = {'form': form}
+        return render(request, template_name='admins/my-password-change.html', context=context)
 
 
 """ USER MGMT"""
