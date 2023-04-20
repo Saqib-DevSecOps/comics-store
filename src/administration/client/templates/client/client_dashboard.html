@@ -85,13 +85,13 @@
                                         <div class="col-sm-6">
                                             <h6>Email : {{request.user.email}}</h6>
                                             <h6>Phone Number : {{request.user.phone_number}}</h6>
-                                            <h6><a href="{% url 'accounts:user-change' %}">Update Profile</a></h6>
+                                            <h6><a href="{% url 'client:user-change' %}">Update Profile</a></h6>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="box mt-3">
                                     <div class="box-title">
-                                        <h3>Address Book</h3><a href="{% url 'accounts:user-address-update' %}">Edit Address</a>
+                                        <h3>Address Book</h3><a href="{% url 'client:user-address-update' %}">Edit Address</a>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6">
