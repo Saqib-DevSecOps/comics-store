@@ -12,6 +12,7 @@ from src.administration.admins.models import (
     Product, ProductVersion, Version, ProductImage, Post, PostCategory, Category, Order, Language, Cart,
 )
 from src.website.filters import ProductFilter, PostFilter
+from src.website.forms import OrderForm
 from src.website.utility import session_id
 
 """ BASIC PAGES ---------------------------------------------------------------------------------------------- """
@@ -118,6 +119,7 @@ class PostDetailView(DetailView):
 """ ORDER AND CART  ------------------------------------------------------------------------------------------ """
 
 
+@method_decorator(login_required, name='dispatch')
 class CartTemplateView(TemplateView):
     template_name = 'website/cart.html'
 
@@ -172,6 +174,7 @@ class DecrementCart(View):
         return redirect('website:cart')
 
 
+@method_decorator(login_required, name='dispatch')
 class RemoveFromCartView(View):
     def get(self, request, *args, **kwargs):
         product_id = request.GET.get('product_id')
@@ -182,8 +185,22 @@ class RemoveFromCartView(View):
 
 
 @method_decorator(login_required, name='dispatch')
-class OrderDetail(DetailView):
-    pass
+class OrderCreate(CreateView):
+    model = Order
+    template_name = 'website/order.html'
+    form_class = OrderForm
+    context_object_name = 'form'
+    success_url = 'website:home'
+
+    def get_context_data(self, **kwargs):
+        context = super(OrderCreate, self).get_context_data(**kwargs)
+        cart = Cart.objects.filter(user=self.request.user)
+        context['cart'] = cart
+        total_price = 0
+        for cart in cart:
+            total_price += float(cart.get_item_price())
+        context['total_amount'] = total_price
+        return context
 
 
 """ ISSUES PAGES ---------------------------------------------------------------------------------------------- """

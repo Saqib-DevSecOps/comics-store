@@ -2,7 +2,8 @@ from django.urls import path
 
 from src.website.views import HomeTemplateView, \
     ContactUsTemplateView, PostListView, CartTemplateView, AboutUsTemplateView, \
-    ProductListView, ProductDetailView, PostDetailView, AddToCart, IncrementCart, DecrementCart, RemoveFromCartView
+    ProductListView, ProductDetailView, PostDetailView, AddToCart, IncrementCart, DecrementCart, \
+    RemoveFromCartView, OrderCreate
 
 app_name = "website"
 urlpatterns = [
@@ -20,4 +21,6 @@ urlpatterns = [
     path('remove-cart/', RemoveFromCartView.as_view(), name='remove-cart'),
     path('increment/cart/item', IncrementCart.as_view(), name='increment'),
     path('decrement/cart/item', DecrementCart.as_view(), name='decrement'),
+
+    path('billing', OrderCreate.as_view(), name='order')
 ]
