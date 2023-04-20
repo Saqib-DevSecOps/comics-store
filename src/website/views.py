@@ -1,12 +1,19 @@
+import json
+
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.core.paginator import Paginator
+from django.http import HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.decorators import method_decorator
+from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView, UpdateView, DeleteView, CreateView
 
 from src.administration.admins.models import (
-    Product, ProductVersion, Version, ProductImage, Post, PostCategory, Category, Order, Cart, Language
+    Product, ProductVersion, Version, ProductImage, Post, PostCategory, Category, Order, Language, Cart,
 )
-
+from src.website.filters import ProductFilter, PostFilter
+from src.website.forms import OrderForm
+from src.website.utility import session_id
 
 """ BASIC PAGES ---------------------------------------------------------------------------------------------- """
 
@@ -16,6 +23,9 @@ class HomeTemplateView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomeTemplateView, self).get_context_data(**kwargs)
+        context['new_products'] = Product.objects.order_by('-created_on')[:10]
+        context['most_like'] = Product.objects.order_by('-likes')[:10]
+        context['most_sale'] = Product.objects.order_by('-sales')[:10]
         return context
 
 
@@ -37,6 +47,17 @@ class ProductListView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(ProductListView, self).get_context_data(**kwargs)
+        category = self.request.GET.get('category')
+        if category and self.request is not None:
+            product = Product.objects.prefetch_related('categories').filter(categories__name=category)
+        else:
+            product = Product.objects.all().order_by('-created_at')
+        filter_product = ProductFilter(self.request.GET, queryset=product)
+        pagination = Paginator(filter_product.qs, 10)
+        page_number = self.request.GET.get('page')
+        page_obj = pagination.get_page(page_number)
+        context['products'] = page_obj
+        context['filter_form'] = filter_product
         return context
 
 
@@ -52,13 +73,34 @@ class ProductDetailView(DetailView):
         return context
 
 
+""" ---------------- POST PAGES ------------------------------------------------------------------------------------ """
+
+
 class PostListView(ListView):
+    model = Post
+    paginate_by = 10
     template_name = 'website/post_list.html'
-    queryset = Post.objects.all()
-    paginate_by = 24
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(PostListView, self).get_context_data(**kwargs)
+        category = self.request.GET.get('category')
+        print(category)
+
+        if category and self.request is not None:
+            post = Post.objects.filter(category__id=category)
+        else:
+            post = Post.objects.all().order_by('-created_on')
+        context['recent'] = Post.objects.order_by('-created_on')[:5]
+        context['popular_posts'] = Post.objects.order_by('-visits', '-read_time')[:5]
+        filter_posts = PostFilter(self.request.GET, queryset=post)
+        pagination = Paginator(filter_posts.qs, 10)
+        page_number = self.request.GET.get('page')
+        print(page_number)
+        page_obj = pagination.get_page(page_number)
+        context['post_category'] = PostCategory.objects.all()
+        context['posts'] = page_obj
+        context['filter_form'] = filter_posts
+        context['category'] = category
         return context
 
 
@@ -78,43 +120,87 @@ class PostDetailView(DetailView):
 
 
 @method_decorator(login_required, name='dispatch')
-class OrderDetail(DetailView):
-    pass
+class CartTemplateView(TemplateView):
+    template_name = 'website/cart.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CartTemplateView, self).get_context_data(**kwargs)
+        cart = Cart.objects.filter(user=self.request.user)
+        context['cart'] = cart
+        total_price = 0
+        for cart in cart:
+            total_price += float(cart.get_item_price())
+        context['total_amount'] = total_price
+        return context
 
 
 @method_decorator(login_required, name='dispatch')
-class AddToCartView(CreateView):
-    pass
+class AddToCart(View):
+    def post(self, request, *args, **kwargs):
+        product_id = request.POST.get('product_id')
+        version = request.POST.get('version_id')
+        cart, created = Cart.objects.get_or_create(user=self.request.user, product_id=product_id,
+                                                   product_version_id=version)
+        if not created:
+            cart.quantity += 1
+        else:
+            cart.quantity = 1
+        cart.save()
+        return redirect('website:cart')
 
 
 @method_decorator(login_required, name='dispatch')
-class RemoveFromCartView(DeleteView):
-    pass
+class IncrementCart(View):
+    def get(self, request, *args, **kwargs):
+        product_id = request.GET.get('product_id')
+        version = request.GET.get('version_id')
+        cart = get_object_or_404(Cart, product_id=product_id, user=self.request.user, product_version_id=version)
+        cart.quantity += 1
+        cart.save()
+        return redirect('website:cart')
 
 
 @method_decorator(login_required, name='dispatch')
-class UpdateCartQuantityView(UpdateView):
-    pass
+class DecrementCart(View):
+    def get(self, request, *args, **kwargs):
+        product_id = request.GET.get('product_id')
+        version = request.GET.get('version_id')
+        cart = get_object_or_404(Cart, product_id=product_id, user=self.request.user, product_version_id=version)
+        if str(cart.quantity) == "1":
+            cart.delete()
+            return redirect('website:cart')
+        cart.quantity -= 1
+        cart.save()
+        return redirect('website:cart')
+
+
+@method_decorator(login_required, name='dispatch')
+class RemoveFromCartView(View):
+    def get(self, request, *args, **kwargs):
+        product_id = request.GET.get('product_id')
+        version = request.GET.get('version_id')
+        cart = get_object_or_404(Cart, product_id=product_id, user=self.request.user, product_version_id=version)
+        cart.delete()
+        return redirect('website:cart')
+
+
+@method_decorator(login_required, name='dispatch')
+class OrderCreate(CreateView):
+    model = Order
+    template_name = 'website/order.html'
+    form_class = OrderForm
+    context_object_name = 'form'
+    success_url = 'website:home'
+
+    def get_context_data(self, **kwargs):
+        context = super(OrderCreate, self).get_context_data(**kwargs)
+        cart = Cart.objects.filter(user=self.request.user)
+        context['cart'] = cart
+        total_price = 0
+        for cart in cart:
+            total_price += float(cart.get_item_price())
+        context['total_amount'] = total_price
+        return context
 
 
 """ ISSUES PAGES ---------------------------------------------------------------------------------------------- """
-
-
-class ComicsTemplateView(TemplateView):
-    template_name = 'website/comic.html'
-
-
-class NovelTemplateView(TemplateView):
-    template_name = 'website/novel.html'
-
-
-class BlogTemplateView(TemplateView):
-    template_name = 'website/blog.html'
-
-
-class BlogDetailTemplateView(TemplateView):
-    template_name = 'website/about_us_detail.html'
-
-
-class CartTemplateView(TemplateView):
-    template_name = 'website/cart.html'

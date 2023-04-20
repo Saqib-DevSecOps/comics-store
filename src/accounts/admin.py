@@ -26,7 +26,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 
 from .models import (
-    User
+    User, Address
 )
 
 
@@ -208,6 +208,7 @@ class UserCustomAdmin(admin.ModelAdmin):
 
 # CUSTOM USER
 admin.site.register(User, UserCustomAdmin)
+admin.site.register(Address)
 
 admin.site.site_header = "Monogatari"
 admin.site.site_title = "Root Access"

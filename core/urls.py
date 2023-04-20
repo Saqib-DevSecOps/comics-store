@@ -38,6 +38,7 @@ urlpatterns += [
     path('accounts/', include('src.accounts.urls', namespace='accounts')),
     path('admins/', include('src.administration.admins.urls', namespace='admins')),
     path('', include('src.website.urls', namespace='website')),
+    path('c/', include('src.administration.client.urls', namespace='client')),
 ]
 
 urlpatterns += [

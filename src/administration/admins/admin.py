@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import (
-    Cart, Product, ProductVersion, Version, ProductImage, Language, Category, Order, Post, PostCategory
+    OrderItem, Product, ProductVersion, Version, ProductImage, Language, Category, Order, Post, PostCategory, Wishlist,
+    Cart
 )
 
 
@@ -51,12 +52,12 @@ class ProductImageAdmin(admin.ModelAdmin):
     list_display = ['id', 'image', 'product']
 
 
-class CartAdmin(admin.ModelAdmin):
+class OrderItemAdmin(admin.ModelAdmin):
     list_display = ['product', 'product_version', 'qty']
 
 
-class CartInline(admin.TabularInline):
-    model = Cart
+class OrderItemInline(admin.TabularInline):
+    model = OrderItem
     fields = ['product', 'product_version', 'qty']
     extra = 0
 
@@ -76,7 +77,7 @@ class OrderAdmin(admin.ModelAdmin):
     list_filter = ['payment_status', 'order_status']
 
     inlines = [
-        CartInline
+        OrderItemInline
     ]
 
 
@@ -105,7 +106,9 @@ admin.site.register(Version, VersionAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ProductVersion, ProductVersionAdmin)
 admin.site.register(ProductImage, ProductImageAdmin)
-admin.site.register(Cart, CartAdmin)
+admin.site.register(OrderItem, OrderItemAdmin)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(PostCategory, PostCategoryAdmin)
 admin.site.register(Post, PostAdmin)
+admin.site.register(Cart)
+admin.site.register(Wishlist)

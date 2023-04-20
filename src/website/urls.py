@@ -1,22 +1,26 @@
 from django.urls import path
 
-from src.website.views import HomeTemplateView, ComicsTemplateView, NovelTemplateView, \
-    BlogDetailTemplateView, ContactUsTemplateView, BlogTemplateView, CartTemplateView, AboutUsTemplateView, \
-    ProductListView
+from src.website.views import HomeTemplateView, \
+    ContactUsTemplateView, PostListView, CartTemplateView, AboutUsTemplateView, \
+    ProductListView, ProductDetailView, PostDetailView, AddToCart, IncrementCart, DecrementCart, \
+    RemoveFromCartView, OrderCreate
 
 app_name = "website"
 urlpatterns = [
     path('', HomeTemplateView.as_view(), name='home'),
-    path('comics/', ComicsTemplateView.as_view(), name='comic'),
-    path('novels/', NovelTemplateView.as_view(), name='novel'),
-
-    path('stories/', BlogTemplateView.as_view(), name='stories'),
-    path('story-detail/', BlogDetailTemplateView.as_view(), name='stories-detail'),
+    path('shop/', ProductListView.as_view(), name='shop'),
+    path('product-detail/<str:slug>', ProductDetailView.as_view(), name='product-detail'),
+    path('stories/', PostListView.as_view(), name='posts'),
+    path('story-detail/<str:slug>', PostDetailView.as_view(), name='post-detail'),
 
     path('about-us/', AboutUsTemplateView.as_view(), name='about_us'),
     path('contact-us/', ContactUsTemplateView.as_view(), name='contact_us'),
 
     path('cart/', CartTemplateView.as_view(), name='cart'),
+    path('add_to_cart/', AddToCart.as_view(), name='add-to-cart'),
+    path('remove-cart/', RemoveFromCartView.as_view(), name='remove-cart'),
+    path('increment/cart/item', IncrementCart.as_view(), name='increment'),
+    path('decrement/cart/item', DecrementCart.as_view(), name='decrement'),
 
-    path('product/', ProductListView.as_view(), name='product_list')
+    path('billing', OrderCreate.as_view(), name='order')
 ]

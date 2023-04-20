@@ -121,11 +121,24 @@ class ProductImage(models.Model):
         super(ProductImage, self).delete(*args, **kwargs)
 
 
+class Cart(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product_version = models.ForeignKey(ProductVersion, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=0)
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user.username
+
+    def get_item_price(self):
+        return self.quantity * self.product_version.price
+
+
 """ ORDERS """
 
 
 class Order(models.Model):
-
     PAYMENT_STATUS_CHOICE = (
         ('pending', 'Pending'),
         ('completed', 'Completed'),
@@ -165,7 +178,7 @@ class Order(models.Model):
         return f"{self.user.name_or_username()} ordered."
 
 
-class Cart(models.Model):
+class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     product_version = models.ForeignKey(ProductVersion, on_delete=models.CASCADE)
@@ -228,3 +241,13 @@ class Post(models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
+
+
+class Wishlist(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    product = models.OneToOneField(Product, on_delete=models.CASCADE)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"User : {self.user.email} and Product {self.product.name}"
