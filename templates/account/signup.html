@@ -1,5 +1,13 @@
-{% extends 'core/../../src/administration/admins/templates/admins/base.html' %}
+{% extends 'website/base.html' %}
+
+{% load i18n %}
+{% load crispy_forms_tags %}
 {% load static %}
+{% load account socialaccount %}
+{% load socialaccount %}
+
+{% block subtitle %}Sign Up{% endblock %}
+
 
 {% block content %}
 <div class="breadcrumb-section">
