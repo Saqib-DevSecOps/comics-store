@@ -193,3 +193,5 @@ if ENVIRONMENT != 'server':
     MIDDLEWARE += [
         'django_browser_reload.middleware.BrowserReloadMiddleware'
     ]
+
+

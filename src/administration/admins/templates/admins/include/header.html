@@ -8,8 +8,8 @@
         </button>
         <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
             <a href="{% url 'account_login' %}">
-                <img src="https://picsum.photos/50/50" width="110"
-                     height="32" alt="Monogatari"
+                <img src="{% static 'website/logos/logo-light.png' %}" width="110"
+                     height="100" alt="Monogatari"
                      class="navbar-brand-image">
             </a>
         </h1>
@@ -59,7 +59,7 @@
                                 </span>
                     {% else %}
                         <span class="avatar avatar-sm"
-                              style="background-image: url('https://picsum.photos/50/50')">
+                              style="background-image: url({% static 'required/images/no-user.png' %})">
                                 </span>
                     {% endif %}
 
@@ -79,10 +79,10 @@
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <a href="#" class="dropdown-item">Profile</a>
-                    <a href="#" class="dropdown-item">Change Password</a>
+                    <a href="{% url 'admins:my-profile-change' %}" class="dropdown-item">Profile</a>
+                    <a href="{% url 'admins:my-password-change' %}" class="dropdown-item">Change Password</a>
                     <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">Logout</a>
+                    <a href="{% url 'accounts:logout' %}" class="dropdown-item">Logout</a>
                 </div>
             </div>
         </div>

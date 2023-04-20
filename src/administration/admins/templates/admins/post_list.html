@@ -3,15 +3,15 @@
 {% load custom_tags %}
 
 {% block base_subtitle %}
-    Products
+    Posts
 {% endblock %}
 
-{% block base_subhead_heading %} Product &rAarr; Management{% endblock %}
-{% block base_subhead_paragraph %}All available products inside your inventory{% endblock %}
+{% block base_subhead_heading %} Post &rAarr; Management{% endblock %}
+{% block base_subhead_paragraph %}All available posts{% endblock %}
 
 {% block base_subhead_button %}
-    <a class="btn btn-primary" href="{% url 'admins:product-add' %}">
-        <i class="fa fa-plus"></i>&nbsp;Add New
+    <a class="btn btn-primary" href="{% url 'admins:post-add' %}">
+        <i class="fa fa-pen"></i>&nbsp;Write New
     </a>
 {% endblock %}
 
@@ -27,7 +27,7 @@
                         <button class="btn btn-primary" type="submit">
                             <i class="fa fa-search"></i>&nbsp;Search
                         </button>
-                        <a href="{% url 'admins:product-list' %}" class="btn btn-danger">
+                        <a href="{% url 'admins:post-list' %}" class="btn btn-danger">
                             <i class="fa fa-paint-brush"></i>&nbsp;Clear
                         </a>
                     </div>
@@ -39,23 +39,19 @@
             {% for object in object_list %}
                 <div class="col-md-6 col-lg-3">
                     <div class="card mb-3">
-                        <a href="{% url 'admins:product-detail' object.pk %}">
+                        <a href="{% url 'admins:post-detail' object.pk %}">
                             <div class="img-responsive card-img-top"
                                  style="background-image: url(
-                                         {% if object.thumbnail_image %}{{ object.thumbnail_image.url }}{% else %}'{% static 'required/images/no-image-product-portrait.jpg' %}'{% endif %})">
+                                         {% if object.image %}{{ object.image.url }}{% else %}'{% static 'required/images/no-image-product-portrait.jpg' %}'{% endif %})">
                             </div>
                         </a>
                         <div class="card-body">
-                            <h3 class="card-title mb-0">{{ object.name }} <a
-                                    href="{% url 'admins:product-detail' object.pk %}"><i class="bx bx-edit"></i></a>
+                            <h3 class="card-title mb-0">{{ object.title }} <a
+                                    href="{% url 'admins:post-detail' object.pk %}"><i class="bx bx-edit"></i></a>
                             </h3>
                             <div class="col-auto d-flex align-items-center pe-2">
-                                {% if object.book_type == 'comic' %}
-                                    <span class="legend me-2 bg-danger"></span>
-                                {% else %}
-                                    <span class="legend me-2 bg-success"></span>
-                                {% endif %}
-                                <span>{{ object.get_book_type_display }}</span>
+                                <span class="legend me-2 bg-success"></span>
+                                <span>{{ object.author }}</span>
                             </div>
                             <p class="text-muted mt-2">{{ object.description }}</p>
                         </div>
@@ -63,21 +59,24 @@
                             <div class="d-flex align-items-center">
                                 <div>
                                     <div class="text-muted">
-                                        {% if object.get_versions %}
-                                            {% for v in object.get_versions %}
-                                                <span class="badge bg-danger">{{ v.version.name }}</span>
-                                            {% endfor %}
-                                        {% endif %}
+                                        <a href="#" class="text-muted">
+                                            <i class="mdi mdi-eye"></i>
+                                            View
+                                        </a>
+                                        <a href="{% url 'admins:post-update' object.pk %}" class="ms-3 text-muted">
+                                            <i class="mdi mdi-file-edit-outline"></i>
+                                            Change
+                                        </a>
                                     </div>
                                 </div>
                                 <div class="ms-auto">
                                     <a href="#" class="text-muted">
-                                        <i class="mdi mdi-sale"></i>
-                                        {{ object.sales }}
+                                        <i class="mdi mdi-clock"></i>
+                                        {{ object.read_time }}
                                     </a>
                                     <a href="#" class="ms-3 text-muted">
-                                        <i class="mdi mdi-eye"></i>
-                                        {{ object.clicks }}
+                                        <i class="mdi mdi-cursor-pointer"></i>
+                                        {{ object.visits }}
                                     </a>
                                 </div>
                             </div>
@@ -88,7 +87,7 @@
         {% else %}
             <p class="text-danger">
                 <b>
-                    <i class="fa fa-exclamation-circle"></i> No products available for now.
+                    <i class="fa fa-exclamation-circle"></i> No posts available for now.
                 </b>
             </p>
         {% endif %}
@@ -129,7 +128,7 @@
     <script>
         $(document).ready(function () {
 
-            $("#id_book_type option:first").text("-- Book Type --");
+            $("#id_status option:first").text("-- Status --");
 
             $('label').hide();
             $('input').addClass('form-control');
