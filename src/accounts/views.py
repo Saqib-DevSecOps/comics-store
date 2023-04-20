@@ -1,4 +1,3 @@
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.utils.decorators import method_decorator
@@ -21,11 +20,9 @@ class CrossAuthView(View):
     def get(self, request):
         if request.user.is_superuser:
             return redirect("/admin/")
+
         elif request.user.is_staff:
             return redirect('admins:dashboard')
         else:
             return redirect('client:dashboard')
-
-
-
 

@@ -80,6 +80,10 @@ class Product(models.Model):
             self.slug = slugify(self.name)
         return super().save(*args, **kwargs)
 
+    def delete(self, *args, **kwargs):
+        self.thumbnail_image.delete(save=True)
+        super(Product, self).delete(*args, **kwargs)
+
     def get_images(self):
         return ProductImage.objects.filter(product=self)
 
@@ -111,6 +115,10 @@ class ProductImage(models.Model):
 
     def __str__(self):
         return self.product.name
+
+    def delete(self, *args, **kwargs):
+        self.image.delete(save=True)
+        super(ProductImage, self).delete(*args, **kwargs)
 
 
 class Cart(models.Model):
@@ -153,10 +161,10 @@ class Order(models.Model):
     phone = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
 
-    total = models.FloatField()
-    paid = models.FloatField()
+    total = models.FloatField(default=0)
+    paid = models.FloatField(default=0)
 
-    stripe_payment_id = models.CharField(max_length=1000)
+    stripe_payment_id = models.CharField(max_length=1000, null=True, blank=True)
     payment_status = models.CharField(max_length=15, choices=PAYMENT_STATUS_CHOICE, default='pending')
     order_status = models.CharField(max_length=15, choices=ORDER_STATUS_CHOICE, default='pending')
 
@@ -203,10 +211,11 @@ class PostCategory(models.Model):
 
 class Post(models.Model):
     STATUS = (
-        (0, "Draft"),
-        (1, "Publish")
+        ('draft', "Draft"),
+        ('publish', "Publish")
     )
 
+    image = models.ImageField(upload_to='books/images/posts', null=True, blank=True)
     title = models.CharField(max_length=255, unique=True)
     slug = models.SlugField(unique=True, null=False)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')
@@ -215,7 +224,7 @@ class Post(models.Model):
     read_time = models.PositiveIntegerField(default=0, help_text='read time in minutes')
     visits = models.PositiveIntegerField(default=0)
 
-    status = models.IntegerField(choices=STATUS, default=0)
+    status = models.CharField(max_length=15, choices=STATUS, default='publish')
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
