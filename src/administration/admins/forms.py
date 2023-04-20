@@ -1,8 +1,10 @@
 from django import forms
+from django.forms import ModelForm
 
 from .models import (
     Product, ProductVersion, Version, ProductImage, Post
 )
+from ...accounts.models import User
 
 
 class ProductForm(forms.ModelForm):
@@ -30,3 +32,14 @@ class ProductImageForm(forms.ModelForm):
         fields = [
             'image', 'description'
         ]
+
+
+class MyProfileForm(ModelForm):
+
+    class Meta:
+        model = User
+        fields = [
+            'profile_image', 'first_name', 'last_name',
+            'phone_number', 'email'
+        ]
+
