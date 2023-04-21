@@ -217,7 +217,7 @@ class OrderCreate(View):
                     {
                         'price_data': {
                             'currency': 'usd',
-                            'unit_amount': int(total_amount(request)),
+                            'unit_amount': int(total_amount(request)*100),
                             'product_data': {
                                 'name': 'Monogatari Store',
                             },

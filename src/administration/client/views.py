@@ -1,12 +1,13 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.generic import TemplateView, UpdateView, ListView
 
 from src.accounts.models import Address
-from src.administration.admins.models import Wishlist, Order
+from src.administration.admins.models import Wishlist, Order, Product
 from src.administration.client.forms import AddressForm, UserProfileForm
 
 
@@ -58,10 +59,28 @@ class ClientDashboard(TemplateView):
 
 
 @method_decorator(login_required, name='dispatch')
+class WishCreateView(View):
+    def get(self, request, pk):
+        wishlist = Wishlist.objects.filter(user=self.request.user,product_id=pk)
+        wish = wishlist.exists()
+        product = Product.objects.get(id=pk)
+        if wish:
+            messages.success(request, 'Already in Wish List')
+            print('hello')
+            return redirect('website:product-detail', product.slug)
+        wishlist = Wishlist.objects.create(user=self.request.user, product_id=pk)
+        messages.success(request, 'Added to wishlist')
+        return redirect('website:product-detail', product.slug)
+
+
+@method_decorator(login_required, name='dispatch')
 class WishlistView(ListView):
     model = Wishlist
     template_name = 'client/wishlist_list.html'
     context_object_name = 'objects'
+
+    def get_queryset(self):
+        return self.model.objects.filter(user = self.request.user)
 
 
 @method_decorator(login_required, name='dispatch')
