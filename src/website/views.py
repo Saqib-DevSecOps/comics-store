@@ -4,6 +4,7 @@ import stripe
 from django.contrib.auth.decorators import login_required
 from django.core.checks import messages
 from django.core.paginator import Paginator
+from django.db.models import OuterRef, Subquery, Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
@@ -29,6 +30,7 @@ class HomeTemplateView(TemplateView):
         context['new_products'] = Product.objects.order_by('-created_on')[:10]
         context['most_like'] = Product.objects.order_by('-likes')[:10]
         context['most_sale'] = Product.objects.order_by('-sales')[:10]
+        context['top'] = Product.objects.order_by('-sales', '-likes', )[:5]
         return context
 
 
@@ -50,16 +52,33 @@ class ProductListView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(ProductListView, self).get_context_data(**kwargs)
-        category = self.request.GET.get('category')
-        if category and self.request is not None:
-            product = Product.objects.prefetch_related('categories').filter(categories__name=category)
+        sort = self.request.GET.get('sort')
+        if sort == '1' and self.request is not None:
+            product = Product.objects.order_by('created_on')
+        elif sort == '2':
+            lowest_price_subquery = ProductVersion.objects.filter(
+                product=OuterRef('pk')
+            ).order_by('price').values('price')[:1]
+
+            product = Product.objects.annotate(
+                lowest_price=Subquery(lowest_price_subquery)
+            ).order_by('lowest_price')
+        elif sort == '3':
+            lowest_price_subquery = ProductVersion.objects.filter(
+                product=OuterRef('pk')
+            ).order_by('-price').values('price')[:1]
+
+            product = Product.objects.annotate(
+                lowest_price=Subquery(lowest_price_subquery)
+            ).order_by('-lowest_price')
         else:
-            product = Product.objects.all().order_by('-created_at')
+            product = Product.objects.all().order_by('-created_on')
         filter_product = ProductFilter(self.request.GET, queryset=product)
         pagination = Paginator(filter_product.qs, 10)
         page_number = self.request.GET.get('page')
         page_obj = pagination.get_page(page_number)
         context['products'] = page_obj
+        context['total'] = page_obj
         context['filter_form'] = filter_product
         return context
 
@@ -75,6 +94,9 @@ class ProductDetailView(DetailView):
         context = super(ProductDetailView, self).get_context_data(**kwargs)
         product = Product.objects.get(slug=self.kwargs['slug'])
         product.clicks += 1
+        context['related_product'] = Product.objects.filter(
+            Q(categories__in=product.categories.all()) & ~Q(id=product.id)
+        ).distinct()[:4]
         product.save()
         return context
 
@@ -119,6 +141,9 @@ class PostDetailView(DetailView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(PostDetailView, self).get_context_data(**kwargs)
+        post = Post.objects.get(slug=self.kwargs['slug'])
+        post.visits += 1
+        post.save()
         return context
 
 
@@ -217,7 +242,7 @@ class OrderCreate(View):
                     {
                         'price_data': {
                             'currency': 'usd',
-                            'unit_amount': int(total_amount(request)*100),
+                            'unit_amount': int(total_amount(request) * 100),
                             'product_data': {
                                 'name': 'Monogatari Store',
                             },

@@ -1,10 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends  'website/base.html' %}
+{% load static %}
+{% block content %}
+<div class="breadcrumb-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="page-title">
+                        <h2>blog details</h2>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <nav aria-label="breadcrumb" class="theme-breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="breadcrumb-item"><a href="index.html">blog</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">blog deatils</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+<section class="blog-detail-page section-b-space ratio2_3">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 blog-detail">
+                    <img src="{{object.thumbnail_image.url}}" class="img-fluid blur-up lazyloaded" alt="">
+                    <h3>{{object.title}}</h3>
+                    <ul class="post-social">
+                        <li>{{object.created_on.date}}</li>
+                        <li>Posted By : Admin</li>
+                        <li>Read Time : {{object.read_time}}</li>
+                        <li><i class="fa fa-heart"></i> {{object.visits}} Hits</li>
+                    </ul>
+                    <p>{{object.content|safe }}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

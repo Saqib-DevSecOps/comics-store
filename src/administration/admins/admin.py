@@ -90,7 +90,7 @@ class PostAdmin(admin.ModelAdmin):
     list_display = ['id', 'title', 'author', 'read_time', 'visits', 'status', 'created_on']
 
     fieldsets = (
-        (None, {'fields': ('title', 'author', 'read_time')}),
+        (None, {'fields': ('title', 'thumbnail_image','author', 'read_time')}),
         ('Content', {'fields': ('content',)}),
         ('Permissions', {'fields': ('status',)}),
         ('Statistics', {'fields': ('visits', )}),

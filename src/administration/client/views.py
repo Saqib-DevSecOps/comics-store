@@ -61,7 +61,7 @@ class ClientDashboard(TemplateView):
 @method_decorator(login_required, name='dispatch')
 class WishCreateView(View):
     def get(self, request, pk):
-        wishlist = Wishlist.objects.filter(user=self.request.user,product_id=pk)
+        wishlist = Wishlist.objects.filter(user=self.request.user, product_id=pk)
         wish = wishlist.exists()
         product = Product.objects.get(id=pk)
         if wish:
@@ -80,7 +80,7 @@ class WishlistView(ListView):
     context_object_name = 'objects'
 
     def get_queryset(self):
-        return self.model.objects.filter(user = self.request.user)
+        return self.model.objects.filter(user=self.request.user)
 
 
 @method_decorator(login_required, name='dispatch')
