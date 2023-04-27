@@ -52,6 +52,12 @@ class User(AbstractUser):
         self.profile_image.delete(save=True)
         super(User, self).delete(*args, **kwargs)
 
+    def fake(self, total=1):
+        for count in range(0,total):
+            User.objects.create(
+
+            )
+
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL, dispatch_uid="user_registered")
 def on_user_registration(sender, instance, created, **kwargs):

@@ -70,7 +70,7 @@ class Product(models.Model):
         verbose_name_plural = "Products"
 
     def __str__(self):
-        return self.name
+        return str(self.pk)
 
     def get_absolute_url(self):
         return reverse("product_detail", kwargs={"slug": self.slug})
@@ -176,6 +176,9 @@ class Order(models.Model):
 
     def __str__(self):
         return f"{self.user.name_or_username()} ordered."
+
+    def order_items(self):
+        return OrderItem.objects.filter(order=self)
 
 
 class OrderItem(models.Model):

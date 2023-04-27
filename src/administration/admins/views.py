@@ -360,7 +360,7 @@ class OrderDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(OrderDetailView, self).get_context_data(**kwargs)
-        context['orders'] = Order.objects.filter(user=self.object)
+        context['orders'] = Order.objects.filter(pk=self.object.pk)
         return context
 
 
