@@ -2,91 +2,152 @@
 {% load static %}
 {% block content %}
 <div class="breadcrumb-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="page-title">
-                        <h2>blog</h2>
-                    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="page-title">
+                    <h2>blog</h2>
                 </div>
-                <div class="col-sm-6">
-                    <nav aria-label="breadcrumb" class="theme-breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                            <li class="breadcrumb-item active">blog</li>
-                        </ol>
-                    </nav>
-                </div>
+            </div>
+            <div class="col-sm-6">
+                <nav aria-label="breadcrumb" class="theme-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item active">blog</li>
+                    </ol>
+                </nav>
             </div>
         </div>
     </div>
+</div>
 <section class="section-b-space blog-page ratio2_3">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-9 col-lg-8 col-md-7">
-                    {% for blog in object_list %}
-                    <div class="row blog-media">
-                        <div class="col-xl-6">
-                            <div class="blog-left">
-                                <a href="{% url 'website:post-detail' blog.slug %}" class="bg-size blur-up lazyloaded" style="background-image: url({{blog.thumbnail_image.url}}); background-size: cover; background-position: center center; display: block;"><img src="{{blog.thumbnail_image.url}}" class="img-fluid blur-up bg-img lazyloaded" alt="" style="display: none;"></a>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-9 col-lg-8 col-md-7">
+                {% for blog in posts %}
+                <div class="row blog-media">
+                    <div class="col-xl-6">
+                        <div class="blog-left">
+                            <a class="bg-size blur-up lazyloaded" href="{% url 'website:post-detail' blog.slug %}"
+                               style="background-image: url({{blog.thumbnail_image.url}}); background-size: cover; background-position: center center; display: block;"><img
+                                    alt="" class="img-fluid blur-up bg-img lazyloaded"
+                                    src="{{blog.thumbnail_image.url}}" style="display: none;"></a>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="blog-right">
+                            <div>
+                                <h6>{{blog.created_on.date}}</h6> <a href="{% url 'website:post-detail' blog.slug %}">
+                                <h4>{{blog.title}}</h4>
+                            </a>
+                                <ul class="post-social">
+                                    <li>Posted By : Admin</li>
+                                    <li><i class="fa fa-heart"></i> {{blog.visits}}</li>
+                                </ul>
+                                <p>{{blog.content|truncatechars_html:50|safe }}</p>
                             </div>
                         </div>
-                        <div class="col-xl-6">
-                            <div class="blog-right">
-                                <div>
-                                    <h6>{{blog.created_on.date}}</h6> <a href="{% url 'website:post-detail' blog.slug %}">
-                                        <h4>{{blog.title}}</h4>
-                                    </a>
-                                    <ul class="post-social">
-                                        <li>Posted By :  Admin</li>
-                                        <li><i class="fa fa-heart"></i> {{blog.visits}}</li>
-                                    </ul>
-                                    <p>{{blog.content|truncatechars_html:50|safe }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-5">
+                <div class="blog-sidebar">
+                    <div class="theme-card">
+                        <h4>Recent Blog</h4>
+                        <ul class="recent-blog">
+                            {% for recent in recent %}
+                            <li>
+                                <div class="media"><a href="{% url 'website:post-detail' recent.slug %}"> <img
+                                        alt="Generic placeholder image" class="img-fluid blur-up lazyloaded"
+                                        src="{{recent.thumbnail_image.url}}"></a>
+                                    <div class="media-body align-self-center">
+                                        <h6>{{recent.created_on.date}}</h6>
+                                        <p>{{recent.visits}}</p>
+                                    </div>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="theme-card">
+                        <h4>Popular Blog</h4>
+                        <ul class="recent-blog">
+                            {% for blog in popular_posts %}
+                            <li>
+                                <div class="media"><a href="{% url 'website:post-detail' blog.slug %}"> <img
+                                        alt="Generic placeholder image" class="img-fluid blur-up lazyloaded" height="10px"
+                                        src="{{blog.thumbnail_image.url}}" width="100px"></a>
+                                    <div class="media-body align-self-center">
+                                        <h6>{{blog.created_on.date}}</h6>
+                                        <p>{{blog.visits}}</p>
+                                    </div>
+
+                                </div>
+                                <p>{{blog.content|truncatechars_html:50|safe }}</p>
+
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="product-pagination">
+                    <div class="theme-paggination-block">
+                        <div class="container-fluid p-0">
+                            <div class="row">
+                                <div class="col-xl-6 col-md-6 col-sm-12">
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination">
+                                            {% if posts.has_previous %}
+
+                                            <li class="page-item">
+
+                                                <a aria-label="Previous" class="page-link"
+                                                   href="?page={{posts.previous_page_number}}">
+                                                                            <span aria-hidden="true">
+                                                                                <i class="fa fa-chevron-left"></i>
+                                                                            </span>
+                                                    <span class="sr-only">Previous</span>
+                                                </a>
+                                            </li>
+                                            {% else %}
+
+                                            {% endif %}
+                                            {% for i in paginator.page_range %}
+                                            {% if posts.number == i %}
+
+                                            <li class="page-item active">
+                                                <a class="page-link">{{i}}</a>
+                                            </li>
+                                            {% else %}
+                                            <li class="page-item"><a class="page-link"
+                                                                     href="?page={{ i }}">{{i}}</a></li>
+                                            {% endif %}
+                                            {% endfor %}
+                                            {% if posts.has_next %}
+
+                                            <li class="page-item"><a aria-label="Next"
+                                                                     class="page-link"
+                                                                     href="?page={{posts.next_page_number}}"><span
+                                                    aria-hidden="true"><i
+                                                    aria-hidden="true"
+                                                    class="fa fa-chevron-right"></i></span>
+                                                <span
+                                                        class="sr-only">Next</span></a></li>
+                                            {% else %}
+                                            {% endif %}
+                                        </ul>
+                                    </nav>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    {% endfor %}
                 </div>
-                <div class="col-xl-3 col-lg-4 col-md-5">
-                    <div class="blog-sidebar">
-                        <div class="theme-card">
-                            <h4>Recent Blog</h4>
-                            <ul class="recent-blog">
-                                {% for recent in recent %}
-                                <li>
-                                    <div class="media"> <a href="{% url 'website:post-detail' recent.slug %}"> <img class="img-fluid blur-up lazyloaded" src="{{recent.thumbnail_image.url}}" alt="Generic placeholder image"></a>
-                                        <div class="media-body align-self-center">
-                                            <h6>{{recent.created_on.date}}</h6>
-                                            <p>{{recent.visits}}</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                        <div class="theme-card">
-                            <h4>Popular Blog</h4>
-                            <ul class="recent-blog">
-                                {% for blog in popular_posts %}
-                                <li>
-                                    <div class="media">  <a href="{% url 'website:post-detail' blog.slug %}"> <img class="img-fluid blur-up lazyloaded" height="10px" width="100px" src="{{blog.thumbnail_image.url}}" alt="Generic placeholder image"></a>
-                                        <div class="media-body align-self-center">
-                                            <h6>{{blog.created_on.date}}</h6>
-                                            <p>{{blog.visits}}</p>
-                                        </div>
 
-                                    </div>
-                                                                        <p>{{blog.content|truncatechars_html:50|safe }}</p>
-
-                                </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
-    </section>
-    <!-- section End -->
+    </div>
+</section>
+<!-- section End -->
 {% endblock content %}
