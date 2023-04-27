@@ -22,6 +22,8 @@ urlpatterns = [
     path('increment/cart/item', IncrementCart.as_view(), name='increment'),
     path('decrement/cart/item', DecrementCart.as_view(), name='decrement'),
 
+
+
     path('billing', OrderCreate.as_view(), name='order'),
     path('payment-success/', SuccessPayment.as_view(), name="success"),
     path('payment-cancelled/', CancelPayment.as_view(), name="cancel"),

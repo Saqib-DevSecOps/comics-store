@@ -1,0 +1,83 @@
+{% extends  'website/base.html' %}
+{% load static %}
+{% block content %}
+<div class="breadcrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="page-title">
+                    <h2>dashboard</h2>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <nav aria-label="breadcrumb" class="theme-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li aria-current="page" class="breadcrumb-item active">dashboard</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="dashboard-section section-b-space user-dashboard-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                {% include 'client/include/dashboard_navbar.html' %}
+            </div>
+            <div class="col-lg-9">
+                <div class="tab-pane fade active show" id="wishlist">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card dashboard-table mt-0">
+                                <div class="card-body table-responsive-sm">
+                                    <div class="top-sec">
+                                        <h3>My Books</h3>
+                                    </div>
+                                    <div class="table-responsive-xl">
+                                        {% if objects %}
+                                        <table class="table cart-table wishlist-table">
+                                            <thead>
+                                            <tr class="table-head">
+                                                <th scope="col">Image</th>
+                                                <th scope="col">Book Name</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for object in objects %}
+                                            <tr>
+                                                <td>
+                                                    <a href="javascript:void(0)">
+                                                        <img alt=""
+                                                             class="blur-up lazyloaded" src="{{object.product.thumbnail_image.url}}">
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <span>{{object.product.name}}</span>
+                                                </td>
+                                                <td>
+                                                    <a href="{% url  'client:download_file' object.product.id %}"><i class="fa fa-download"></i></a>
+                                                    <a href="#"><i class="fa fa-eye mx-1"></i></a>
+                                                </td>
+
+
+                                            </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        {% else %}
+                                        <h3 class="mt-4 text-danger">Books Not Found</h3>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
