@@ -76,16 +76,10 @@
                                                 <span class="badge bg-purple-lt">
                                                     Staff
                                                 </span>
-                                            {% elif object.is_employee %}
+                                            {% elif object.is_client %}
                                                 <b class="badge bg-success-lt">
-                                                    Employee
+                                                    Client
                                                 </b>
-                                                {% if object.get_employee_profile.is_sia_expired %}
-                                                    <i class="fa fa-exclamation-circle text-danger"
-                                                       data-bs-toggle="tooltip"
-                                                       data-bs-placement="right" data-bs-title="SIA License Expired">
-                                                    </i>
-                                                {% endif %}
                                             {% else %}
                                                 <b class="badge bg-warning-lt">
                                                     Undefined
@@ -94,7 +88,7 @@
                                         {% endif %}
                                     </td>
                                     <td>{{ object.date_joined }}</td>
-                                    <td>{{ object.last_login }}</td>
+                                    <td>{% if object.last_login %}{{ object.last_login }}{% else %}-{% endif %}</td>
                                     <td>
                                         {% if object.is_active %}
                                             <b class="text-success">

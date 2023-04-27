@@ -23,7 +23,6 @@
                         <thead class="thead-light">
                         <tr>
                             <th>Name</th>
-                            <th>Parent</th>
                             <th>Status</th>
                             <th>-</th>
                         </tr>
@@ -33,7 +32,6 @@
                         {% for object in object_list %}
                             <tr>
                                 <td>{{ object.name }}</td>
-                                <td>{{ object.parent }}</td>
                                 <td>
                                     {% if object.is_active %}
                                         <b class="text-success"><i class="fa fa-check"></i></b>

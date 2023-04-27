@@ -12,6 +12,7 @@ from django.views.generic import (
 
 from src.accounts.decorators import admin_protected
 from src.accounts.models import User
+from src.administration.admins.bll import fake_data
 from src.administration.admins.filters import UserFilter, ProductFilter, OrderFilter, PostFilter
 from src.administration.admins.forms import ProductVersionForm, ProductImageForm, MyProfileForm
 from src.administration.admins.models import Category, PostCategory, Product, ProductVersion, ProductImage, Order, Post
@@ -25,6 +26,7 @@ class DashboardView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(DashboardView, self).get_context_data(**kwargs)
+        # fake_data()
         context['blogs'] = Post.objects.count()
         context['orders'] = Order.objects.count()
         context['users'] = User.objects.filter(is_staff=False).count()
@@ -156,14 +158,14 @@ class CategoryListView(ListView):
 @method_decorator(admin_protected, name='dispatch')
 class CategoryUpdateView(UpdateView):
     model = Category
-    fields = ['name', 'parent', 'is_active']
+    fields = ['name', 'is_active']
     success_url = reverse_lazy('admins:category-list')
 
 
 @method_decorator(admin_protected, name='dispatch')
 class CategoryCreateView(CreateView):
     model = Category
-    fields = ['name', 'parent', 'is_active']
+    fields = ['name', 'is_active']
     success_url = reverse_lazy('admins:category-list')
 
 
