@@ -86,6 +86,9 @@ class UserUpdateView(UpdateView):
     template_name = 'admins/user_form.html'
     success_url = reverse_lazy('admins:user-list')
 
+    def get_success_url(self):
+        return reverse_lazy('admins:user-detail', args=(self.object.pk, ))
+
 
 @method_decorator(admin_protected, name='dispatch')
 class UserCreateView(CreateView):
@@ -93,6 +96,9 @@ class UserCreateView(CreateView):
     fields = ['profile_image', 'first_name', 'last_name', 'email', 'username', 'is_active']
     template_name = 'admins/user_form.html'
     success_url = reverse_lazy('admins:user-list')
+
+    def get_success_url(self):
+        return reverse_lazy('admins:user-detail', args=(self.object.pk, ))
 
 
 @method_decorator(admin_protected, name='dispatch')
@@ -126,6 +132,8 @@ class UserPasswordResetView(View):
         if form.is_valid():
             form.save(commit=True)
             messages.success(request, f"{user.get_full_name()}'s password changed successfully.")
+            return redirect('admins:user-detail', user.pk)
+
         return render(request, self.template_name, {'form': form})
 
 
