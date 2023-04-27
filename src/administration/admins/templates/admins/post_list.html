@@ -37,7 +37,7 @@
 
         {% if object_list %}
             {% for object in object_list %}
-                <div class="col-md-6 col-lg-3">
+                <div class="col-md-6 col-lg-4">
                     <div class="card mb-3">
                         <a href="{% url 'admins:post-detail' object.pk %}">
                             <div class="img-responsive card-img-top"
@@ -45,15 +45,19 @@
                                          {% if object.thumbnail_image %}{{ object.thumbnail_image.url }}{% else %}'{% static 'required/images/no-image-product-portrait.jpg' %}'{% endif %})">
                             </div>
                         </a>
+                        {% if object.status == 'publish' %}
+                            <div class="ribbon ribbon-top ribbon-bookmark bg-green">
+                                <i class="fa fa-check"></i>
+                            </div>
+                        {% else %}
+                            <div class="ribbon ribbon-top ribbon-bookmark bg-primary">
+                                <i class="fa fa-times"></i>
+                            </div>
+                        {% endif %}
                         <div class="card-body">
                             <a href="{% url 'admins:post-detail' object.pk %}" class="text-decoration-none">
-                                <h3 class="card-title mb-0">{{ object.title }}</h3>
+                                <h3 class="card-title">{{ object.title }}</h3>
                             </a>
-                            <p class="text-muted mt-2">{% lorem 20 w %}</p>
-
-                            <span class="status status-green pl-0">
-                                name
-                            </span>
                         </div>
                         <div class="card-body">
                             <div class="">

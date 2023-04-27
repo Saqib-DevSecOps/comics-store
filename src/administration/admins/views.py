@@ -23,6 +23,14 @@ from src.administration.admins.models import Category, PostCategory, Product, Pr
 class DashboardView(TemplateView):
     template_name = 'admins/dashboard.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(DashboardView, self).get_context_data(**kwargs)
+        context['blogs'] = Post.objects.count()
+        context['orders'] = Order.objects.count()
+        context['users'] = User.objects.filter(is_staff=False).count()
+        context['novels'] = Product.objects.count()
+        return context
+
 
 @method_decorator(admin_protected, name='dispatch')
 class UserOwnUpdateView(View):
@@ -413,7 +421,7 @@ class PostDeleteView(DeleteView):
 class PostUpdateView(UpdateView):
     model = Post
     fields = [
-        'thumbnail_image', 'title', 'author', 'read_time', 'content', 'status'
+        'thumbnail_image', 'title', 'category', 'read_time', 'content', 'status'
     ]
     success_url = reverse_lazy('admins:post-list')
 
@@ -422,6 +430,10 @@ class PostUpdateView(UpdateView):
 class PostCreateView(CreateView):
     model = Post
     fields = [
-        'image', 'title', 'author', 'read_time', 'content', 'status'
+        'thumbnail_image', 'title', 'category', 'read_time', 'content', 'status'
     ]
     success_url = reverse_lazy('admins:post-list')
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super(PostCreateView, self).form_valid(form)

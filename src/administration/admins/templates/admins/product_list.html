@@ -39,6 +39,15 @@
             {% for object in object_list %}
                 <div class="col-md-6 col-lg-3">
                     <div class="card mb-3">
+                        {% if object.book_type == 'comic' %}
+                            <div class="ribbon ribbon-top ribbon-bookmark bg-green">
+                                <i class="fa fa-smile"></i>
+                            </div>
+                        {% else %}
+                            <div class="ribbon ribbon-top ribbon-bookmark bg-primary">
+                                <i class="fa fa-book"></i>
+                            </div>
+                        {% endif %}
                         <a href="{% url 'admins:product-detail' object.pk %}">
                             <div class="img-responsive card-img-top"
                                  style="background-image: url(
@@ -47,16 +56,8 @@
                         </a>
                         <div class="card-body">
                             <h3 class="card-title mb-0">{{ object.name }} <a
-                                    href="{% url 'admins:product-detail' object.pk %}"><i class="bx bx-edit"></i></a>
+                                    href="{% url 'admins:product-detail' object.pk %}"></a>
                             </h3>
-                            <div class="col-auto d-flex align-items-center pe-2">
-                                {% if object.book_type == 'comic' %}
-                                    <span class="legend me-2 bg-danger"></span>
-                                {% else %}
-                                    <span class="legend me-2 bg-success"></span>
-                                {% endif %}
-                                <span>{{ object.get_book_type_display }}</span>
-                            </div>
                             <p class="text-muted mt-2">{{ object.description }}</p>
                         </div>
                         <div class="card-body">

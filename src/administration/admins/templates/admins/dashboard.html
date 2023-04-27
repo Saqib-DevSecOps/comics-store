@@ -23,7 +23,7 @@
                         </div>
                         <div class="col">
                             <div class="font-weight-medium">
-                                00 Users
+                                {{ users }} Users
                             </div>
                             <div class="text-muted">
                                 <a href="{% url 'admins:user-list' %}"><i class="fa fa-eye"></i> view</a>
@@ -44,10 +44,10 @@
                         </div>
                         <div class="col">
                             <div class="font-weight-medium">
-                                00 Orders
+                                {{ orders }} Orders
                             </div>
                             <div class="text-muted">
-                                <a href="#"><i class="fa fa-eye"></i> view</a>
+                                <a href="{% url 'admins:order-list' %}"><i class="fa fa-eye"></i> view</a>
                             </div>
                         </div>
                     </div>
@@ -65,10 +65,10 @@
                         </div>
                         <div class="col">
                             <div class="font-weight-medium">
-                                00 Blogs
+                                {{ blogs }} Blogs
                             </div>
                             <div class="text-muted">
-                                <a href="#"><i class="fa fa-eye"></i> view</a>
+                                <a href="{% url 'admins:post-list' %}"><i class="fa fa-eye"></i> view</a>
                             </div>
                         </div>
                     </div>
@@ -86,31 +86,10 @@
                         </div>
                         <div class="col">
                             <div class="font-weight-medium">
-                                00 Comics
+                                {{ novels }} Novels
                             </div>
                             <div class="text-muted">
-                                <a href="#"><i class="fa fa-eye"></i> view</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card card-sm">
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col-auto">
-                            <span class="bg-azure-lt text-white avatar">
-                              <i class="bx bx-history"></i>
-                            </span>
-                        </div>
-                        <div class="col">
-                            <div class="font-weight-medium">
-                                00 Stories
-                            </div>
-                            <div class="text-muted">
-                                <a href="#"><i class="fa fa-eye"></i> view</a>
+                                <a href="{% url 'admins:product-list' %}"><i class="fa fa-eye"></i> view</a>
                             </div>
                         </div>
                     </div>

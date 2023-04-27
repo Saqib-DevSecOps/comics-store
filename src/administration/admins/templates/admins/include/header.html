@@ -64,7 +64,7 @@
                     {% endif %}
 
                     <div class="d-none d-xl-block ps-2">
-                        <div>{{ request.user.get_user_name }}</div>
+                        <div>{{ request.user.name_or_username }}</div>
                         <div class="mt-1 small text-muted">
                             {% if request.user.is_superuser %}
                                 Administrator
