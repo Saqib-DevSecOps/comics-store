@@ -3,6 +3,7 @@ Faker
 pillow
 markdown
 python-dateutil
+pdf2image
 
 django
 django-environ

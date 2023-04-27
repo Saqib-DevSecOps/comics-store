@@ -225,7 +225,7 @@ class ProductListView(ListView):
 class ProductUpdateView(UpdateView):
     model = Product
     fields = [
-            'thumbnail_image', 'name',
+            'thumbnail_image', 'book_file', 'name',
             'book_type', 'categories', 'languages', 'pages',
             'artist', 'author', 'translator', 'illustrator',
             'description', 'is_active'
@@ -237,7 +237,7 @@ class ProductUpdateView(UpdateView):
 class ProductCreateView(CreateView):
     model = Product
     fields = [
-            'thumbnail_image', 'name',
+            'thumbnail_image', 'book_file', 'name',
             'book_type', 'categories', 'languages', 'pages',
             'artist', 'author', 'translator', 'illustrator',
             'description', 'is_active'

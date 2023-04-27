@@ -1,6 +1,5 @@
 import base64
 
-import PyPDF2
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
@@ -9,7 +8,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.generic import TemplateView, UpdateView, ListView, DetailView
-from fitz import fitz
 from pdf2image import convert_from_bytes, convert_from_path
 
 from src.accounts.models import Address
@@ -17,7 +15,6 @@ from src.administration.admins.models import Wishlist, Order, Product, OrderItem
 from src.administration.client.forms import AddressForm, UserProfileForm
 
 import io
-from PyPDF2 import PdfFileReader
 from PIL import Image
 from django.shortcuts import get_object_or_404, render
 

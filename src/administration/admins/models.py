@@ -99,7 +99,7 @@ class Product(models.Model):
     slug = models.SlugField(null=False, unique=True)
     description = models.TextField(null=True, blank=True)
     thumbnail_image = models.ImageField(upload_to='books/images/thumbnails', null=True, blank=True)
-    book_file = models.FileField(blank=True,null=True,upload_to='books/pdf')
+    book_file = models.FileField(blank=True, null=True, upload_to='books/pdf', help_text="Only pdf files are allowed to upload")
 
     artist = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
