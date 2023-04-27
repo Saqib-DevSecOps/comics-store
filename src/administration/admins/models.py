@@ -93,7 +93,7 @@ class Product(models.Model):
 
 class ProductVersion(models.Model):
     version = models.ForeignKey(Version, on_delete=models.SET_NULL, null=True, blank=False)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE,related_name='product_version')
     isbn = models.CharField(max_length=255)
     price = models.FloatField(default=0)
 
@@ -107,7 +107,7 @@ class ProductVersion(models.Model):
 class ProductImage(models.Model):
     image = models.ImageField(upload_to='books/images/product_images', null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product_image')
 
     class Meta:
         ordering = ['product']
@@ -122,7 +122,7 @@ class ProductImage(models.Model):
 
 
 class Cart(models.Model):
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     product_version = models.ForeignKey(ProductVersion, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=0)
@@ -215,8 +215,8 @@ class Post(models.Model):
         ('publish', "Publish")
     )
 
-    image = models.ImageField(upload_to='books/images/posts', null=True, blank=True)
     title = models.CharField(max_length=255, unique=True)
+    thumbnail_image = models.ImageField(upload_to='books/images/posts', null=True, blank=True)
     slug = models.SlugField(unique=True, null=False)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')
     content = HTMLField()
@@ -244,8 +244,8 @@ class Post(models.Model):
 
 
 class Wishlist(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    product = models.OneToOneField(Product, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 

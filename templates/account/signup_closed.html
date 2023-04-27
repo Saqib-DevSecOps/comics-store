@@ -1,41 +1,11 @@
-{% extends 'core/../../src/administration/admins/templates/admins/base.html' %}
-{% load static %}
+{% extends 'base.html' %}
 
-{% block base_subtitle %} Sign up{% endblock %}
+{% load i18n %}
 
-{% block base_no_body %}
-    <body class=" border-top-wide border-danger d-flex flex-column">
-    <div class="page page-center">
-        <div class="container container-tight py-2">
-            <div class="empty">
-                <iframe src="https://embed.lottiefiles.com/animation/66761"></iframe>
-{#                <div class="empty-header">Failed</div>#}
-                <p class="empty-title">Registration is closed.</p>
-                <p class="empty-subtitle text-muted">
-                    You are not allowed to register via organization profile, please contact organizational owner if you are an <b>Employee</b>
-                </p>
-                <div class="empty-action">
-                    <a href="{% url 'account-auth:who-am-i' %}" class="btn btn-danger">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
-                             stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                             stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                            <line x1="5" y1="12" x2="19" y2="12"/>
-                            <line x1="5" y1="12" x2="11" y2="18"/>
-                            <line x1="5" y1="12" x2="11" y2="6"/>
-                        </svg>
-                        Lets Find your organization
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
+{% block head_title %}{% trans "Sign Up Closed" %}{% endblock %}
 
-    <!-- Tabler Core -->
-    <script src="{% static 'admin/js/tabler.min.js' %}?1668287865" defer></script>
-    <script src="{% static 'admin/js/demo.min.js' %}?1668287865" defer></script>
+{% block content %}
+<h1>{% trans "Sign Up Closed" %}</h1>
 
-    </body>
+<p>{% trans "We are sorry, but the sign up is currently closed." %}</p>
 {% endblock %}
-
-

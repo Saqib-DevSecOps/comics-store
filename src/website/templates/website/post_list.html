@@ -24,201 +24,63 @@
         <div class="container">
             <div class="row">
                 <div class="col-xl-9 col-lg-8 col-md-7">
+                    {% for blog in object_list %}
                     <div class="row blog-media">
                         <div class="col-xl-6">
                             <div class="blog-left">
-                                <a href="#" class="bg-size blur-up lazyloaded" style="background-image: url(&quot;../assets/images/blog/1.jpg&quot;); background-size: cover; background-position: center center; display: block;"><img src="{% static 'website/images/blog/1.jpg' %}" class="img-fluid blur-up bg-img lazyloaded" alt="" style="display: none;"></a>
+                                <a href="{% url 'website:post-detail' blog.slug %}" class="bg-size blur-up lazyloaded" style="background-image: url({{blog.thumbnail_image.url}}); background-size: cover; background-position: center center; display: block;"><img src="{{blog.thumbnail_image.url}}" class="img-fluid blur-up bg-img lazyloaded" alt="" style="display: none;"></a>
                             </div>
                         </div>
                         <div class="col-xl-6">
                             <div class="blog-right">
                                 <div>
-                                    <h6>25 January 2018</h6> <a href="#">
-                                        <h4>you how all this mistaken idea of denouncing pleasure and praising pain was
-                                            born.</h4>
+                                    <h6>{{blog.created_on.date}}</h6> <a href="{% url 'website:post-detail' blog.slug %}">
+                                        <h4>{{blog.title}}</h4>
                                     </a>
                                     <ul class="post-social">
-                                        <li>Posted By : Admin Admin</li>
-                                        <li><i class="fa fa-heart"></i> 5 Hits</li>
-                                        <li><i class="fa fa-comments"></i> 10 Comment</li>
+                                        <li>Posted By :  Admin</li>
+                                        <li><i class="fa fa-heart"></i> {{blog.visits}}</li>
                                     </ul>
-                                    <p>Consequences that are extremely painful. Nor again is there anyone who loves or
-                                        pursues or desires to obtain pain of itself, because it is pain, but because
-                                        occasionally circumstances occur in which toil and pain can procure him some
-                                        great pleasure.</p>
+                                    <p>{{blog.content|truncatechars_html:50|safe }}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row blog-media">
-                        <div class="col-xl-6">
-                            <div class="blog-left">
-                                <a href="#" class="bg-size blur-up lazyloaded" style="background-image: url(&quot;../assets/images/blog/2.jpg&quot;); background-size: cover; background-position: center center; display: block;"><img src="{% static 'website/images/blog/2.jpg' %}" class="img-fluid blur-up bg-img lazyloaded" alt="" style="display: none;"></a>
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
-                            <div class="blog-right">
-                                <div>
-                                    <h6>25 January 2018</h6> <a href="#">
-                                        <h4>you how all this mistaken idea of denouncing pleasure and praising pain was
-                                            born.</h4>
-                                    </a>
-                                    <ul class="post-social">
-                                        <li>Posted By : Admin Admin</li>
-                                        <li><i class="fa fa-heart"></i> 5 Hits</li>
-                                        <li><i class="fa fa-comments"></i> 10 Comment</li>
-                                    </ul>
-                                    <p>Consequences that are extremely painful. Nor again is there anyone who loves or
-                                        pursues or desires to obtain pain of itself, because it is pain, but because
-                                        occasionally circumstances occur in which toil and pain can procure him some
-                                        great pleasure.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row blog-media">
-                        <div class="col-xl-6">
-                            <div class="blog-left">
-                                <a href="#" class="bg-size blur-up lazyloaded" style="background-image: url(&quot;../assets/images/blog/3.jpg&quot;); background-size: cover; background-position: center center; display: block;"><img src="{% static 'website/images/blog/3.jpg' %}" class="img-fluid blur-up lazyload bg-img" alt="" style="display: none;"></a>
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
-                            <div class="blog-right">
-                                <div>
-                                    <h6>25 January 2018</h6> <a href="#">
-                                        <h4>you how all this mistaken idea of denouncing pleasure and praising pain was
-                                            born.</h4>
-                                    </a>
-                                    <ul class="post-social">
-                                        <li>Posted By : Admin Admin</li>
-                                        <li><i class="fa fa-heart"></i> 5 Hits</li>
-                                        <li><i class="fa fa-comments"></i> 10 Comment</li>
-                                    </ul>
-                                    <p>Consequences that are extremely painful. Nor again is there anyone who loves or
-                                        pursues or desires to obtain pain of itself, because it is pain, but because
-                                        occasionally circumstances occur in which toil and pain can procure him some
-                                        great pleasure.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row blog-media">
-                        <div class="col-xl-6">
-                            <div class="blog-left">
-                                <a href="#" class="bg-size blur-up lazyloaded" style="background-image: url(&quot;../assets/images/blog/4.jpg&quot;); background-size: cover; background-position: center center; display: block;"><img src="{% static 'website/images/blog/4.jpg' %}" class="img-fluid blur-up lazyload bg-img" alt="" style="display: none;"></a>
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
-                            <div class="blog-right">
-                                <div>
-                                    <h6>25 January 2018</h6> <a href="#">
-                                        <h4>you how all this mistaken idea of denouncing pleasure and praising pain was
-                                            born.</h4>
-                                    </a>
-                                    <ul class="post-social">
-                                        <li>Posted By : Admin Admin</li>
-                                        <li><i class="fa fa-heart"></i> 5 Hits</li>
-                                        <li><i class="fa fa-comments"></i> 10 Comment</li>
-                                    </ul>
-                                    <p>Consequences that are extremely painful. Nor again is there anyone who loves or
-                                        pursues or desires to obtain pain of itself, because it is pain, but because
-                                        occasionally circumstances occur in which toil and pain can procure him some
-                                        great pleasure.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
                 <div class="col-xl-3 col-lg-4 col-md-5">
                     <div class="blog-sidebar">
                         <div class="theme-card">
                             <h4>Recent Blog</h4>
                             <ul class="recent-blog">
+                                {% for recent in recent %}
                                 <li>
-                                    <div class="media"> <img class="img-fluid blur-up lazyloaded" src="../assets/images/blog/1.jpg" alt="Generic placeholder image">
+                                    <div class="media"> <a href="{% url 'website:post-detail' recent.slug %}"> <img class="img-fluid blur-up lazyloaded" src="{{recent.thumbnail_image.url}}" alt="Generic placeholder image"></a>
                                         <div class="media-body align-self-center">
-                                            <h6>25 Dec 2018</h6>
-                                            <p>0 hits</p>
+                                            <h6>{{recent.created_on.date}}</h6>
+                                            <p>{{recent.visits}}</p>
                                         </div>
                                     </div>
                                 </li>
-                                <li>
-                                    <div class="media"> <img class="img-fluid blur-up lazyloaded" src="../assets/images/blog/2.jpg" alt="Generic placeholder image">
-                                        <div class="media-body align-self-center">
-                                            <h6>25 Dec 2018</h6>
-                                            <p>0 hits</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="media"> <img class="img-fluid blur-up lazyloaded" src="../assets/images/blog/3.jpg" alt="Generic placeholder image">
-                                        <div class="media-body align-self-center">
-                                            <h6>25 Dec 2018</h6>
-                                            <p>0 hits</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="media"> <img class="img-fluid blur-up lazyloaded" src="../assets/images/blog/4.jpg" alt="Generic placeholder image">
-                                        <div class="media-body align-self-center">
-                                            <h6>25 Dec 2018</h6>
-                                            <p>0 hits</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="media"> <img class="img-fluid blur-up lazyloaded" src="../assets/images/blog/5.jpg" alt="Generic placeholder image">
-                                        <div class="media-body align-self-center">
-                                            <h6>25 Dec 2018</h6>
-                                            <p>0 hits</p>
-                                        </div>
-                                    </div>
-                                </li>
+                                {% endfor %}
                             </ul>
                         </div>
                         <div class="theme-card">
                             <h4>Popular Blog</h4>
-                            <ul class="popular-blog">
+                            <ul class="recent-blog">
+                                {% for blog in popular_posts %}
                                 <li>
-                                    <div class="media">
-                                        <div class="blog-date"><span>03 </span><span>may</span></div>
+                                    <div class="media">  <a href="{% url 'website:post-detail' blog.slug %}"> <img class="img-fluid blur-up lazyloaded" height="10px" width="100px" src="{{blog.thumbnail_image.url}}" alt="Generic placeholder image"></a>
                                         <div class="media-body align-self-center">
-                                            <h6>Injected humour the like</h6>
-                                            <p>0 hits</p>
+                                            <h6>{{blog.created_on.date}}</h6>
+                                            <p>{{blog.visits}}</p>
                                         </div>
+
                                     </div>
-                                    <p>it look like readable English. Many desktop publishing text.</p>
+                                                                        <p>{{blog.content|truncatechars_html:50|safe }}</p>
+
                                 </li>
-                                <li>
-                                    <div class="media">
-                                        <div class="blog-date"><span>03 </span><span>may</span></div>
-                                        <div class="media-body align-self-center">
-                                            <h6>Injected humour the like</h6>
-                                            <p>0 hits</p>
-                                        </div>
-                                    </div>
-                                    <p>it look like readable English. Many desktop publishing text.</p>
-                                </li>
-                                <li>
-                                    <div class="media">
-                                        <div class="blog-date"><span>03 </span><span>may</span></div>
-                                        <div class="media-body align-self-center">
-                                            <h6>Injected humour the like</h6>
-                                            <p>0 hits</p>
-                                        </div>
-                                    </div>
-                                    <p>it look like readable English. Many desktop publishing text.</p>
-                                </li>
-                                <li>
-                                    <div class="media">
-                                        <div class="blog-date"><span>03 </span><span>may</span></div>
-                                        <div class="media-body align-self-center">
-                                            <h6>Injected humour the like</h6>
-                                            <p>0 hits</p>
-                                        </div>
-                                    </div>
-                                    <p>it look like readable English. Many desktop publishing text.</p>
-                                </li>
+                                {% endfor %}
                             </ul>
                         </div>
                     </div>

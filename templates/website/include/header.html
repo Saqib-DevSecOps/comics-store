@@ -62,13 +62,9 @@
                                     <li>
                                         <a href="/">Home</a>
                                     </li>
-                                    <li class="mega" id="hover-cls">
-                                        <a href="{% url 'website:shop' %}?category=comics">Comics
-                                            <div class="lable-nav">new</div>
-                                        </a>
-                                    </li>
+
                                     <li>
-                                        <a href="{% url 'website:shop' %}?category=novel">Novels</a>
+                                        <a href="{% url 'website:shop' %}">Shop</a>
                                     </li>
                                     <li>
                                         <a href="{% url 'website:posts' %}">Stories</a>
@@ -102,10 +98,11 @@
                                                     <div class="container">
                                                         <div class="row">
                                                             <div class="col-xl-12">
-                                                                <form>
+                                                                <form action="{% url 'website:shop' %}">
                                                                     <div class="form-group"><input type="text"
                                                                                                    class="form-control"
                                                                                                    id="exampleInputPassword1"
+                                                                                                   name="title"
                                                                                                    placeholder="Search a Product">
                                                                     </div>
                                                                     <button type="submit" class="btn btn-primary"><i

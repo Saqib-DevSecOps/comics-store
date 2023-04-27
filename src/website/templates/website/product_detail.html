@@ -1,6 +1,11 @@
 {% extends  'website/base.html' %}
 {% load static %}
 {% block content %}
+<style>
+.checked {
+  color: orange;
+}
+</style>
 <div class="breadcrumb-section">
     <div class="container">
         <div class="row">
@@ -24,57 +29,33 @@
     <div class="collection-wrapper">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6">
-                    <div class="product-slick slick-initialized slick-slider">
-                        <button aria-label="Previous" class="slick-prev slick-arrow" style="display: block;"
-                                type="button">Previous
-                        </button>
-                        <div class="slick-list draggable">
-                            <div class="slick-track" style="opacity: 1; width: 2184px;">
-                                <div aria-hidden="false" class="slick-slide slick-current slick-active"
-                                     data-slick-index="0"
-                                     style="width: 546px; position: relative; left: 0px; top: 0px; z-index: 999; opacity: 1;">
-                                    <div>
-                                        <div style="width: 100%; display: inline-block;"><img
-                                                alt="" class="img-fluid blur-up image_zoom_cls-0 lazyloaded"
-                                                src="{{object.thumbnail_image.url}}"></div>
-                                    </div>
-                                </div>
-                                <div aria-hidden="true" class="slick-slide" data-slick-index="1"
-                                     style="width: 546px; position: relative; left: -546px; top: 0px; z-index: 998; opacity: 0;"
-                                     tabindex="-1">
-                                    <div>
-                                        <div style="width: 100%; display: inline-block;"><img
-                                                alt="" class="img-fluid blur-up image_zoom_cls-1 lazyloaded"
-                                                src="{{object.thumbnail_image.url}}"></div>
-                                    </div>
-                                </div>
-                                <div aria-hidden="true" class="slick-slide" data-slick-index="2"
-                                     style="width: 546px; position: relative; left: -1092px; top: 0px; z-index: 998; opacity: 0;"
-                                     tabindex="-1">
-                                    <div>
-                                        <div style="width: 100%; display: inline-block;"><img
-                                                alt="" class="img-fluid blur-up image_zoom_cls-2 lazyloaded"
-                                                src="{{object.thumbnail_image.url}}"></div>
-                                    </div>
-                                </div>
-                                <div aria-hidden="true" class="slick-slide" data-slick-index="3"
-                                     style="width: 546px; position: relative; left: -1638px; top: 0px; z-index: 998; opacity: 0;"
-                                     tabindex="-1">
-                                    <div>
-                                        <div style="width: 100%; display: inline-block;"><img
-                                                alt="" class="img-fluid blur-up image_zoom_cls-3 lazyloaded"
-                                                src="{{object.thumbnail_image.url}}"></div>
-                                    </div>
+                    <div class="col-lg-5">
+                        <div class="product-slick">
+
+                            <div><img src="{{object.thumbnail_image.url}}" width="" height="550px" alt=""
+                                    ></div>
+                            {% for object in object.product_image.all %}
+                            <div><img src="{{object.image.url}}" alt=""
+                                    width="fixed" height="550px"></div>
+                            {% endfor %}
+                        </div>
+                        <div class="row">
+                            <div class="col-10 p-0">
+                                <div class="slider-nav">
+
+                                    <div><img src="{{object.thumbnail_image.url}}" alt=""
+                                            class="img-fluid"></div>
+                                                                {% for object in object.product_image.all %}
+
+                                    <div><img src="{{object.image.url}}" alt=""
+                                            class="img-fluid" ></div>
+                                                                {% endfor %}
+
                                 </div>
                             </div>
                         </div>
-                        <button aria-label="Next" class="slick-next slick-arrow" style="display: block;" type="button">
-                            Next
-                        </button>
                     </div>
-                </div>
-                <div class="col-lg-6 rtl-text">
+                <div class="col-lg-7 rtl-text">
                     <div class="product-right">
                         <h2>{{object.name}}</h2>
                         <div class="row">
@@ -112,7 +93,7 @@
 
                         <a
                                 class="btn btn-solid"
-                                href="#"><i
+                                href="{% url 'client:wishlist-create' object.id %}"><i
                                 aria-hidden="true" class="fa fa-bookmark fz-16 me-2"></i>wishlist</a>
                     </div>
 
@@ -148,7 +129,7 @@
                     </div>
                     <div class="border-product">
                         <h6 class="product-title">100% secure payment</h6>
-                        <img alt="" class="img-fluid mt-1" src="../assets/images/payment.png">
+                        <img alt="" class="img-fluid mt-1" src="{% static 'website/images/payment.png">
                     </div>
                 </div>
             </div>
@@ -166,55 +147,13 @@
                             class="icofont icofont-ui-home"></i>Details</a>
                         <div class="material-border"></div>
                     </li>
-                    <li class="nav-item"><a aria-selected="false" class="nav-link" data-bs-toggle="tab"
-                                            href="#top-profile" id="profile-top-tab" role="tab"><i
-                            class="icofont icofont-man-in-glasses"></i>Specification</a>
-                        <div class="material-border"></div>
-                    </li>
-                    <li class="nav-item"><a aria-selected="false" class="nav-link" data-bs-toggle="tab"
-                                            href="#top-contact" id="contact-top-tab" role="tab"><i
-                            class="icofont icofont-contacts"></i>Video</a>
-                        <div class="material-border"></div>
-                    </li>
-                    <li class="nav-item"><a aria-selected="false" class="nav-link" data-bs-toggle="tab"
-                                            href="#top-review"
-                                            id="review-top-tab" role="tab"><i class="icofont icofont-contacts"></i>Write
-                        Review</a>
-                        <div class="material-border"></div>
-                    </li>
                 </ul>
                 <div class="tab-content nav-material" id="top-tabContent">
                     <div aria-labelledby="top-home-tab" class="tab-pane fade show active" id="top-home" role="tabpanel">
                         <div class="product-tab-discription">
-                            <div class="part">
-                                <p>The Model is wearing a white blouse from our stylist's collection, see the image
-                                    for a mock-up of what the actual blouse would look like.it has text written on
-                                    it in a black cursive language which looks great on a white color.</p>
-                            </div>
-                            <div class="part">
-                                <h5 class="inner-title">fabric:</h5>
-                                <p>Art silk is manufactured by synthetic fibres like rayon. It's light in weight and
-                                    is soft on the skin for comfort in summers.Art silk is manufactured by synthetic
-                                    fibres like rayon. It's light in weight and is soft on the skin for comfort in
-                                    summers.</p>
-                            </div>
-                            <div class="part">
-                                <h5 class="inner-title">size &amp; fit:</h5>
-                                <p>The model (height 5'8") is wearing a size S</p>
-                            </div>
-                            <div class="part">
-                                <h5 class="inner-title">Material &amp; Care:</h5>
-                                <p>Top fabric: pure cotton</p>
-                                <p>Bottom fabric: pure cotton</p>
-                                <p>Hand-wash</p>
-                            </div>
+                       {{object.description}}
                         </div>
-                    </div>
-                    <div aria-labelledby="profile-top-tab" class="tab-pane fade" id="top-profile" role="tabpanel">
-                        <p>The Model is wearing a white blouse from our stylist's collection, see the image for a
-                            mock-up of what the actual blouse would look like.it has text written on it in a black
-                            cursive language which looks great on a white color.</p>
-                        <div class="single-product-tables">
+                                                <div class="single-product-tables">
                             <table>
                                 <tbody>
                                 <tr>
@@ -269,67 +208,68 @@
                                 </tbody>
                             </table>
                         </div>
+
                     </div>
-                    <div aria-labelledby="contact-top-tab" class="tab-pane fade" id="top-contact" role="tabpanel">
-                        <div class="">
-                            <iframe allow="autoplay; encrypted-media" allowfullscreen="" height="315"
-                                    src="https://www.youtube.com/embed/BUWzX78Ye_8" width="560"></iframe>
-                        </div>
-                    </div>
-                    <div aria-labelledby="review-top-tab" class="tab-pane fade" id="top-review" role="tabpanel">
-                        <form class="theme-form">
-                            <div class="form-row row">
-                                <div class="col-md-12">
-                                    <div class="media">
-                                        <label>Rating</label>
-                                        <div class="media-body ms-3">
-                                            <div class="rating three-star"><i class="fa fa-star"></i> <i
-                                                    class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-                                                    class="fa fa-star"></i> <i class="fa fa-star"></i></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="name">Name</label>
-                                    <input class="form-control" id="name" placeholder="Enter Your name" required=""
-                                           type="text">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="email">Email</label>
-                                    <input class="form-control" id="email" placeholder="Email" required="" type="text">
-                                </div>
-                                <div class="col-md-12">
-                                    <label for="review">Review Title</label>
-                                    <input class="form-control" id="review" placeholder="Enter your Review Subjects"
-                                           required="" type="text">
-                                </div>
-                                <div class="col-md-12">
-                                    <label for="review">Review Title</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1"
-                                              placeholder="Wrire Your Testimonial Here" rows="6"></textarea>
-                                </div>
-                                <div class="col-md-12">
-                                    <button class="btn btn-solid" type="submit">Submit YOur
-                                        Review
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+
                 </div>
             </div>
         </div>
     </div>
 </section>
-<div class="zoomContainer"
-     style="-webkit-transform: translateZ(0);position:absolute;left:117.5px;top:335px;height:742px;width:546px;">
-    <div class="zoomWindowContainer" style="width: 400px;">
-        <div class="zoomWindow"
-             style="z-index: 999; overflow: hidden; margin-left: 0px; margin-top: 0px; background-position: -32.3187px -258px; width: 546px; height: 742px; float: left; cursor: crosshair; background-repeat: no-repeat; position: absolute; background-image: url(&quot;../assets/images/pro3/1.jpg&quot;); top: 0px; left: 0px; display: none;">
-            &nbsp;
+<section class="section-b-space ratio_asos">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 product-related">
+                    <h2>related products</h2>
+                </div>
+            </div>
+            <div class="row search-product">
+                {% if related_product %}
+                {% for product in related_product %}
+                                                                <div class="col-xl-2 col-4 col-grid-box">
+                                                    <div class="product-box">
+                                                        <div class="img-wrapper">
+                                                            <div class="front">
+                                                                <a href="#"><img alt=""
+                                                                                 class="img-fluid blur-up lazyload bg-img"
+                                                                                 src="{{product.thumbnail_image.url}}"></a>
+                                                            </div>
+                                                            <div class="back">
+                                                                <a href="#"><img alt=""
+                                                                                 class="img-fluid blur-up lazyload bg-img"
+                                                                                 src="{{product.thumbnail_image.url}}"></a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="product-detail">
+                                                            <div>
+
+                                                                <a href="{% url 'website:product-detail' product.slug %}">
+                                                                    <h6 class="text-center">comic Title</h6>
+                                                                </a>
+                                                                <div class="text-center">
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+
+                                        </div>
+                                        <h6 class="text-center">{% for price in product.product_version.all %}
+                                            ${{price.price}}
+                                            &nbsp;&nbsp;&nbsp;
+                                            {% endfor %}</h6>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                {% endfor %}
+                {% else %}
+                <h3 class="text-danger">Related Items Not Found</h3>
+                {% endif %}
+            </div>
         </div>
-    </div>
-</div>
+    </section>
 <script>
 function enableButton() {
   var selectelem = document.getElementById('dropdown');
@@ -340,6 +280,7 @@ function enableButton() {
     btnelem.disabled = false;
   }
 }
+
 
 
 

@@ -1,4 +1,4 @@
-{% extends 'core/auth_base.html' %}
+{% extends 'base.html' %}
 
 {% load i18n %}
 {% load account socialaccount %}
@@ -6,9 +6,11 @@
 {% load socialaccount %}
 {% load crispy_forms_tags %}
 
-{% block base_title %}Logout{% endblock %}
+{% block title %}Logout{% endblock %}
 
-{% block auth_content %}
+{% block base_top_nav %}{% endblock %}
+
+{% block dont_include_details %}
 
     <div class="container text-secondary mt-5">
         <div class="row justify-content-center">
