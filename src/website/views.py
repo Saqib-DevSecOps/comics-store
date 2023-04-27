@@ -1,3 +1,5 @@
+import base64
+import io
 import json
 
 import stripe
@@ -11,9 +13,10 @@ from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView, UpdateView, DeleteView, CreateView
+from pdf2image import convert_from_path
 
 from src.administration.admins.models import (
-    Product, ProductVersion, Version, ProductImage, Post, PostCategory, Category, Order, Language, Cart,
+    Product, ProductVersion, Version, ProductImage, Post, PostCategory, Category, Order, Language, Cart, OrderItem,
 )
 from src.website.filters import ProductFilter, PostFilter
 from src.website.forms import OrderForm
@@ -30,6 +33,7 @@ class HomeTemplateView(TemplateView):
         context['new_products'] = Product.objects.order_by('-created_on')[:10]
         context['most_like'] = Product.objects.order_by('-likes')[:10]
         context['most_sale'] = Product.objects.order_by('-sales')[:10]
+        context['blogs'] = Post.objects.order_by('-created_on')[:10]
         context['top'] = Product.objects.order_by('-sales', '-likes', )[:5]
         return context
 
@@ -74,7 +78,7 @@ class ProductListView(ListView):
         else:
             product = Product.objects.all().order_by('-created_on')
         filter_product = ProductFilter(self.request.GET, queryset=product)
-        pagination = Paginator(filter_product.qs, 10)
+        pagination = Paginator(filter_product.qs, 24)
         page_number = self.request.GET.get('page')
         page_obj = pagination.get_page(page_number)
         context['products'] = page_obj
@@ -106,7 +110,7 @@ class ProductDetailView(DetailView):
 
 class PostListView(ListView):
     model = Post
-    paginate_by = 10
+    paginate_by = 24
     template_name = 'website/post_list.html'
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -120,7 +124,7 @@ class PostListView(ListView):
         context['recent'] = Post.objects.order_by('-created_on')[:5]
         context['popular_posts'] = Post.objects.order_by('-visits', '-read_time')[:5]
         filter_posts = PostFilter(self.request.GET, queryset=post)
-        pagination = Paginator(filter_posts.qs, 10)
+        pagination = Paginator(filter_posts.qs, 24)
         page_number = self.request.GET.get('page')
         page_obj = pagination.get_page(page_number)
         context['post_category'] = PostCategory.objects.all()
@@ -240,7 +244,7 @@ class OrderCreate(View):
                     {
                         'price_data': {
                             'currency': 'usd',
-                            'unit_amount': int(total_amount(request) * 100),
+                            'unit_amount': int(total_amount(request) * 10),
                             'product_data': {
                                 'name': 'Monogatari Store',
                             },
@@ -261,6 +265,11 @@ class OrderCreate(View):
             order.total = total_amount(request)
             order.stripe_payment_id = stripe_id
             order.save()
+            cart = Cart.objects.filter(user=self.request.user)
+            for cart in cart:
+                cart_item = OrderItem(product=cart.product, product_version=cart.product_version, order=order,
+                                      qty=cart.quantity)
+                cart_item.save()
             return redirect(checkout_session.url, code=303)
         else:
             form = OrderForm()
@@ -274,6 +283,7 @@ class SuccessPayment(View):
         order = Order.objects.get(user=self.request.user, stripe_payment_id=stripe_id)
         order.is_paid = order.total
         order.payment_status = 'completed'
+        order.order_status = 'shipping'
         order.save()
         context = {
             'invoice': order
@@ -288,3 +298,18 @@ class CancelPayment(TemplateView):
 
 
 """ ISSUES PAGES ---------------------------------------------------------------------------------------------- """
+
+
+class ReadSample(View):
+    def get(self, request, pk, *args, **kwargs):
+        pdf_file = Product.objects.get(id=pk)
+        images = convert_from_path(pdf_file.book_file.path, first_page=1, last_page=15)
+
+        image_data = []
+        for image in images:
+            with io.BytesIO() as output:
+                image.save(output, format='PNG')
+                image_data.append(base64.b64encode(output.getvalue()).decode('utf-8'))
+
+        context = {'images': image_data}
+        return render(request, 'client/sample_book.html', context)

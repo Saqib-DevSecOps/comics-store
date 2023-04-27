@@ -27,7 +27,7 @@ class ProductAdmin(admin.ModelAdmin):
     readonly_fields = ['created_on', 'clicks', 'sales', 'likes']
     list_display = ['id', 'name', 'book_type', 'pages', 'sales', 'is_active', 'created_on']
     fieldsets = (
-        (None, {'fields': ('thumbnail_image', 'name', 'description')}),
+        (None, {'fields': ('thumbnail_image','book_file', 'name', 'description')}),
         ('Writers and Creators', {'fields': ('artist', 'author', 'translator', 'illustrator')}),
         ('Types and Selections', {
             'fields': ('book_type', 'categories', 'languages'),

@@ -97,7 +97,7 @@
                             <a href="tab-4">New Products</a>
                         </li>
                         <li class="">
-                            <a href="tab-5">Featured Products</a>
+                            <a href="tab-5">Most Like</a>
                         </li>
                         <li class="">
                             <a href="tab-6">Best Sellers</a>
@@ -241,384 +241,55 @@
 <!-- Product slider end -->
 
 
-<!-- timer banner start -->
-<section class="game-banner">
-    <div class="container">
-        <div class="row banner-timer">
-            <div class="col-md-6">
-                <div class="banner-text">
-                    <h2>Save <span>30% off</span> Digital Watch</h2>
-                </div>
+<!-- Paragraph-->
+<div class="title1  section-t-space">
+    <h2 class="title-inner1">Latest Blogs</h2>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+            <div class="product-para">
+                <p class="text-center">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    Lorem Ipsum has been the industry's
+                    standard dummy text ever since the 1500s,</p>
             </div>
-            <div class="col-md-6">
-                <div class="timer-box">
-                    <div class="timer">
-                        <p id="demo"></p>
+        </div>
+    </div>
+</div>
+<!-- Paragraph end -->
+
+
+<!-- Product slider -->
+<section class="game-product pt-0 ratio_asos">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="product-slider-5 product-m no-arrow">
+                    {% for top in blogs %}
+                    <div class="product-box">
+                        <div class="img-wrapper">
+                            <div class="front">
+                                                                <a href="{% url 'website:post-detail' top.slug %}" class="bg-size blur-up lazyloaded" style="background-image: url({{top.thumbnail_image.url}}); background-size: cover; background-position: center center; display: block;"><img src="{{top.thumbnail_image.url}}" class="img-fluid blur-up bg-img lazyloaded" alt="" style="display: none;"></a>
+
+                            </div>
+                        </div>
+                        <div class="product-detail">
+                            <a href="#">
+                                <h6>{{top.title}}</h6>
+                                <span>{{top.created_on}}</span>
+                            </a>
+                        </div>
                     </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
     </div>
 </section>
-<!-- timer banner end-->
+<!-- Product slider end -->
 
 
-<!-- product slider -->
-<section class="section-b-space">
-    <div class="container">
-        <div class="row multiple-slider">
-            <div class="col-lg-3 col-sm-6">
-                <div class="theme-card">
-                    <h5 class="title-border">new products</h5>
-                    <div class="offer-slider slide-1">
-                        <div>
-                            <div class="media">
-                                <a href="#"><img alt=""
-                                                 class="img-fluid blur-up lazyload"
-                                                 src="{% static 'website/images/game/pro/14.jpg' %}"></a>
-                                <div class="media-body align-self-center">
-                                    <div class="rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                    <a href="#">
-                                        <h6>Slim Fit Cotton Shirt</h6>
-                                    </a>
-                                    <h4>$500.00
-                                        <del>$600.00</del>
-                                    </h4>
-                                </div>
-                            </div>
-                            <div class="media">
-                                <a href="#"><img alt=""
-                                                 class="img-fluid blur-up lazyload"
-                                                 src="{% static 'website/images/game/pro/12.jpg' %}"></a>
-                                <div class="media-body align-self-center">
-                                    <div class="rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                    <a href="#">
-                                        <h6>Slim Fit Cotton Shirt</h6>
-                                    </a>
-                                    <h4>$500.00</h4>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="media">
-                                <a href="#"><img alt=""
-                                                 class="img-fluid blur-up lazyload"
-                                                 src="{% static 'website/images/game/pro/10.jpg' %}"></a>
-                                <div class="media-body align-self-center">
-                                    <div class="rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                    <a href="#">
-                                        <h6>Slim Fit Cotton Shirt</h6>
-                                    </a>
-                                    <h4>$500.00
-                                        <del>$600.00</del>
-                                    </h4>
-                                </div>
-                            </div>
-                            <div class="media">
-                                <a href="#"><img alt=""
-                                                 class="img-fluid blur-up lazyload"
-                                                 src="{% static 'website/images/game/pro/11.jpg' %}"></a>
-                                <div class="media-body align-self-center">
-                                    <div class="rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                    <a href="#">
-                                        <h6>Slim Fit Cotton Shirt</h6>
-                                    </a>
-                                    <h4>$500.00</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="theme-card">
-                    <h5 class="title-border">feature product</h5>
-                    <div class="offer-slider slide-1">
-                        <div>
-                            <div class="media">
-                                <a href="#"><img alt=""
-                                                 class="img-fluid blur-up lazyload"
-                                                 src="{% static 'website/images/game/pro/1.jpg' %}"></a>
-                                <div class="media-body align-self-center">
-                                    <div class="rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                    <a href="#">
-                                        <h6>Slim Fit Cotton Shirt</h6>
-                                    </a>
-                                    <h4>$500.00
-                                        <del>$600.00</del>
-                                    </h4>
-                                </div>
-                            </div>
-                            <div class="media">
-                                <a href="#"><img alt=""
-                                                 class="img-fluid blur-up lazyload"
-                                                 src="{% static 'website/images/game/pro/2.jpg' %}"></a>
-                                <div class="media-body align-self-center">
-                                    <div class="rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                    <a href="#">
-                                        <h6>Slim Fit Cotton Shirt</h6>
-                                    </a>
-                                    <h4>$500.00</h4>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="media">
-                                <a href="#"><img alt=""
-                                                 class="img-fluid blur-up lazyload"
-                                                 src="{% static 'website/images/game/pro/3.jpg' %}"></a>
-                                <div class="media-body align-self-center">
-                                    <div class="rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                    <a href="#">
-                                        <h6>Slim Fit Cotton Shirt</h6>
-                                    </a>
-                                    <h4>$500.00
-                                        <del>$600.00</del>
-                                    </h4>
-                                </div>
-                            </div>
-                            <div class="media">
-                                <a href="#"><img alt=""
-                                                 class="img-fluid blur-up lazyload"
-                                                 src="{% static 'website/images/game/pro/4.jpg' %}"></a>
-                                <div class="media-body align-self-center">
-                                    <div class="rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                    <a href="#">
-                                        <h6>Slim Fit Cotton Shirt</h6>
-                                    </a>
-                                    <h4>$500.00</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="theme-card">
-                    <h5 class="title-border">best seller</h5>
-                    <div class="offer-slider slide-1">
-                        <div>
-                            <div class="media">
-                                <a href="#"><img alt=""
-                                                 class="img-fluid blur-up lazyload"
-                                                 src="{% static 'website/images/game/pro/5.jpg' %}"></a>
-                                <div class="media-body align-self-center">
-                                    <div class="rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                    <a href="#">
-                                        <h6>Slim Fit Cotton Shirt</h6>
-                                    </a>
-                                    <h4>$500.00
-                                        <del>$600.00</del>
-                                    </h4>
-                                </div>
-                            </div>
-                            <div class="media">
-                                <a href="#"><img alt=""
-                                                 class="img-fluid blur-up lazyload"
-                                                 src="{% static 'website/images/game/pro/6.jpg' %}"></a>
-                                <div class="media-body align-self-center">
-                                    <div class="rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                    <a href="#">
-                                        <h6>Slim Fit Cotton Shirt</h6>
-                                    </a>
-                                    <h4>$500.00</h4>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="media">
-                                <a href="#"><img alt=""
-                                                 class="img-fluid blur-up lazyload"
-                                                 src="{% static 'website/images/game/pro/18.jpg' %}"></a>
-                                <div class="media-body align-self-center">
-                                    <div class="rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                    <a href="#">
-                                        <h6>Slim Fit Cotton Shirt</h6>
-                                    </a>
-                                    <h4>$500.00
-                                        <del>$600.00</del>
-                                    </h4>
-                                </div>
-                            </div>
-                            <div class="media">
-                                <a href="#"><img alt=""
-                                                 class="img-fluid blur-up lazyload"
-                                                 src="{% static 'website/images/game/pro/19.jpg' %}"></a>
-                                <div class="media-body align-self-center">
-                                    <div class="rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                    <a href="#">
-                                        <h6>Slim Fit Cotton Shirt</h6>
-                                    </a>
-                                    <h4>$500.00</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="theme-card">
-                    <h5 class="title-border">best seller</h5>
-                    <div class="offer-slider slide-1">
-                        <div>
-                            <div class="media">
-                                <a href="#"><img alt=""
-                                                 class="img-fluid blur-up lazyload"
-                                                 src="{% static 'website/images/game/pro/5.jpg' %}"></a>
-                                <div class="media-body align-self-center">
-                                    <div class="rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                    <a href="#">
-                                        <h6>Slim Fit Cotton Shirt</h6>
-                                    </a>
-                                    <h4>$500.00
-                                        <del>$600.00</del>
-                                    </h4>
-                                </div>
-                            </div>
-                            <div class="media">
-                                <a href="#"><img alt=""
-                                                 class="img-fluid blur-up lazyload"
-                                                 src="{% static 'website/images/game/pro/6.jpg' %}"></a>
-                                <div class="media-body align-self-center">
-                                    <div class="rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                    <a href="#">
-                                        <h6>Slim Fit Cotton Shirt</h6>
-                                    </a>
-                                    <h4>$500.00</h4>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="media">
-                                <a href="#"><img alt=""
-                                                 class="img-fluid blur-up lazyload"
-                                                 src="{% static 'website/images/game/pro/18.jpg' %}"></a>
-                                <div class="media-body align-self-center">
-                                    <div class="rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                    <a href="#">
-                                        <h6>Slim Fit Cotton Shirt</h6>
-                                    </a>
-                                    <h4>$500.00
-                                        <del>$600.00</del>
-                                    </h4>
-                                </div>
-                            </div>
-                            <div class="media">
-                                <a href="#"><img alt=""
-                                                 class="img-fluid blur-up lazyload"
-                                                 src="{% static 'website/images/game/pro/19.jpg' %}"></a>
-                                <div class="media-body align-self-center">
-                                    <div class="rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                    <a href="#">
-                                        <h6>Slim Fit Cotton Shirt</h6>
-                                    </a>
-                                    <h4>$500.00</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- product slider end -->
+
 
 
 <!-- Parallax section start -->
