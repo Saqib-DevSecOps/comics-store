@@ -1,9 +1,14 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.urls import reverse
 from tinymce.models import HTMLField
 
 from src.accounts.models import User
+from faker import Faker
+
+fake = Faker()
+
 
 """ INVENTORY """
 
@@ -14,10 +19,31 @@ class Language(models.Model):
     def __str__(self):
         return self.name
 
+    @classmethod
+    def fake(cls, total=10):
+        print()
+        print("- Langauge: build")
+        for x in range(total):
+            Language.objects.create(
+                name=fake.language_code(),
+            )
+            print(f"---- Language: {x} faked.")
+        print("- END ")
+        print()
+
+
+def book_category_validation(value):
+    if not value == "physical" or not value == "digital":
+        raise ValidationError("You can only use digital or physical for categories names")
+
+    if Category.objects.count() > 2:
+        raise ValidationError("You can only add 2 categories [digital and physical]")
+
+    return value
+
 
 class Category(models.Model):
-    name = models.CharField(max_length=255)
-    parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True)
+    name = models.CharField(max_length=255, unique=True, validators=[book_category_validation])
 
     is_active = models.BooleanField(default=True)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -29,12 +55,38 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    @classmethod
+    def fake(cls, total=10):
+        print()
+        print("- Category: build")
+        Category.objects.create(
+            name="physical",
+        )
+        Category.objects.create(
+            name="digital",
+        )
+        print(f"---- Categories: faked.")
+        print("- END ")
+        print()
+
 
 class Version(models.Model):
     name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
+
+    @classmethod
+    def fake(cls, total=2):
+        print()
+        print("- Version: build")
+
+        Version.objects.get_or_create(name='digital')
+        Version.objects.get_or_create(name='physical')
+
+        print(f"---- Version: faked.")
+        print("- END ")
+        print()
 
 
 class Product(models.Model):
@@ -64,6 +116,33 @@ class Product(models.Model):
 
     is_active = models.BooleanField(default=True)
     created_on = models.DateTimeField(auto_now_add=True)
+
+    @classmethod
+    def fake(cls, total=10):
+        print()
+        print("- Product: build")
+        for x in range(total):
+            product = Product.objects.create(
+                name=fake.bs(),
+                description=fake.paragraph(nb_sentences=1),
+                artist=fake.name(),
+                author=fake.name(),
+                translator=fake.name(),
+                illustrator=fake.name(),
+                pages=fake.random_number(digits=3, fix_len=False),
+                sales=fake.random_number(digits=3, fix_len=False),
+                likes=fake.random_number(digits=3, fix_len=False),
+                clicks=fake.random_number(digits=3, fix_len=False),
+            )
+            # categories = Category.objects.order_by('?')[0:2]
+            # languages = Category.objects.order_by('?')[0:3]
+            # product.languages.bulk_create(languages)
+            # product.categories.bulk_create(categories)
+            product.save()
+
+            print(f"---- Product: {x} faked.")
+        print("- END ")
+        print()
 
     class Meta:
         ordering = ['-created_on']
@@ -101,7 +180,25 @@ class ProductVersion(models.Model):
         ordering = ''
 
     def __str__(self):
-        return f"{self.product.name} {self.version.name}"
+        return f"{self.pk}"
+
+    @classmethod
+    def fake(cls):
+        print()
+        print("- ProductVersion: build")
+        for product in Product.objects.all():
+            for version in Version.objects.all():
+                if not ProductVersion.objects.filter(product=product, version=version):
+                    ProductVersion.objects.create(
+                        version=version,
+                        product=product,
+                        isbn=fake.isbn10(),
+                        price=fake.random_number(digits=3, fix_len=False),
+                    )
+
+            print(f"---- ProductVersion: faked.")
+        print("- END ")
+        print()
 
 
 class ProductImage(models.Model):
@@ -180,18 +277,61 @@ class Order(models.Model):
     def order_items(self):
         return OrderItem.objects.filter(order=self)
 
+    @classmethod
+    def fake(cls, total=10):
+        print()
+        print("- Order: build")
+
+        for x in range(total):
+            Order.objects.create(
+                user=User.objects.order_by('?')[0],
+                name=fake.name(),
+                street_address=fake.street_address(),
+                city=fake.name(),
+                postal_code=fake.building_number(),
+                country=fake.city(),
+                phone=fake.msisdn(),
+                email=fake.simple_profile()['mail'],
+                total=fake.random_number(digits=3, fix_len=False),
+                paid=fake.random_number(digits=3, fix_len=False),
+                stripe_payment_id=fake.isbn10(),
+            )
+            print(f"---- Order {x} : faked.")
+
+        print("- END ")
+        print()
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     product_version = models.ForeignKey(ProductVersion, on_delete=models.CASCADE)
-    qty = models.PositiveIntegerField(default=0)
+    qty = models.PositiveIntegerField(default=1)
 
     class Meta:
         ordering = ['order']
 
     def __str__(self):
         return f"{self.order} {self.product.name}."
+
+    @classmethod
+    def fake(cls):
+        print()
+        print("- Product Version: build")
+
+        for order in Order.objects.all():
+            products = Product.objects.order_by('?')[0:3]
+            for product in products:
+                product_version = product.product_version.order_by('?')[0]
+                OrderItem.objects.create(
+                    order=order,
+                    product=product,
+                    product_version=product_version,
+                )
+                print(f"---- Product Version {product.pk}: faked.")
+
+        print("- END ")
+        print()
 
 
 """ BLOG DETAILS """
@@ -210,6 +350,18 @@ class PostCategory(models.Model):
 
     def __str__(self):
         return self.name
+
+    @classmethod
+    def fake(cls, total=10):
+        print()
+        print("- PostCategory: build")
+        for x in range(total):
+            PostCategory.objects.create(
+                name=fake.bs(),
+            )
+            print(f"---- PostCategory: {x} faked.")
+        print("- END ")
+        print()
 
 
 class Post(models.Model):
@@ -245,6 +397,23 @@ class Post(models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
+
+    @classmethod
+    def fake(cls, total=10):
+        print()
+        print("- Post: build")
+        for x in range(total):
+            Post.objects.create(
+                title=fake.sentence(nb_words=8),
+                author=User.objects.order_by('?').first(),
+                category=PostCategory.objects.order_by('?').first(),
+                read_time=fake.random_number(digits=2, fix_len=False),
+                visits=fake.random_number(digits=2, fix_len=False),
+                content=fake.paragraph(nb_sentences=5),
+            )
+            print(f"---- Post: {x} faked.")
+        print("- END ")
+        print()
 
 
 class Wishlist(models.Model):

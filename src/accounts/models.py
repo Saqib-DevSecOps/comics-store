@@ -5,6 +5,9 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from django_resized import ResizedImageField
+from faker import Faker
+
+fake = Faker()
 
 """
 At the start please be careful to start migrations
@@ -52,11 +55,26 @@ class User(AbstractUser):
         self.profile_image.delete(save=True)
         super(User, self).delete(*args, **kwargs)
 
-    def fake(self, total=1):
-        for count in range(0,total):
-            User.objects.create(
+    @classmethod
+    def fake(cls, total=10):
 
+        print()
+        print("- User: build")
+        for count in range(total):
+            profile = fake.simple_profile()
+            user = User.objects.create_user(
+                username=profile['username'],
+                email=profile['mail'],
+                password=fake.isbn13()
             )
+            user.first_name = fake.first_name()
+            user.last_name = fake.first_name()
+            user.phone_number = fake.msisdn()
+            user.save()
+            print(f"---- User: faked.")
+
+        print("- END ")
+        print()
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL, dispatch_uid="user_registered")

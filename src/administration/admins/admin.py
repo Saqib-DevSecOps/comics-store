@@ -14,7 +14,7 @@ class VersionAdmin(admin.ModelAdmin):
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'parent', 'is_active', 'created_on']
+    list_display = ['id', 'name', 'is_active', 'created_on']
 
 
 class VersionInline(admin.TabularInline):
