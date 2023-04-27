@@ -1,3 +1,4 @@
+import PyPDF2
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
@@ -6,10 +7,17 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.generic import TemplateView, UpdateView, ListView, DetailView
+from fitz import fitz
+from pdf2image import convert_from_bytes
 
 from src.accounts.models import Address
 from src.administration.admins.models import Wishlist, Order, Product, OrderItem
 from src.administration.client.forms import AddressForm, UserProfileForm
+
+import io
+from PyPDF2 import PdfFileReader
+from PIL import Image
+from django.shortcuts import get_object_or_404, render
 
 
 # Create your views here.
@@ -130,15 +138,34 @@ def download_file(request, pk):
     product = get_object_or_404(Product, id=pk)
     print(product)
     print(product.book_file)
-    file_path = f'media/books/pdf/{product.book_file}'
+    file_path = f'media/{product.book_file}'
     print(file_path)
     # Open the file in binary mode using the built-in open() function
     with open(file_path, 'rb') as file:
-        response = HttpResponse(file.read(), content_type='application/octet-stream')
-        response['Content-Disposition'] = 'attachment;filename=example.txt'
-        return response
+        with open(file_path, 'rb') as file:
+            response = HttpResponse(file.read(), content_type='application/octet-stream')
+            response['Content-Disposition'] = f'attachment; filename="{product.book_file}"'
+            return response
 
 
 class ReadSample(View):
     def get(self, request, *args, **kwargs):
-        return render(request, 'client/sample_book.html')
+        my_object = get_object_or_404(Product, pk=self.kwargs['pk'])
+        pdf_file = my_object.book_file
+        pdf_bytes = pdf_file.read()
+
+        pages = convert_from_bytes(pdf_bytes, size=(None, None), first_page=1, last_page=10)
+
+        # Store the image data in a list of byte arrays
+        images = []
+        for page in pages:
+            img_bytes = io.BytesIO()
+            page.save(img_bytes, format='PNG')
+            images.append(img_bytes.getvalue())
+
+            # Pass the image data to the template via the context dictionary
+            context = {
+                'images': images,
+            }
+
+        return render(self.request, 'client/sample_book.html')

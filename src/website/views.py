@@ -30,6 +30,7 @@ class HomeTemplateView(TemplateView):
         context['new_products'] = Product.objects.order_by('-created_on')[:10]
         context['most_like'] = Product.objects.order_by('-likes')[:10]
         context['most_sale'] = Product.objects.order_by('-sales')[:10]
+        context['blogs'] = Post.objects.order_by('-created_on')[:10]
         context['top'] = Product.objects.order_by('-sales', '-likes', )[:5]
         return context
 
