@@ -112,7 +112,6 @@ class PostListView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(PostListView, self).get_context_data(**kwargs)
         category = self.request.GET.get('category')
-        print(category)
 
         if category and self.request is not None:
             post = Post.objects.filter(category__id=category)
@@ -123,7 +122,6 @@ class PostListView(ListView):
         filter_posts = PostFilter(self.request.GET, queryset=post)
         pagination = Paginator(filter_posts.qs, 10)
         page_number = self.request.GET.get('page')
-        print(page_number)
         page_obj = pagination.get_page(page_number)
         context['post_category'] = PostCategory.objects.all()
         context['posts'] = page_obj

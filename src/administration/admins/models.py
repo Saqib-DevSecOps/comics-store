@@ -219,6 +219,7 @@ class Post(models.Model):
     thumbnail_image = models.ImageField(upload_to='books/images/posts', null=True, blank=True)
     slug = models.SlugField(unique=True, null=False)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')
+    category = models.ForeignKey(PostCategory, on_delete=models.SET_NULL, blank=False, null=True)
     content = HTMLField()
 
     read_time = models.PositiveIntegerField(default=0, help_text='read time in minutes')

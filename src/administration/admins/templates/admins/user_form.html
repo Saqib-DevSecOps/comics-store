@@ -2,11 +2,11 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
-{% block base_subtitle %}Employee Form {% endblock %}
-{% block base_subhead_heading %}Employee &rAarr; Form {% endblock %}
-{% block base_subhead_paragraph %}Employee create/update form{% endblock %}
+{% block base_subtitle %}User Form {% endblock %}
+{% block base_subhead_heading %}User &rAarr; Form {% endblock %}
+{% block base_subhead_paragraph %}User create/update form{% endblock %}
 {% block base_subhead_button %}
-    <a href="{% url 'admins:user-list' %}">&larr; Users</a>
+    <a href="{% url 'admins:user-list' %}" class="btn btn-ghost-primary">&larr; Users</a>
 {% endblock %}
 
 
@@ -15,37 +15,30 @@
     <div class="row justify-content-center">
         <div class="col-sm-6">
             <div class="card">
+
+                <div class="card-body text-center">
+                    {% if object %}
+                        <div class="mb-2">
+                            {% if not form.instance.profile_image %}
+                                <img src="{% static 'required/images/no-user.png' %}" height="100"
+                                     class="rounded-circle">
+                            {% else %}
+                                <img src="{{ form.instance.profile_image.url }}" height="100"
+                                     class="rounded-circle">
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
                 <div class="card-body">
 
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
-
-                        {% if object %}
-                            <div class="mb-2">
-                                {% if not form.instance.profile_image %}
-                                    <img src="{% static 'required/images/no-image.jpg' %}" height="100" class="rounded-circle">
-                                {% else %}
-                                    <img src="{{ form.instance.profile_image.url }}" height="100"
-                                         class="rounded-circle">
-                                {% endif %}
-                            </div>
-                        {% endif %}
 
                         {{ form|crispy }}
 
                         <button type="submit" class="btn btn-primary">
                             <i class="fa fa-check-circle"></i>&nbsp;Submit
                         </button>
-
-                        {% if object %}
-                            <a type="button" class="btn btn-primary"
-                               href="{% url 'admins:user-password-reset' object.pk %}">
-                                <i class="fa fa-user-secret"></i>&nbsp;Password Reset
-                            </a>
-                            <a type="button" class="btn btn-danger" href="{% url 'admins:user-delete' object.pk %}">
-                                <i class="fa fa-trash"></i>&nbsp;Delete
-                            </a>
-                        {% endif %}
                     </form>
 
                 </div>

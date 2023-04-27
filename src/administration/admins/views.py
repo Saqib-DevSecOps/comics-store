@@ -82,7 +82,7 @@ class UserListView(ListView):
 @method_decorator(admin_protected, name='dispatch')
 class UserUpdateView(UpdateView):
     model = User
-    fields = ['profile_image', 'first_name', 'last_name', 'email', 'username', 'is_staff', 'is_employee', 'is_active']
+    fields = ['profile_image', 'first_name', 'last_name', 'email', 'username', 'is_staff', 'is_client', 'is_active']
     template_name = 'admins/user_form.html'
     success_url = reverse_lazy('admins:user-list')
 
@@ -350,6 +350,11 @@ class OrderListView(ListView):
 class OrderDetailView(DetailView):
     model = Order
 
+    def get_context_data(self, **kwargs):
+        context = super(OrderDetailView, self).get_context_data(**kwargs)
+        context['orders'] = Order.objects.filter(user=self.object)
+        return context
+
 
 @method_decorator(admin_protected, name='dispatch')
 class OrderDeleteView(DeleteView):
@@ -365,6 +370,7 @@ class OrderStatusChangeView(View):
 
 
 """ BLOG """
+
 
 @method_decorator(admin_protected, name='dispatch')
 class PostListView(ListView):
@@ -399,7 +405,7 @@ class PostDeleteView(DeleteView):
 class PostUpdateView(UpdateView):
     model = Post
     fields = [
-        'image', 'title', 'author', 'read_time', 'content', 'status'
+        'thumbnail_image', 'title', 'author', 'read_time', 'content', 'status'
     ]
     success_url = reverse_lazy('admins:post-list')
 

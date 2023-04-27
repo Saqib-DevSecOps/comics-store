@@ -42,42 +42,28 @@
                         <a href="{% url 'admins:post-detail' object.pk %}">
                             <div class="img-responsive card-img-top"
                                  style="background-image: url(
-                                         {% if object.image %}{{ object.image.url }}{% else %}'{% static 'required/images/no-image-product-portrait.jpg' %}'{% endif %})">
+                                         {% if object.thumbnail_image %}{{ object.thumbnail_image.url }}{% else %}'{% static 'required/images/no-image-product-portrait.jpg' %}'{% endif %})">
                             </div>
                         </a>
                         <div class="card-body">
-                            <h3 class="card-title mb-0">{{ object.title }} <a
-                                    href="{% url 'admins:post-detail' object.pk %}"><i class="bx bx-edit"></i></a>
-                            </h3>
-                            <div class="col-auto d-flex align-items-center pe-2">
-                                <span class="legend me-2 bg-success"></span>
-                                <span>{{ object.author }}</span>
-                            </div>
-                            <p class="text-muted mt-2">{{ object.description }}</p>
+                            <a href="{% url 'admins:post-detail' object.pk %}" class="text-decoration-none">
+                                <h3 class="card-title mb-0">{{ object.title }}</h3>
+                            </a>
+                            <p class="text-muted mt-2">{% lorem 20 w %}</p>
+
+                            <span class="status status-green pl-0">
+                                name
+                            </span>
                         </div>
                         <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div>
-                                    <div class="text-muted">
-                                        <a href="#" class="text-muted">
-                                            <i class="mdi mdi-eye"></i>
-                                            View
-                                        </a>
-                                        <a href="{% url 'admins:post-update' object.pk %}" class="ms-3 text-muted">
-                                            <i class="mdi mdi-file-edit-outline"></i>
-                                            Change
-                                        </a>
+                            <div class="">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <b><i class="bx bx-book"></i>{{ object.read_time }}</b>
                                     </div>
-                                </div>
-                                <div class="ms-auto">
-                                    <a href="#" class="text-muted">
-                                        <i class="mdi mdi-clock"></i>
-                                        {{ object.read_time }}
-                                    </a>
-                                    <a href="#" class="ms-3 text-muted">
-                                        <i class="mdi mdi-cursor-pointer"></i>
-                                        {{ object.visits }}
-                                    </a>
+                                    <div class="col-6">
+                                        <b><i class="bx bx-mouse"></i>{{ object.visits }}</b>
+                                    </div>
                                 </div>
                             </div>
                         </div>
