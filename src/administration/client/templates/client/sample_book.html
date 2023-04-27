@@ -130,139 +130,9 @@
             <div id="fb5-book">
 
 
-                <!-- BEGIN PAGE 1-->
-                <div class="" data-background-image="">
-
-                    <!-- begin container page book -->
-                    <div class="fb5-cont-page-book">
-
-                        <!-- description for page  -->
-                        <div class="fb5-page-book">
-                            <div id="fb5-cover">
-                                <ul>
-                                    <li><a href="javascript:setPage(2)"><img data-src="{% static 'flip_book/img/cover-photo1.jpg' %}"></a></li>
-                                    <li><a href="javascript:youtube('zWzRrqEvfPU','560','315')"><img
-                                            data-src="{% static 'flip_book/img/cover-photo2.jpg' %}"></a></li>
-                                    <li><a href="javascript:youtube('48I0IHmsuOE','560','315')"><img
-                                            data-src="{% static 'flip_book/img/cover-photo3.jpg' %}"></a></li>
-                                </ul>
-                                <img data-src="img/logo-on-book.png" id="fb5-logo-cover">
-                            </div>
-                        </div>
-                        <!-- end description for page  -->
-
-                        <!-- number page and title -->
-                        <div class="fb5-meta">
-                            <span class="fb5-description"></span>
-                            <span class="fb5-num"></span>
-                        </div>
-                        <!-- end number page and title  -->
-                    </div>
-                    <!-- end container page book -->
-
-                </div>
-                <!-- END PAGE 1 -->
-
-                <!-- BEGIN PAGE 1-->
-                <div class="" data-background-image="">
-
-                    <!-- begin container page book -->
-                    <div class="fb5-cont-page-book">
-
-                        <!-- description for page  -->
-                        <div class="fb5-page-book">
-                            <div id="fb5-cover">
-                                <ul>
-                                    <li><a href="javascript:setPage(2)"><img data-src="{% static 'flip_book/img/cover-photo1.jpg' %}"></a></li>
-                                    <li><a href="javascript:youtube('zWzRrqEvfPU','560','315')"><img
-                                            data-src="{% static 'flip_book/img/cover-photo2.jpg' %}"></a></li>
-                                    <li><a href="javascript:youtube('48I0IHmsuOE','560','315')"><img
-                                            data-src="{% static 'flip_book/img/cover-photo3.jpg' %}"></a></li>
-                                </ul>
-                                <img data-src="img/logo-on-book.png" id="fb5-logo-cover">
-                            </div>
-                        </div>
-                        <!-- end description for page  -->
-
-                        <!-- number page and title -->
-                        <div class="fb5-meta">
-                            <span class="fb5-description"></span>
-                            <span class="fb5-num"></span>
-                        </div>
-                        <!-- end number page and title  -->
-                    </div>
-                    <!-- end container page book -->
-
-                </div>
-                <!-- END PAGE 1 -->
-
-                <!-- BEGIN PAGE 1-->
-                <div class="" data-background-image="">
-
-                    <!-- begin container page book -->
-                    <div class="fb5-cont-page-book">
-
-                        <!-- description for page  -->
-                        <div class="fb5-page-book">
-                            <div id="fb5-cover">
-                                <ul>
-                                    <li><a href="javascript:setPage(2)"><img data-src="{% static 'flip_book/img/cover-photo1.jpg' %}"></a></li>
-                                    <li><a href="javascript:youtube('zWzRrqEvfPU','560','315')"><img
-                                            data-src="{% static 'flip_book/img/cover-photo2.jpg' %}"></a></li>
-                                    <li><a href="javascript:youtube('48I0IHmsuOE','560','315')"><img
-                                            data-src="{% static 'flip_book/img/cover-photo3.jpg' %}"></a></li>
-                                </ul>
-                                <img data-src="img/logo-on-book.png" id="fb5-logo-cover">
-                            </div>
-                        </div>
-                        <!-- end description for page  -->
-
-                        <!-- number page and title -->
-                        <div class="fb5-meta">
-                            <span class="fb5-description"></span>
-                            <span class="fb5-num"></span>
-                        </div>
-                        <!-- end number page and title  -->
-                    </div>
-                    <!-- end container page book -->
-
-                </div>
-                <!-- END PAGE 1 -->
-
-                <!-- BEGIN PAGE 1-->
-                <div class="" data-background-image="">
-
-                    <!-- begin container page book -->
-                    <div class="fb5-cont-page-book">
-
-                        <!-- description for page  -->
-                        <div class="fb5-page-book">
-                            <div id="fb5-cover">
-                                <ul>
-                                    <li><a href="javascript:setPage(2)"><img data-src="{% static 'flip_book/img/cover-photo1.jpg' %}"></a></li>
-                                    <li><a href="javascript:youtube('zWzRrqEvfPU','560','315')"><img
-                                            data-src="{% static 'flip_book/img/cover-photo2.jpg' %}"></a></li>
-                                    <li><a href="javascript:youtube('48I0IHmsuOE','560','315')"><img
-                                            data-src="{% static 'flip_book/img/cover-photo3.jpg' %}"></a></li>
-                                </ul>
-                                <img data-src="img/logo-on-book.png" id="fb5-logo-cover">
-                            </div>
-                        </div>
-                        <!-- end description for page  -->
-
-                        <!-- number page and title -->
-                        <div class="fb5-meta">
-                            <span class="fb5-description"></span>
-                            <span class="fb5-num"></span>
-                        </div>
-                        <!-- end number page and title  -->
-                    </div>
-                    <!-- end container page book -->
-
-                </div>
-                <!-- END PAGE 1 -->
-
-
+         {% for image in images %}
+    <img src="data:image/png;base64,{{ image }}" alt="Image">
+{% endfor %}
 
             </div>
             <!-- END BOOK -->
@@ -288,10 +158,6 @@
             <div class="fb5-menu" id="fb5-center">
                 <ul>
 
-                    <!-- icon download -->
-                    <li>
-                        <a class="fb5-download" href="img/file.pdf" title="DOWNLOAD (ZIP)  "></a>
-                    </li>
 
 
                     <!-- icon_zoom_in -->
@@ -317,16 +183,6 @@
 
 
                     <!-- icon_allpages -->
-                    <li>
-                        <a class="fb5-show-all" title="SHOW ALL PAGES "></a>
-                    </li>
-
-
-                    <!-- icon_home -->
-                    <li>
-                        <a class="fb5-home" title="SHOW HOME PAGE "></a>
-                    </li>
-
                 </ul>
             </div>
 

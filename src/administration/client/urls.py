@@ -1,7 +1,7 @@
 from django.urls import path
 
 from src.administration.client.views import ClientDashboard, WishlistView, WishListDelete, UserUpdateView, \
-    AddressUpdate, WishCreateView, OrderListView, AddressList, BooksListView, download_file,ReadSample
+    AddressUpdate, WishCreateView, OrderListView, AddressList, BooksListView, download_file,ReadBook
 
 app_name = 'client'
 urlpatterns = [
@@ -19,6 +19,6 @@ urlpatterns = [
     path('user/address/update/', AddressUpdate.as_view(), name='user-address-update'),
 
     path('download-file/<str:pk>', download_file, name='download_file'),
-    path('sample/book/<str:pk>', ReadSample.as_view(), name='sample'),
+    path('read/book/<str:pk>', ReadBook.as_view(), name='read_book'),
 
 ]

@@ -37,6 +37,7 @@
                                     </div>
                                     <div class="table-responsive-xl">
                                         {% if objects %}
+
                                         <table class="table cart-table wishlist-table">
                                             <thead>
                                             <tr class="table-head">
@@ -59,7 +60,7 @@
                                                 </td>
                                                 <td>
                                                     <a href="{% url  'client:download_file' object.product.id %}"><i class="fa fa-download"></i></a>
-                                                    <a href="#"><i class="fa fa-eye mx-1"></i></a>
+                                                    <a href="{% url 'client:read_book' object.product.id %}"><i class="fa fa-eye mx-1"></i></a>
                                                 </td>
 
 

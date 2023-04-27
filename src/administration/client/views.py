@@ -1,3 +1,5 @@
+import base64
+
 import PyPDF2
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -8,7 +10,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.generic import TemplateView, UpdateView, ListView, DetailView
 from fitz import fitz
-from pdf2image import convert_from_bytes
+from pdf2image import convert_from_bytes, convert_from_path
 
 from src.accounts.models import Address
 from src.administration.admins.models import Wishlist, Order, Product, OrderItem
@@ -107,10 +109,10 @@ class OrderListView(ListView):
     template_name = 'client/order_list.html'
     context_object_name = 'objects'
 
-    # def get_queryset(self):
-    #     return self.model.objects.filter(order__user=self.request.user).exclude(Q(order__order_status='completed')
-    #                                                                             | Q(order__order_status='cancelled')
-    #                                                                             )
+    def get_queryset(self):
+        return self.model.objects.filter(order__user=self.request.user).exclude(Q(order__order_status='completed')
+                                                                                | Q(order__order_status='cancelled')
+                                                                                )
 
 
 @method_decorator(login_required, name='dispatch')
@@ -129,8 +131,8 @@ class BooksListView(ListView):
     template_name = 'client/books.html'
     context_object_name = 'objects'
 
-    # def get_queryset(self):
-    #     return self.model.objects.filter(order__user=self.request.user)
+    def get_queryset(self):
+        return self.model.objects.filter(order__user=self.request.user)
 
 
 def download_file(request, pk):
@@ -148,24 +150,17 @@ def download_file(request, pk):
             return response
 
 
-class ReadSample(View):
-    def get(self, request, *args, **kwargs):
-        my_object = get_object_or_404(Product, pk=self.kwargs['pk'])
-        pdf_file = my_object.book_file
-        pdf_bytes = pdf_file.read()
+@method_decorator(login_required, name='dispatch')
+class ReadBook(View):
+    def get(self, request, pk, *args, **kwargs):
+        pdf_file = Product.objects.get(id=pk)
+        images = convert_from_path(pdf_file.book_file.path)
 
-        pages = convert_from_bytes(pdf_bytes, size=(None, None), first_page=1, last_page=10)
+        image_data = []
+        for image in images:
+            with io.BytesIO() as output:
+                image.save(output, format='PNG')
+                image_data.append(base64.b64encode(output.getvalue()).decode('utf-8'))
 
-        # Store the image data in a list of byte arrays
-        images = []
-        for page in pages:
-            img_bytes = io.BytesIO()
-            page.save(img_bytes, format='PNG')
-            images.append(img_bytes.getvalue())
-
-            # Pass the image data to the template via the context dictionary
-            context = {
-                'images': images,
-            }
-
-        return render(self.request, 'client/sample_book.html')
+        context = {'images': image_data}
+        return render(request, 'client/sample_book.html', context)
