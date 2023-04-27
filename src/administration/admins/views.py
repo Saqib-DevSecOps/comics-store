@@ -23,6 +23,14 @@ from src.administration.admins.models import Category, PostCategory, Product, Pr
 class DashboardView(TemplateView):
     template_name = 'admins/dashboard.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(DashboardView, self).get_context_data(**kwargs)
+        context['blogs'] = Post.objects.count()
+        context['orders'] = Order.objects.count()
+        context['users'] = User.objects.filter(is_staff=False).count()
+        context['novels'] = Product.objects.count()
+        return context
+
 
 @method_decorator(admin_protected, name='dispatch')
 class UserOwnUpdateView(View):
@@ -82,9 +90,12 @@ class UserListView(ListView):
 @method_decorator(admin_protected, name='dispatch')
 class UserUpdateView(UpdateView):
     model = User
-    fields = ['profile_image', 'first_name', 'last_name', 'email', 'username', 'is_staff', 'is_employee', 'is_active']
+    fields = ['profile_image', 'first_name', 'last_name', 'email', 'username', 'is_staff', 'is_client', 'is_active']
     template_name = 'admins/user_form.html'
     success_url = reverse_lazy('admins:user-list')
+
+    def get_success_url(self):
+        return reverse_lazy('admins:user-detail', args=(self.object.pk, ))
 
 
 @method_decorator(admin_protected, name='dispatch')
@@ -93,6 +104,9 @@ class UserCreateView(CreateView):
     fields = ['profile_image', 'first_name', 'last_name', 'email', 'username', 'is_active']
     template_name = 'admins/user_form.html'
     success_url = reverse_lazy('admins:user-list')
+
+    def get_success_url(self):
+        return reverse_lazy('admins:user-detail', args=(self.object.pk, ))
 
 
 @method_decorator(admin_protected, name='dispatch')
@@ -126,6 +140,8 @@ class UserPasswordResetView(View):
         if form.is_valid():
             form.save(commit=True)
             messages.success(request, f"{user.get_full_name()}'s password changed successfully.")
+            return redirect('admins:user-detail', user.pk)
+
         return render(request, self.template_name, {'form': form})
 
 
@@ -350,6 +366,11 @@ class OrderListView(ListView):
 class OrderDetailView(DetailView):
     model = Order
 
+    def get_context_data(self, **kwargs):
+        context = super(OrderDetailView, self).get_context_data(**kwargs)
+        context['orders'] = Order.objects.filter(pk=self.object.pk)
+        return context
+
 
 @method_decorator(admin_protected, name='dispatch')
 class OrderDeleteView(DeleteView):
@@ -365,6 +386,7 @@ class OrderStatusChangeView(View):
 
 
 """ BLOG """
+
 
 @method_decorator(admin_protected, name='dispatch')
 class PostListView(ListView):
@@ -399,7 +421,7 @@ class PostDeleteView(DeleteView):
 class PostUpdateView(UpdateView):
     model = Post
     fields = [
-        'image', 'title', 'author', 'read_time', 'content', 'status'
+        'thumbnail_image', 'title', 'category', 'read_time', 'content', 'status'
     ]
     success_url = reverse_lazy('admins:post-list')
 
@@ -408,6 +430,10 @@ class PostUpdateView(UpdateView):
 class PostCreateView(CreateView):
     model = Post
     fields = [
-        'image', 'title', 'author', 'read_time', 'content', 'status'
+        'thumbnail_image', 'title', 'category', 'read_time', 'content', 'status'
     ]
     success_url = reverse_lazy('admins:post-list')
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super(PostCreateView, self).form_valid(form)
