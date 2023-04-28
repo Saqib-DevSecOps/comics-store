@@ -6,16 +6,16 @@ def fake_data():
         OrderItem, Order
     )
 
-    # User.fake()
+    # User.fake(total=50)
     # Language.fake()
     # Category.fake()
     # Version.fake()
-    #
-    # Product.fake()
+
+    # Product.fake(total=50)
     # ProductVersion.fake()
     #
-    # Order.fake()
+    # Order.fake(50)
     # OrderItem.fake()
     #
     # PostCategory.fake()
-    # Post.fake()
+    # Post.fake(50)

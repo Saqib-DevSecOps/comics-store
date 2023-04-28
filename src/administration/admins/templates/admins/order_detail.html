@@ -93,7 +93,9 @@
                         <img src="{% static 'required/images/no-user.png' %}" height="100" width="auto"
                              class="rounded-circle">
                     {% endif %}
-                    <h2 class="mb-0 mt-2">{{ object.user.name_or_username }}</h2>
+                    <h2 class="mb-0 mt-2">
+                        <a href="{% url 'admins:user-detail' object.user.pk %}">{{ object.user.name_or_username }}</a>
+                    </h2>
                     <p class="mb-0"><a href="mailto:{{ object.user.email }}">{{ object.user.email }}</a></p>
                 </div>
                 <div class="card-body">

@@ -56,7 +56,7 @@
                         {% endif %}
                         <div class="card-body">
                             <a href="{% url 'admins:post-detail' object.pk %}" class="text-decoration-none">
-                                <h3 class="card-title">{{ object.title }}</h3>
+                                <h3 class="card-title">{{ object.title|truncatechars:50 }}</h3>
                             </a>
                         </div>
                         <div class="card-body">

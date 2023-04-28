@@ -71,7 +71,7 @@ class User(AbstractUser):
             user.last_name = fake.first_name()
             user.phone_number = fake.msisdn()
             user.save()
-            print(f"---- User: faked.")
+            print(f"---- User: {count} faked.")
 
         print("- END ")
         print()

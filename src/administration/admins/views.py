@@ -26,7 +26,7 @@ class DashboardView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(DashboardView, self).get_context_data(**kwargs)
-        # fake_data()
+        fake_data()
         context['blogs'] = Post.objects.count()
         context['orders'] = Order.objects.count()
         context['users'] = User.objects.filter(is_staff=False).count()
@@ -356,7 +356,7 @@ class OrderListView(ListView):
         _filter = OrderFilter(self.request.GET, queryset=Order.objects.filter())
         context['filter_form'] = _filter.form
 
-        paginator = Paginator(_filter.qs, 16)
+        paginator = Paginator(_filter.qs, 25)
         page_number = self.request.GET.get('page')
         page_object = paginator.get_page(page_number)
 
@@ -393,7 +393,7 @@ class OrderStatusChangeView(View):
 @method_decorator(admin_protected, name='dispatch')
 class PostListView(ListView):
     queryset = Post.objects.all()
-    paginate_by = 25
+    paginate_by = 16
 
     def get_context_data(self, **kwargs):
         context = super(PostListView, self).get_context_data(**kwargs)
