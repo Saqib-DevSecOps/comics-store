@@ -52,7 +52,7 @@
                                 <tr class="">
                                     <td>
                                         <b>
-                                            <a href="{% url 'admins:user-detail' object.pk %}">{{ object.user.name_or_username }}</a>
+                                            <a href="{% url 'admins:user-detail' object.user.pk %}">{{ object.user.name_or_username }}</a>
                                         </b>
                                     </td>
                                     <td>{{ object.total }}</td>
