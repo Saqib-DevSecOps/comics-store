@@ -32,16 +32,6 @@ class Language(models.Model):
         print()
 
 
-def book_category_validation(value):
-    if not value == "physical" or not value == "digital":
-        raise ValidationError("You can only use digital or physical for categories names")
-
-    if Category.objects.count() > 2:
-        raise ValidationError("You can only add 2 categories [digital and physical]")
-
-    return value
-
-
 class Category(models.Model):
     name = models.CharField(max_length=255, unique=True, validators=[book_category_validation])
 
