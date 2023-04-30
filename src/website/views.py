@@ -17,6 +17,7 @@ from src.administration.admins.models import (
 )
 from src.website.filters import ProductFilter, PostFilter
 from src.website.forms import OrderForm
+from src.website.models import HomeSliderImage, Banner
 from src.website.utility import  total_amount, total_quantity
 
 """ BASIC PAGES ---------------------------------------------------------------------------------------------- """
@@ -30,6 +31,8 @@ class HomeTemplateView(TemplateView):
         context['new_products'] = Product.objects.order_by('-created_on')[:10]
         context['blogs'] = Post.objects.order_by('-created_on')[:10]
         context['top'] = Product.objects.order_by('-sales', '-likes', )[:5]
+        context['slider'] = HomeSliderImage.objects.all()
+        context['banner'] = Banner.objects.all()[:1].get()
         return context
 
 
@@ -280,12 +283,13 @@ class SuccessPayment(View):
         order.payment_status = 'completed'
         order.order_status = 'shipping'
         order.save()
-        context = {
-            'invoice': order
-        }
         cart = Cart.objects.filter(user=self.request.user)
+        for cart in cart:
+            cart_item = OrderItem(product=cart.product, product_version=cart.product_version, order=order,
+                                  qty=cart.quantity)
+            cart_item.save()
         cart.delete()
-        return render(self.request, 'website/success.html', context)
+        return render(self.request, 'website/success.html')
 
 
 class CancelPayment(View):
@@ -294,7 +298,7 @@ class CancelPayment(View):
         stripe_id = self.request.GET.get('session_id')
         order = Order.objects.get(user=self.request.user, stripe_payment_id=stripe_id)
         order.delete()
-        return render(self.request, template_name)
+        return render(self.request, template_name=self.template_name)
 
 
 """ ISSUES PAGES ---------------------------------------------------------------------------------------------- """

@@ -52,6 +52,7 @@ class AddressUpdate(UpdateView):
     def get_success_url(self):
         return reverse('client:dashboard')
 
+
 @method_decorator(login_required, name='dispatch')
 class ClientDashboard(TemplateView):
     template_name = 'client/client_dashboard.html'
@@ -127,7 +128,7 @@ class BooksListView(ListView):
     context_object_name = 'objects'
 
     def get_queryset(self):
-        return self.model.objects.filter(order__user=self.request.user)
+        return self.model.objects.filter(order__user=self.request.user, product_version__version__name='Digital')
 
 
 def download_file(request, pk):

@@ -9,7 +9,6 @@ from faker import Faker
 
 fake = Faker()
 
-
 """ INVENTORY """
 
 
@@ -71,7 +70,11 @@ class Category(models.Model):
 
 
 class Version(models.Model):
-    name = models.CharField(max_length=255)
+    VERSION_STATUS = (
+        ('Digital', 'Digital'),
+        ('Physical', 'Physical'),
+    )
+    name = models.CharField(max_length=255, choices=VERSION_STATUS)
 
     def __str__(self):
         return self.name
@@ -99,7 +102,8 @@ class Product(models.Model):
     slug = models.SlugField(null=False, unique=True)
     description = models.TextField(null=True, blank=True)
     thumbnail_image = models.ImageField(upload_to='books/images/thumbnails', null=True, blank=True)
-    book_file = models.FileField(blank=True, null=True, upload_to='books/pdf', help_text="Only pdf files are allowed to upload")
+    book_file = models.FileField(blank=True, null=True, upload_to='books/pdf',
+                                 help_text="Only pdf files are allowed to upload")
 
     artist = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
@@ -173,7 +177,7 @@ class Product(models.Model):
 
 class ProductVersion(models.Model):
     version = models.ForeignKey(Version, on_delete=models.SET_NULL, null=True, blank=False)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE,related_name='product_version')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product_version')
     isbn = models.CharField(max_length=255)
     price = models.FloatField(default=0)
 
@@ -220,7 +224,7 @@ class ProductImage(models.Model):
 
 
 class Cart(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE,related_name="cart_set")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="cart_set")
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     product_version = models.ForeignKey(ProductVersion, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=0)
