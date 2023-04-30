@@ -60,6 +60,7 @@
                             <li>
                                 <div class="media"><a href="{% url 'website:post-detail' recent.slug %}"> <img
                                         alt="Generic placeholder image" class="img-fluid blur-up lazyloaded"
+
                                         src="{{recent.thumbnail_image.url}}"></a>
                                     <div class="media-body align-self-center">
                                         <h6>{{recent.created_on.date}}</h6>

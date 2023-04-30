@@ -85,25 +85,31 @@
                                         <div class="col-sm-6">
                                             <h6>Email : {{request.user.email}}</h6>
                                             <h6>Phone Number : {{request.user.phone_number}}</h6>
-                                            <h6><a href="{% url 'client:user-change' %}">Update Profile</a></h6>
+                                            <h6><a href="{% url 'client:user-change'  %}">Update Profile</a></h6>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="box mt-3">
                                     <div class="box-title">
-                                        <h3>Address Book</h3><a href="{% url 'client:user-address-update' %}">Edit Address</a>
+                                        <h3>Address Book</h3><a href="{% url 'client:user-address-update' request.user.pk  %}">Edit
+                                        Address</a>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <h6>Default Billing Address</h6>
-                                            <h6>Country : {{request.user.address_set.country}}</h6>
-                                            <h6>Province : {{request.user.last_name}}</h6>
-                                            <h6>City : {{request.user.last_name}}</h6>
+                                            <h6>Country :{% if not request.user.address_set.Province %}None{% else %}
+                                                {{request.user.address_set.country}} {% endif %}</h6>
+                                            <h6>Province :{% if not request.user.address_set.Province %}None{% else %}
+                                                {{request.user.address_set.Province}}{% endif %}</h6>
+                                            <h6>City : {% if not request.user.address_set.City %}None
+                                                {{request.user.address_set.City}} {% endif %}</h6>
                                         </div>
                                         <div class="col-sm-6">
-                                            <h6>Street Address 1 : {{request.user.address_set.street_address_1}}</h6>
-                                            <h6>Street Address 2 : {{request.user.address_set.street_address_2}}</h6>
-                                            <h6>Postal Code : {{request.user.address_set.street_address_2}}</h6>
+                                            <h6>Street Address 1 : {% if not request.user.address_set.street_address_1 %}None{% else %}
+                                                {{request.user.address_set.street_address_1}}{% endif %}</h6>
+                                            <h6>Street Address 2 : {% if not request.user.address_set.street_address_2 %}None {% else %}
+                                                {{request.user.address_set.street_address_2}}{% endif %}</h6>
+                                            <h6>Postal Code : {% if not request.user.address_set.postal_code %}None {% else %}
+                                                {{request.user.address_set.postal_code}} {% endif %}</h6>
 
                                         </div>
                                     </div>

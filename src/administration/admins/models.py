@@ -220,7 +220,7 @@ class ProductImage(models.Model):
 
 
 class Cart(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,related_name="cart_set")
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     product_version = models.ForeignKey(ProductVersion, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=0)

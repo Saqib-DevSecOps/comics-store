@@ -5,7 +5,7 @@ from django.urls import path, include, re_path
 from django.views.static import serve
 from django.views.generic import TemplateView
 from core.settings import ENVIRONMENT, MEDIA_ROOT, STATIC_ROOT
-
+from django.contrib.auth.views import LoginView
 
 def handler404(request, *args, **kwargs):
     return render(request, "404.html")

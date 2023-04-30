@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.generic import TemplateView, UpdateView, ListView, DetailView
@@ -33,26 +34,23 @@ class UserUpdateView(View):
         if form.is_valid():
             messages.success(request, "Your profile updated successfully")
             form.save(commit=True)
+            return redirect('client:dashboard')
         context = {'form': form}
         return render(request, template_name='client/user_update_form.html', context=context)
 
 
 @method_decorator(login_required, name='dispatch')
-class AddressUpdate(View):
+class AddressUpdate(UpdateView):
+    form_class = AddressForm
+    model = Address
+    template_name = 'client/address_form.html'
 
-    def get(self, request):
-        form = AddressForm(instance=request.user)
-        context = {'form': form}
-        return render(request, template_name='client/address_form.html', context=context)
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(AddressUpdate, self).form_valid(form)
 
-    def post(self, request):
-        form = UserProfileForm(request.POST, instance=request.user)
-        if form.is_valid():
-            messages.success(request, "Your address updated successfully")
-            form.save(commit=True)
-        context = {'form': form}
-        return render(request, template_name='client/address_form.html', context=context)
-
+    def get_success_url(self):
+        return reverse('client:dashboard')
 
 @method_decorator(login_required, name='dispatch')
 class ClientDashboard(TemplateView):

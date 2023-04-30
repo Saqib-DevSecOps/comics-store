@@ -84,7 +84,7 @@ def on_user_registration(sender, instance, created, **kwargs):
 
 
 class Address(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE,related_name="address_set")
     country = models.CharField(max_length=200)
     Province = models.CharField(max_length=250)
     City = models.CharField(max_length=250)
