@@ -1,26 +1,24 @@
 import base64
 import io
-import json
 
 import stripe
 from django.contrib.auth.decorators import login_required
-from django.core.checks import messages
 from django.core.paginator import Paginator
 from django.db.models import OuterRef, Subquery, Q
-from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views import View
-from django.views.generic import TemplateView, ListView, DetailView, UpdateView, DeleteView, CreateView
+from django.views.generic import TemplateView, ListView, DetailView
 from pdf2image import convert_from_path
 
 from src.administration.admins.models import (
-    Product, ProductVersion, Version, ProductImage, Post, PostCategory, Category, Order, Language, Cart, OrderItem,
+    Product, ProductVersion, Post, PostCategory, Order, Cart, OrderItem,
 )
 from src.website.filters import ProductFilter, PostFilter
 from src.website.forms import OrderForm
-from src.website.utility import session_id, total_amount, total_quantity
+from src.website.models import HomeSliderImage, Banner
+from src.website.utility import  total_amount, total_quantity
 
 """ BASIC PAGES ---------------------------------------------------------------------------------------------- """
 
@@ -31,10 +29,10 @@ class HomeTemplateView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(HomeTemplateView, self).get_context_data(**kwargs)
         context['new_products'] = Product.objects.order_by('-created_on')[:10]
-        context['most_like'] = Product.objects.order_by('-likes')[:10]
-        context['most_sale'] = Product.objects.order_by('-sales')[:10]
         context['blogs'] = Post.objects.order_by('-created_on')[:10]
         context['top'] = Product.objects.order_by('-sales', '-likes', )[:5]
+        context['slider'] = HomeSliderImage.objects.all()
+        context['banner'] = Banner.objects.all()[:1].get()
         return context
 
 
@@ -285,16 +283,22 @@ class SuccessPayment(View):
         order.payment_status = 'completed'
         order.order_status = 'shipping'
         order.save()
-        context = {
-            'invoice': order
-        }
         cart = Cart.objects.filter(user=self.request.user)
+        for cart in cart:
+            cart_item = OrderItem(product=cart.product, product_version=cart.product_version, order=order,
+                                  qty=cart.quantity)
+            cart_item.save()
         cart.delete()
-        return render(self.request, 'website/success.html', context)
+        return render(self.request, 'website/success.html')
 
 
-class CancelPayment(TemplateView):
+class CancelPayment(View):
     template_name = 'website/cancel.html'
+    def get(self,*args):
+        stripe_id = self.request.GET.get('session_id')
+        order = Order.objects.get(user=self.request.user, stripe_payment_id=stripe_id)
+        order.delete()
+        return render(self.request, template_name=self.template_name)
 
 
 """ ISSUES PAGES ---------------------------------------------------------------------------------------------- """

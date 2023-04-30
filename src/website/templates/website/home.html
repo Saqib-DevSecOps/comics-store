@@ -9,23 +9,103 @@
 
 
 
+
+</style>
+<style>
+* {box-sizing: border-box;}
+body {font-family: Verdana, sans-serif;}
+.mySlides {display: none;}
+img {vertical-align: middle;}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+  .text {font-size: 11px}
+}
+
 </style>
 
-<!-- Home slider -->
-<section class="p-0 effect-cls ">
-    <div class="slide-1 home-slider">
-        <div>
-            <div class="home text-center p-center">
-                <img alt="" class="bg-img blur-up lazyload" src="{% static 'website/bg/slider2.jpg' %}">
-            </div>
-        </div>
-        <div>
-            <div class="home text-center p-center">
-                <img alt="" class="bg-img blur-up lazyload" src="{% static 'website/bg/slider1.jpg' %}">
-            </div>
-        </div>
+
+<div class=" effect-cls">
+    {% if slider %}
+    {% for slider in slider %}
+    <div class="mySlides fade">
+        <div class="numbertext"></div>
+        <img src="{{slider.image.url}}" style="height:550px;width:100%">
+        <div class="text"></div>
     </div>
-</section>
+    {% endfor %}
+    {% else %}
+    <div class="mySlides fade">
+        <div class="numbertext"></div>
+        <img src="{% static 'website/bg/slider2.jpg' %}" style="height:550px;width:100%">
+        <div class="text"></div>
+    </div>
+    {% endif %}
+
+</div>
+<br>
+
+<div style="text-align:center">
+    {% for slider in slider %}
+    <span class="dot"></span>
+    {% endfor %}
+</div>
+
+
+<!-- Home slider -->
 <!-- Home slider end -->
 
 
@@ -33,36 +113,18 @@
 <section class="pb-0  banner-text-white ratio_45">
     <div class="container">
         <div class="row partition2">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <a href="#">
                     <div class="collection-banner p-left text-start">
-                        <div class="img-part">
+                        <div class="img">
+                            {% if banner %}
+                            <img src="{{banner.image.url}}" style="height:350px;width:100%">
+
+                            {% else %}
                             <img alt=""
-                                 class="img-fluid bg-img blur-up lazyload"
-                                 src="{% static 'website/images/game/banner/1.jpg' %}">
-                        </div>
-                        <div class="contain-banner">
-                            <div>
-                                <h4>for windows</h4>
-                                <h2>save 10%</h2>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-6">
-                <a href="#">
-                    <div class="collection-banner p-right text-end">
-                        <div class="img-part">
-                            <img alt=""
-                                 class="img-fluid bg-img blur-up lazyload"
-                                 src="{% static 'website/images/game/banner/2.jpg' %}">
-                        </div>
-                        <div class="contain-banner">
-                            <div>
-                                <h4>for psp</h4>
-                                <h2>off 15%</h2>
-                            </div>
+                                 class=" blur-up lazyload"
+                                 src="{% static 'website/images/bgg.jpg' %}">
+                            {% endif %}
                         </div>
                     </div>
                 </a>
@@ -73,166 +135,67 @@
 <!-- category section end -->
 
 
-<!-- Product tab slider -->
+<!-- Paragraph-->
 <div class="title1  section-t-space">
-    <h4>special offer</h4>
-    <h2 class="title-inner1">top collection</h2>
+    <h2 class="title-inner1">New Collection</h2>
 </div>
-<section class="game-product ratio_asos pt-0">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6 offset-lg-3">
-                <div class="product-para">
-                    <p class="text-center">Lorem Ipsum is simply dummy text of the printing and typesetting
-                        industry. Lorem Ipsum has been the industry's
-                        standard dummy text ever since the 1500s,</p>
-                </div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+            <div class="product-para">
+                <p class="text-center">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    Lorem Ipsum has been the industry's
+                    standard dummy text ever since the 1500s,</p>
             </div>
         </div>
+    </div>
+</div>
+<!-- Paragraph end -->
+
+
+<!-- Product slider -->
+<section class="game-product pt-0 ratio_asos">
+    <div class="container">
         <div class="row">
             <div class="col">
-                <div class="theme-tab">
-                    <ul class="tabs tab-title">
-                        <li class="current">
-                            <a href="tab-4">New Products</a>
-                        </li>
-                        <li class="">
-                            <a href="tab-5">Most Like</a>
-                        </li>
-                        <li class="">
-                            <a href="tab-6">Best Sellers</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content-cls">
-                        <div class="tab-content active default" id="tab-4">
-                            <div class=" no-slider five-product row">
-                                {% for sale in new_products %}
-                                <div class="product-box">
-                                    <div class="img-wrapper">
-                                        <div class="front">
-                                            <a href="#"><img
-                                                    alt=""
-                                                    class="img-fluid bg-img blur-up lazyload"
-                                                    src="{{sale.thumbnail_image.url}}"></a>
-                                        </div>
-                                        <div class="cart-info cart-wrap">
-                                            <a href="javascript:void(0)" title="Add to Wishlist"><i aria-hidden="true"
-                                                                                                    class="ti-heart"></i></a>
+                <div class="product-slider-5 product-m no-arrow">
+                    {% for top in new_products %}
+                    <div class="product-box">
+                        <div class="img-wrapper">
+                            <div class="front">
+                                <a href="{% url 'website:product-detail' top.slug %}"><img
+                                        alt=""
+                                        class="img-fluid bg-img blur-up lazyload"
+                                        src="{{top.thumbnail_image.url}}"></a>
+                            </div>
+                            <div class="cart-info cart-wrap">
+                                <a href="javascript:void(0)" title="Add to Wishlist"><i aria-hidden="true"
+                                                                                        class="ti-heart"></i></a>
 
-                                        </div>
-                                        <div class="add-button" data-bs-target="#addtocart" data-bs-toggle="modal">
-                                            <a href="{% url 'website:product-detail' sale.slug %}"> View</a>
-                                        </div>
-                                    </div>
-                                    <div class="product-detail">
+                            </div>
+                            <div class="add-button" data-bs-target="#addtocart" data-bs-toggle="modal"><a
+                                    href="{% url 'website:product-detail' top.slug %}"> View</a>
 
-                                        <a href="#">
-                                            <h6>{{sale.name}}</h6>
-                                        </a>
-                                        <div class="">
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-
-                                        </div>
-                                        <h6>{% for price in sale.product_version.all %}
-                                            ${{price.price}}
-                                            &nbsp;&nbsp;&nbsp;
-                                            {% endfor %}</h6>
-                                    </div>
-                                </div>
-                                {% endfor %}
                             </div>
                         </div>
-                        <div class="tab-content" id="tab-5">
-                            <div class=" no-slider five-product row">
-                                {% for sale in most_like %}
-                                <div class="product-box">
-                                    <div class="img-wrapper">
-                                        <div class="front">
-                                            <a href="#"><img
-                                                    alt=""
-                                                    class="img-fluid bg-img blur-up lazyload"
-                                                    src="{{sale.thumbnail_image.url}}"></a>
-                                        </div>
-                                        <div class="cart-info cart-wrap">
-                                            <a href="javascript:void(0)" title="Add to Wishlist"><i aria-hidden="true"
-                                                                                                    class="ti-heart"></i></a>
-
-                                        </div>
-                                        <div class="add-button" data-bs-target="#addtocart" data-bs-toggle="modal">
-                                            <a href="{% url 'website:product-detail' sale.slug %}"> View</a>
-
-                                        </div>
-                                    </div>
-                                    <div class="product-detail">
-
-                                        <a href="#">
-                                            <h6>{{sale.name}}</h6>
-                                        </a>
-                                        <div class="">
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-
-                                        </div>
-                                        <h6>{% for price in sale.product_version.all %}
-                                            ${{price.price}}
-                                            &nbsp;&nbsp;&nbsp;
-                                            {% endfor %}</h6>
-                                    </div>
-                                </div>
-                                {% endfor %}
+                        <div class="product-detail">
+                            <div class="rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
                             </div>
-                        </div>
-                        <div class="tab-content" id="tab-6">
-                            <div class=" no-slider five-product row">
-                                {% for sale in most_sale %}
-                                <div class="product-box">
-                                    <div class="img-wrapper">
-                                        <div class="front">
-                                            <a href="#"><img
-                                                    alt=""
-                                                    class="img-fluid bg-img blur-up lazyload"
-                                                    src="{{sale.thumbnail_image.url}}"></a>
-                                        </div>
-                                        <div class="cart-info cart-wrap">
-                                            <a href="javascript:void(0)" title="Add to Wishlist"><i aria-hidden="true"
-                                                                                                    class="ti-heart"></i></a>
-                                        </div>
-                                        <div class="add-button" data-bs-target="#addtocart" data-bs-toggle="modal">
-                                            <a href="{% url 'website:product-detail' sale.slug %}"> View</a>
-
-                                        </div>
-                                    </div>
-                                    <div class="product-detail">
-
-                                        <a href="#">
-                                            <h6>{{sale.name}}</h6>
-                                        </a>
-                                        <div class="">
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-
-                                        </div>
-                                        <h6>{% for price in sale.product_version.all %}
-                                            ${{price.price}}
-                                            &nbsp;&nbsp;&nbsp;
-                                            {% endfor %}</h6>
-                                    </div>
-                                </div>
-                                {% endfor %}
-
-                            </div>
+                            <a href="#">
+                                <h6>{{top.name}}</h6>
+                            </a>
+                            <h6>{% for price in top.product_version.all %}
+                                ${{price.price}}
+                                &nbsp;&nbsp;&nbsp;
+                                {% endfor %}</h6>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -269,7 +232,10 @@
                     <div class="product-box">
                         <div class="img-wrapper">
                             <div class="front">
-                                                                <a href="{% url 'website:post-detail' top.slug %}" class="bg-size blur-up lazyloaded" style="background-image: url({{top.thumbnail_image.url}}); background-size: cover; background-position: center center; display: block;"><img src="{{top.thumbnail_image.url}}" class="img-fluid blur-up bg-img lazyloaded" alt="" style="display: none;"></a>
+                                <a class="bg-size blur-up lazyloaded" href="{% url 'website:post-detail' top.slug %}"
+                                   style="background-image: url({{top.thumbnail_image.url}}); background-size: cover; background-position: center center; display: block;"><img
+                                        alt="" class="img-fluid blur-up bg-img lazyloaded"
+                                        src="{{top.thumbnail_image.url}}" style="display: none;"></a>
 
                             </div>
                         </div>
@@ -287,9 +253,6 @@
     </div>
 </section>
 <!-- Product slider end -->
-
-
-
 
 
 <!-- Parallax section start -->
@@ -368,9 +331,9 @@
                                 <h6>{{top.name}}</h6>
                             </a>
                             <h6>{% for price in top.product_version.all %}
-                                            ${{price.price}}
-                                            &nbsp;&nbsp;&nbsp;
-                                            {% endfor %}</h6>
+                                ${{price.price}}
+                                &nbsp;&nbsp;&nbsp;
+                                {% endfor %}</h6>
                         </div>
                     </div>
                     {% endfor %}
@@ -451,4 +414,26 @@
 </section>
 <!--  logo section end-->
 
+<script>
+let slideIndex = 0;
+showSlides();
+
+function showSlides() {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  slideIndex++;
+  if (slideIndex > slides.length) {slideIndex = 1}
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+  setTimeout(showSlides, 2000); // Change image every 2 seconds
+}
+
+</script>
 {% endblock %}

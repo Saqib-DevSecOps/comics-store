@@ -5,23 +5,35 @@
     <div class="top-header">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-3">
                     <div class="header-contact">
                         <ul>
                             <li>Welcome to Monogatari</li>
-                            <li><i class="fa fa-phone" aria-hidden="true"></i>Call Us: 111 - 111 - 1111</li>
+
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-6 text-end">
+                <div class="col-lg-3 my-3">
+                    <ul class="font">
+                        <li><a href="#"><i aria-hidden="true" class="text-primary  fa fa-facebook"></i></a></li>&nbsp;&nbsp;
+                        <li><a href="#"><i aria-hidden="true" class="text-primary fa fa-twitter"></i></a></li>&nbsp;&nbsp;
+                        <li><a href="#"><i aria-hidden="true" class="text-danger fa fa-youtube"></i></a></li>&nbsp;&nbsp;
+                        <li><a href="#"><i aria-hidden="true" class="text-danger fa fa-instagram"></i></a></li>&nbsp;&nbsp;
+                    </ul>
+                </div>
+                <div class="col-lg-2 my-3">
+                                                                <div id="google_translate_element"></div>
+
+                </div>
+                <div class="col-lg-4 text-end">
                     <ul class="header-dropdown">
-                        <li class="mobile-wishlist"><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                        <li class="mobile-wishlist"><a href="#"><i aria-hidden="true" class="fa fa-heart"></i></a>
                         </li>
                         <li class="onhover-dropdown mobile-account">
-                            <i class="fa fa-user" aria-hidden="true"></i> My Account
+                            <i aria-hidden="true" class="fa fa-user"></i> My Account
                             <ul class="onhover-show-div">
                                 {% if request.user.is_authenticated %}
-                                           <li><a href="{% url 'accounts:cross-auth' %}">Dashboard</a></li>
+                                <li><a href="{% url 'accounts:cross-auth' %}">Dashboard</a></li>
                                 <li><a href="{% url 'account_logout' %}">Logout</a></li>
                                 {% else %}
                                 <li><a href="{% url 'account_login' %}">Login</a></li>
@@ -41,8 +53,9 @@
                     <div class="menu-left">
                         <div class="brand-logo">
                             <a href="/">
-                                <img src="{% static 'website/logos/logo-dark.png' %}"
-                                     height="75" class="blur-up lazyload" alt="">
+                                <img alt=""
+                                     class="blur-up lazyload" height="75"
+                                     src="{% static 'website/logos/logo-dark.png' %}">
                             </a>
                         </div>
                     </div>
@@ -53,10 +66,10 @@
                                 <div class="toggle-nav">
                                     <i class="fa fa-bars sidebar-bar"></i>
                                 </div>
-                                <ul id="main-menu" class="sm pixelstrap sm-horizontal">
+                                <ul class="sm pixelstrap sm-horizontal" id="main-menu">
                                     <li>
                                         <div class="mobile-back text-end">Back
-                                            <i class="fa fa-angle-right ps-2" aria-hidden="true"></i>
+                                            <i aria-hidden="true" class="fa fa-angle-right ps-2"></i>
                                         </div>
                                     </li>
                                     <li>
@@ -85,12 +98,14 @@
 
                                     {# SEARCH #}
                                     <li class="onhover-div mobile-search">
-                                        <div><img src="{% static 'website/images/icon/search.png' %}"
+                                        <div><img alt=""
+                                                  class="img-fluid blur-up lazyload"
                                                   onclick="openSearch()"
-                                                  class="img-fluid blur-up lazyload" alt=""> <i class="ti-search"
-                                                                                                onclick="openSearch()"></i>
+                                                  src="{% static 'website/images/icon/search.png' %}"> <i
+                                                class="ti-search"
+                                                onclick="openSearch()"></i>
                                         </div>
-                                        <div id="search-overlay" class="search-overlay">
+                                        <div class="search-overlay" id="search-overlay">
                                             <div>
                                                     <span class="closebtn" onclick="closeSearch()"
                                                           title="Close Overlay">×</span>
@@ -99,13 +114,13 @@
                                                         <div class="row">
                                                             <div class="col-xl-12">
                                                                 <form action="{% url 'website:shop' %}">
-                                                                    <div class="form-group"><input type="text"
-                                                                                                   class="form-control"
+                                                                    <div class="form-group"><input class="form-control"
                                                                                                    id="exampleInputPassword1"
                                                                                                    name="title"
-                                                                                                   placeholder="Search a Product">
+                                                                                                   placeholder="Search a Product"
+                                                                                                   type="text">
                                                                     </div>
-                                                                    <button type="submit" class="btn btn-primary"><i
+                                                                    <button class="btn btn-primary" type="submit"><i
                                                                             class="fa fa-search"></i></button>
                                                                 </form>
                                                             </div>
@@ -116,74 +131,42 @@
                                         </div>
                                     </li>
 
-                                    {# SETTINGS LANG #}
-                                    <li class="onhover-div mobile-setting">
-                                        <div><img src="{% static 'website/images/icon/setting.png' %}"
-                                                  class="img-fluid blur-up lazyload" alt=""> <i
-                                                class="ti-settings"></i></div>
-                                        <div class="show-div setting">
-                                            <h6>language</h6>
-                                            <ul>
-                                                <li><a href="#">english</a></li>
-                                                <li><a href="#">french</a></li>
-                                            </ul>
-                                            <h6>currency</h6>
-                                            <ul class="list-inline">
-                                                <li><a href="#">euro</a></li>
-                                                <li><a href="#">rupees</a></li>
-                                                <li><a href="#">pound</a></li>
-                                                <li><a href="#">doller</a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
 
                                     {# CART #}
                                     <li class="onhover-div mobile-cart">
-                                        <div><img src="{% static 'website/images/icon/cart.png' %}"
-                                                  class="img-fluid blur-up lazyload" alt=""> <i
+                                        <div><img alt=""
+                                                  class="img-fluid blur-up lazyload"
+                                                  src="{% static 'website/images/icon/cart.png' %}"> <i
                                                 class="ti-shopping-cart"></i></div>
                                         <ul class="show-div shopping-cart">
+                                            {% if request.user.is_authenticated %}
+                                            {% if request.user.cart_set.all  %}
+                                            {% for object in request.user.cart_set.all %}
                                             <li>
                                                 <div class="media">
-                                                    <a href="#"><img class="me-3"
-                                                                     src="{% static 'website/images/fashion/product/1.jpg' %}"
-                                                                     alt="Generic placeholder image"></a>
+                                                    <a href="#"><img alt="Generic placeholder image"
+                                                                     class="me-3"
+                                                                     src="{{object.product.thumbnail_image.url}}"></a>
                                                     <div class="media-body">
                                                         <a href="#">
-                                                            <h4>item name</h4>
+                                                            <h4>{{object.product.name}}</h4>
                                                         </a>
-                                                        <h4><span>1 x $ 299.00</span></h4>
+                                                        <h4><span>{{object.quantity}} x $ {{object.product_version.price}}</span></h4>
                                                     </div>
                                                 </div>
-                                                <div class="close-circle"><a href="#"><i class="fa fa-times"
-                                                                                         aria-hidden="true"></i></a>
-                                                </div>
+                                                {% endfor %}
                                             </li>
                                             <li>
-                                                <div class="media">
-                                                    <a href="#"><img class="me-3"
-                                                                     src="{% static 'website/images/fashion/product/2.jpg' %}"
-                                                                     alt="Generic placeholder image"></a>
-                                                    <div class="media-body">
-                                                        <a href="#">
-                                                            <h4>item name</h4>
-                                                        </a>
-                                                        <h4><span>1 x $ 299.00</span></h4>
-                                                    </div>
+                                                <div class="buttons"><a class="view-cart"
+                                                                        href="{% url 'website:cart' %}">view
+                                                    cart</a> <a class="checkout" href="{% url 'website:cart' %}">checkout</a>
                                                 </div>
-                                                <div class="close-circle"><a href="#"><i class="fa fa-times"
-                                                                                         aria-hidden="true"></i></a>
-                                                </div>
+
                                             </li>
-                                            <li>
-                                                <div class="total">
-                                                    <h5>subtotal : <span>$299.00</span></h5>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="buttons"><a href="{% url 'website:cart' %}" class="view-cart">view
-                                                    cart</a> <a href="{% url 'website:cart' %}" class="checkout">checkout</a></div>
-                                            </li>
+                                            {% else %}
+                                            <h3 class="text-danger"> Cart is Empty</h3>
+                                            {% endif %}
+                                            {% endif %}
                                         </ul>
                                     </li>
 

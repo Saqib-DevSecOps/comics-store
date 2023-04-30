@@ -16,7 +16,7 @@ urlpatterns = [
     path('my-books/', BooksListView.as_view(), name='book'),
 
     path('user/change/', UserUpdateView.as_view(), name='user-change'),
-    path('user/address/update/', AddressUpdate.as_view(), name='user-address-update'),
+    path('user/address/update/<str:pk>', AddressUpdate.as_view(), name='user-address-update'),
 
     path('download-file/<str:pk>', download_file, name='download_file'),
     path('read/book/<str:pk>', ReadBook.as_view(), name='read_book'),

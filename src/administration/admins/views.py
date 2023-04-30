@@ -15,7 +15,8 @@ from src.accounts.models import User
 from src.administration.admins.bll import fake_data
 from src.administration.admins.filters import UserFilter, ProductFilter, OrderFilter, PostFilter
 from src.administration.admins.forms import ProductVersionForm, ProductImageForm, MyProfileForm
-from src.administration.admins.models import Category, PostCategory, Product, ProductVersion, ProductImage, Order, Post
+from src.administration.admins.models import Category, PostCategory, Product, ProductVersion, ProductImage, Order, Post, \
+    Language
 
 """ MAIN """
 
@@ -172,6 +173,31 @@ class CategoryCreateView(CreateView):
 @method_decorator(admin_protected, name='dispatch')
 class CategoryDeleteView(DeleteView):
     model = Category
+    success_url = reverse_lazy('admins:category-list')
+
+
+@method_decorator(admin_protected, name='dispatch')
+class LanguageListView(ListView):
+    queryset = Language.objects.all()
+
+
+@method_decorator(admin_protected, name='dispatch')
+class LanguageUpdateView(UpdateView):
+    model = Language
+    fields = ['name']
+    success_url = reverse_lazy('admins:category-list')
+
+
+@method_decorator(admin_protected, name='dispatch')
+class LanguageCreateView(CreateView):
+    model = Language
+    fields = ['name']
+    success_url = reverse_lazy('admins:category-list')
+
+
+@method_decorator(admin_protected, name='dispatch')
+class LanguageDeleteView(DeleteView):
+    model = Language
     success_url = reverse_lazy('admins:category-list')
 
 

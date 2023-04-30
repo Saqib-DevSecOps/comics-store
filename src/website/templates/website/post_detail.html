@@ -1,6 +1,14 @@
 {% extends  'website/base.html' %}
 {% load static %}
 {% block content %}
+<style>
+.center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+ }
+</style>
+
 <div class="breadcrumb-section">
         <div class="container">
             <div class="row">
@@ -25,7 +33,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 blog-detail">
-                    <img src="{{object.thumbnail_image.url}}" class="img-fluid blur-up lazyloaded" alt="">
+                    <img src="{{object.thumbnail_image.url}}" height="600px" class="center-block blur-up lazyloaded" alt="">
                     <h3>{{object.title}}</h3>
                     <ul class="post-social">
                         <li>{{object.created_on.date}}</li>
