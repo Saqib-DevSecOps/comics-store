@@ -43,7 +43,7 @@ def book_category_validation(value):
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=255, unique=True, validators=[book_category_validation])
+    name = models.CharField(max_length=255, unique=True)
 
     is_active = models.BooleanField(default=True)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -91,8 +91,8 @@ class Version(models.Model):
 
 class Product(models.Model):
     BOOK_TYPE_CHOICE = (
-        ('comic', 'Comic'),
-        ('novel', 'Novel'),
+        ('manga', 'Manga'),
+        ('novel', 'Light Novel'),
     )
 
     name = models.CharField(max_length=255, unique=True)

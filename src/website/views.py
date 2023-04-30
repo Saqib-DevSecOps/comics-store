@@ -288,8 +288,13 @@ class SuccessPayment(View):
         return render(self.request, 'website/success.html', context)
 
 
-class CancelPayment(TemplateView):
+class CancelPayment(View):
     template_name = 'website/cancel.html'
+    def get(self,*args):
+        stripe_id = self.request.GET.get('session_id')
+        order = Order.objects.get(user=self.request.user, stripe_payment_id=stripe_id)
+        order.delete()
+        return render(self.request, template_name)
 
 
 """ ISSUES PAGES ---------------------------------------------------------------------------------------------- """

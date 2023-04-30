@@ -58,7 +58,7 @@
                             <h3 class="card-title mb-0">{{ object.name }} <a
                                     href="{% url 'admins:product-detail' object.pk %}"></a>
                             </h3>
-                            <p class="text-muted mt-2">{{ object.description }}</p>
+                            <p class="text-muted mt-2">{{ object.description|truncatechars:25}}</p>
                         </div>
                         <div class="card-body">
                             <div class="d-flex align-items-center">
