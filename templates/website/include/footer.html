@@ -55,15 +55,13 @@
                     <div class="col p-set">
                         <div class="footer-link">
                             <div class="footer-title">
-                                <h4>my account</h4>
                             </div>
                             <div class="footer-contant">
                                 <ul>
-                                    <li><a href="#">mens</a></li>
-                                    <li><a href="#">womens</a></li>
-                                    <li><a href="#">clothing</a></li>
-                                    <li><a href="#">accessories</a></li>
-                                    <li><a href="#">featured</a></li>
+                                    <li><a href="{% url 'website:privacy' %}">Privacy Policy</a></li>
+                                    <li><a href="{% url 'website:cookie' %}">Cookie Policy</a></li>
+                                    <li><a href="{% url 'website:terms' %}">Terms and conditopns</a></li>
+                                    <li><a href="{% url 'website:jobs' %}">Jobs</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -85,22 +83,11 @@
                 <div class="col-xl-6 col-md-6 col-sm-12">
                     <div class="payment-card-bottom">
                         <ul>
-                            <li>
-                                <a href="#"><img src="{% static 'website/images/icon/visa.png' %}" alt=""></a>
+
+    <li>
+                                <a href="#"><img height="100px" class="mb-4" src="{% static 'website/logos/stripe-payments-1.png' %}" alt=""></a>
                             </li>
-                            <li>
-                                <a href="#"><img src="{% static 'website/images/icon/mastercard.png' %}" alt=""></a>
-                            </li>
-                            <li>
-                                <a href="#"><img src="{% static 'website/images/icon/paypal.png' %}" alt=""></a>
-                            </li>
-                            <li>
-                                <a href="#"><img src="{% static 'website/images/icon/american-express.png' %}"
-                                                 alt=""></a>
-                            </li>
-                            <li>
-                                <a href="#"><img src="{% static 'website/images/icon/discover.png' %}" alt=""></a>
-                            </li>
+
                         </ul>
                     </div>
                 </div>

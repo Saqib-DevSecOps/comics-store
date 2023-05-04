@@ -20,8 +20,8 @@
                 <div class="col-sm-6">
                     <nav aria-label="breadcrumb" class="theme-breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                            <li class="breadcrumb-item"><a href="index.html">blog</a></li>
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item"><a href="#">blog</a></li>
                             <li class="breadcrumb-item active" aria-current="page">blog deatils</li>
                         </ol>
                     </nav>
@@ -29,20 +29,54 @@
             </div>
         </div>
     </div>
+  <!--Main Navigation-->
+
 <section class="blog-detail-page section-b-space ratio2_3">
+     <header>
+    <style>
+      #intro {
+        background-image: url({{object.thumbnail_image.url}});
+        height: 70vh;
+   background-repeat: no-repeat;
+   background-position: center
+      }
+
+      /* Height for devices larger than 576px */
+      @media (min-width: 992px) {
+        #intro {
+          margin-top: -58.59px;
+        }
+      }
+    </style>
+
+
+    <!-- Background image -->
+    <div id="intro" class="bg-image shadow-2-strong">
+      <div class="mask" style="background-color: rgba(0, 0, 0, 0.8);">
+        <div class="container d-flex align-items-center justify-content-center text-center h-100">
+          <div class="text-white">
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Background image -->
+  </header>
+
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 blog-detail">
-                    <img src="{{object.thumbnail_image.url}}" height="600px" class="center-block blur-up lazyloaded" alt="">
-                    <h3>{{object.title}}</h3>
-                    <ul class="post-social">
+                    <ul class="post-social mt-3">
                         <li>{{object.created_on.date}}</li>
                         <li>Posted By : Admin</li>
                         <li>Read Time : {{object.read_time}}</li>
                         <li><i class="fa fa-heart"></i> {{object.visits}} Hits</li>
                     </ul>
+                                        <h3>{{object.title}}</h3>
+
                     <p>{{object.content|safe }}</p>
                 </div>
+
             </div>
         </div>
     </section>

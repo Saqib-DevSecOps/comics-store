@@ -17,7 +17,7 @@
             <div class="col-sm-6">
                 <nav aria-label="breadcrumb" class="theme-breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li aria-current="page" class="breadcrumb-item active">product</li>
                     </ol>
                 </nav>
@@ -58,20 +58,18 @@
                 <div class="col-lg-7 rtl-text">
                     <div class="product-right">
                         <h2>{{object.name}}</h2>
-                        <div class="row" id = 'version_detail' style="display:none">
-                            {% for version in object.get_versions %}
+                 <div class="row" id="version_detail" style="display:none">
+    {% for version in object.get_versions %}
+    <div class="col-sm-6">
+        <h4 class="price-detail">{{version.version.name}} Version </h4>
+        <hr>
+        <h4 class="price-detail"> Price : ${{version.price}}</h4>
+        <h4 class="price-detail"> ISBN : ${{version.isbn}}</h4><br><br>
+        <input type="hidden" name="version_id" value="{{version.id}}">
+    </div>
+    {% endfor %}
+</div>
 
-                            <div  class="col-sm-6">
-                                <h4 class="price-detail">{{version.version.name}} Version </h4>
-                                <hr>
-                                <h4 class="price-detail"> Price : ${{version.price}}</h4>
-                                <h4 class="price-detail"> ISBN : ${{version.isbn}}</h4><br><br>
-
-
-                            </div>
-                            {% endfor %}
-
-                        </div>
                         <h4>Version</h4>
                         <form action="{% url 'website:add-to-cart' %}" method="post">
                             {% csrf_token %}
@@ -179,7 +177,7 @@
                             <table>
                                 <tbody>
                                 <tr>
-                                    <td>Illustrator</td>
+                                    <td>Editor</td>
                                     <td>{{object.illustrator}}</td>
                                 </tr>
                                 <tr>
@@ -197,7 +195,7 @@
                                 <tr>
                                     <td>Category</td>
                                     {% for category in object.categories.all %}
-                                    <td>{{category.name}}</td>
+                                    <td class="text-white">{{category.name}}</td>
                                     {% endfor %}
                                 </tr>
                                 <tr>
@@ -206,10 +204,6 @@
 
                                     <td>{{language.name}}</td>
                                     {% endfor %}
-                                </tr>
-                                <tr>
-                                    <td>Book Pages</td>
-                                    <td>{{object.pages}}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -283,14 +277,24 @@ function enableButton() {
   var btnelem = document.getElementById('seedoc');
   if (selectelem.value === "default") {
     btnelem.disabled = true;
-
-  versionDetail.style.display = 'none';
-    } else {
+    versionDetail.style.display = 'none';
+  } else {
     btnelem.disabled = false;
-  versionDetail.style.display = 'block';
-    }
+    versionDetail.style.display = 'block';
+    // Update the version detail section with the selected version's details
+    var selectedVersionId = selectelem.value;
+    var versionDetails = document.querySelectorAll('#version_detail .col-sm-6');
+    versionDetails.forEach(function(detail) {
+    console.log('hello')
+      var versionId = detail.querySelector('input[name="version_id"]').value;
+      if (versionId == selectedVersionId) {
+        detail.style.display = 'block';
+      } else {
+        detail.style.display = 'none';
+      }
+    });
+  }
 }
-
 
 
 

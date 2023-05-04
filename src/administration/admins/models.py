@@ -94,8 +94,8 @@ class Version(models.Model):
 
 class Product(models.Model):
     BOOK_TYPE_CHOICE = (
-        ('manga', 'Manga'),
-        ('novel', 'Light Novel'),
+        ('Manga', 'Manga'),
+        ('Light Novel', 'Light Novel'),
     )
 
     name = models.CharField(max_length=255, unique=True)
@@ -108,10 +108,10 @@ class Product(models.Model):
     artist = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
     translator = models.CharField(max_length=255)
-    illustrator = models.CharField(max_length=255)
+    illustrator = models.CharField(verbose_name = 'Editor', max_length=255)
 
     book_type = models.CharField(max_length=15, default='novel', choices=BOOK_TYPE_CHOICE)
-    categories = models.ManyToManyField(Category)
+    categories = models.ManyToManyField(Category,verbose_name='Genres')
     languages = models.ManyToManyField(Language)
 
     pages = models.PositiveIntegerField(default=0)
