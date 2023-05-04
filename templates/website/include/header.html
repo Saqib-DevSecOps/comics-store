@@ -8,17 +8,18 @@
                 <div class="col-lg-3">
                     <div class="header-contact">
                         <ul>
-                            <li>Welcome to Monogatari</li>
+                            <li class="mt-2">Welcome to Monogatari</li>
 
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-3 my-3">
                     <ul class="font">
-                        <li><a href="#"><i aria-hidden="true" class="text-primary  fa fa-facebook"></i></a></li>&nbsp;&nbsp;
-                        <li><a href="#"><i aria-hidden="true" class="text-primary fa fa-twitter"></i></a></li>&nbsp;&nbsp;
-                        <li><a href="#"><i aria-hidden="true" class="text-danger fa fa-youtube"></i></a></li>&nbsp;&nbsp;
-                        <li><a href="#"><i aria-hidden="true" class="text-danger fa fa-instagram"></i></a></li>&nbsp;&nbsp;
+                        <li><a href="#"><img src="{% static  'website/logos/facebook.png' %}" style="width:30px"></i></a></li>
+                        <li><a href="#"><img src="{% static  'website/logos/twitter.png' %}" style="width:43px"></i></a></li>
+                        <li><a href="#"><img src="{% static  'website/logos/instagram.png' %}" style="width:26px"></i></a></li>
+                        <li><a href="#"><img  class="mx-1" src="{% static  'website/logos/youtube.png' %}" style="width:30px" ></i></a></li>
+                        <li><a href="#"><img src="{% static  'website/logos/discord.png' %}" style="width:30px" ></i></a></li>
                     </ul>
                 </div>
                 <div class="col-lg-2 my-3">
@@ -80,7 +81,7 @@
                                         <a href="{% url 'website:shop' %}">Shop</a>
                                     </li>
                                     <li>
-                                        <a href="{% url 'website:posts' %}">Stories</a>
+                                        <a href="{% url 'website:posts' %}">Blog</a>
                                     </li>
                                     <li>
                                         <a href="{% url 'website:about_us' %}">About Us</a>

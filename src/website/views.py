@@ -18,7 +18,7 @@ from src.administration.admins.models import (
 from src.website.filters import ProductFilter, PostFilter
 from src.website.forms import OrderForm
 from src.website.models import HomeSliderImage, Banner
-from src.website.utility import  total_amount, total_quantity
+from src.website.utility import total_amount, total_quantity
 
 """ BASIC PAGES ---------------------------------------------------------------------------------------------- """
 
@@ -294,7 +294,8 @@ class SuccessPayment(View):
 
 class CancelPayment(View):
     template_name = 'website/cancel.html'
-    def get(self,*args):
+
+    def get(self, *args):
         stripe_id = self.request.GET.get('session_id')
         order = Order.objects.get(user=self.request.user, stripe_payment_id=stripe_id)
         order.delete()
@@ -317,3 +318,19 @@ class ReadSample(View):
 
         context = {'images': image_data}
         return render(request, 'client/sample_book.html', context)
+
+
+class CookiePolicy(TemplateView):
+    template_name = 'website/cookie_policy.html'
+
+
+class PrivacyPolicy(TemplateView):
+    template_name = 'website/privacy_policy.html'
+
+
+class TermsAndCondition(TemplateView):
+    template_name = 'website/terms_and_conditions.html'
+
+
+class Jobs(TemplateView):
+    template_name = 'website/jobs.html'
