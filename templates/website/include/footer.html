@@ -2,7 +2,7 @@
 
 <!-- footer -->
 <footer class="bg-img-gym overlay-cls effect-cls footer-effect">
-    <img src="{% static 'website/bg/bottom.jpg' %}" alt="" class="bg-img blur-up lazyload">
+    <img alt="" class="bg-img blur-up lazyload" src="{% static 'website/bg/bottom.jpg' %}">
     <div class="dark-layout">
         <div class="container">
             <section class="section-b-space border-b">
@@ -13,10 +13,12 @@
                         </div>
                         <div class="footer-contant">
                             <div class="footer-logo">
-                                <img src="{% static 'website/logos/logo-dark.png' %}" height="100" alt="">
+                                <img alt="" height="100" src="{% static 'website/logos/logo-dark.png' %}">
                             </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et.Lorem ipsum dolor sit amet, consectetur adipiscing</p>
+                            <p>Monogatari Novels is a light novel and manga's editor/publisher located in Barcelona,
+                                Spin. We bring
+                                both kind of Japenese Media into English and Spanish with high quality and
+                                transparency. </p>
                         </div>
                     </div>
                     <div class="col-lg-6 subscribe-wrapper">
@@ -24,9 +26,10 @@
                             <h2>newsletter</h2>
                             <form>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="exampleFormControlInput3"
-                                           placeholder="Enter your email">
-                                    <button type="submit" class="btn btn-solid ">subscribe</button>
+                                    <input class="form-control" id="exampleFormControlInput3"
+                                           placeholder="Enter your email"
+                                           type="text">
+                                    <button class="btn btn-solid " type="submit">subscribe</button>
                                 </div>
                             </form>
                         </div>
@@ -37,10 +40,10 @@
                         </div>
                         <div class="footer-contant">
                             <ul class="contact-details">
-                                <li>Office 4kc, Multi monogatari Novels and Comics Store</li>
-                                <li>Call Us: 111-111-1111</li>
-                                <li>Email Us: <a href="#">Support@monogatari.com</a></li>
-                                <li>Fax: 01010101</li>
+                                <li>Monogatari Media Editorial SL</li>
+                                General Inqueries: help@monogataried.com<br>
+                                Light Novel Inqueries: lightnovel@monogataried.com<br>
+                                Manga Inqueries: manga@monogataried.com<br>
                             </ul>
                         </div>
                     </div>
@@ -75,8 +78,9 @@
             <div class="row">
                 <div class="col-xl-6 col-md-6 col-sm-12">
                     <div class="footer-end">
-                        <p><i class="fa fa-copyright" aria-hidden="true"></i> All Rights reserved - &copy; copyright
-                            2023 - {% now 'Y' %} - Developed and Designed by <a href="https://exarth.com/" class="text-danger">Exarth</a>
+                        <p><i aria-hidden="true" class="fa fa-copyright"></i> All Rights reserved - &copy; copyright
+                            2023 - {% now 'Y' %} - Developed and Designed by <a class="text-danger"
+                                                                                href="https://exarth.com/">Exarth</a>
                         </p>
                     </div>
                 </div>
@@ -84,8 +88,10 @@
                     <div class="payment-card-bottom">
                         <ul>
 
-    <li>
-                                <a href="#"><img height="100px" class="mb-4" src="{% static 'website/logos/stripe-payments-1.png' %}" alt=""></a>
+                            <li>
+                                <a href="#"><img alt="" class="mb-4"
+                                                 height="100px"
+                                                 src="{% static 'website/logos/stripe-payments-1.png' %}"></a>
                             </li>
 
                         </ul>

@@ -108,10 +108,10 @@ class Product(models.Model):
     artist = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
     translator = models.CharField(max_length=255)
-    illustrator = models.CharField(verbose_name = 'Editor', max_length=255)
+    illustrator = models.CharField(verbose_name='Editor', max_length=255)
 
     book_type = models.CharField(max_length=15, default='novel', choices=BOOK_TYPE_CHOICE)
-    categories = models.ManyToManyField(Category,verbose_name='Genres')
+    categories = models.ManyToManyField(Category, verbose_name='Genres')
     languages = models.ManyToManyField(Language)
 
     pages = models.PositiveIntegerField(default=0)
@@ -252,6 +252,11 @@ class Order(models.Model):
         ('completed', 'Completed'),
         ('cancelled', 'Cancelled'),
     )
+    SHIPPING_STATUS_CHOICE = (
+        ('Free', 'Free'),
+        ('Normal', 'Normal'),
+        ('Premium', 'Premium'),
+    )
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -266,6 +271,7 @@ class Order(models.Model):
     total = models.FloatField(default=0)
     paid = models.FloatField(default=0)
 
+    shipping = models.CharField(max_length=15, choices=SHIPPING_STATUS_CHOICE, default='Free')
     stripe_payment_id = models.CharField(max_length=1000, null=True, blank=True)
     payment_status = models.CharField(max_length=15, choices=PAYMENT_STATUS_CHOICE, default='pending')
     order_status = models.CharField(max_length=15, choices=ORDER_STATUS_CHOICE, default='pending')
