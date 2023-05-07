@@ -328,7 +328,7 @@ class OrderItem(models.Model):
     @classmethod
     def fake(cls):
         print()
-        print("- Product Version: build")
+        print("- OrderItem: build")
 
         for order in Order.objects.all():
             products = Product.objects.order_by('?')[0:3]
@@ -339,7 +339,7 @@ class OrderItem(models.Model):
                     product=product,
                     product_version=product_version,
                 )
-                print(f"---- Product Version {product.pk}: faked.")
+                print(f"---- OrderItem {product.pk}: faked.")
 
         print("- END ")
         print()
