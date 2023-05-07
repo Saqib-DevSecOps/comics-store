@@ -31,6 +31,7 @@
                     <tr class="table-head">
                         <th scope="col">image</th>
                         <th scope="col">product name</th>
+                        <th scope="col">product Version</th>
                         <th scope="col">price</th>
                         <th scope="col">quantity</th>
                         <th scope="col">action</th>
@@ -44,6 +45,25 @@
                             <a href="#"><img alt="" src="{{cart.product.thumbnail_image.url}}"></a>
                         </td>
                         <td><a href="#">{{cart.product.name}}</a>
+
+                            <div class="mobile-cart-content row">
+                                <div class="col">
+                                    <div class="qty-box">
+                                        <div class="input-group">
+                                            <input class="form-control input-number" name="quantity" type="text"
+                                                   value="{{cart.quantity}}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <h2 class="td-color">${{cart.product_version.price}}</h2>
+                                </div>
+                                <div class="col">
+                                    <h2 class="td-color"><a class="icon" href="#"><i class="ti-close"></i></a>
+                                    </h2>
+                                </div>
+                            </div>
+                        </td>          <td><a href="#">{{cart.product_version.version.name}}</a>
 
                             <div class="mobile-cart-content row">
                                 <div class="col">

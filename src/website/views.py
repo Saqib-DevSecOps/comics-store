@@ -228,7 +228,45 @@ class OrderCreate(View):
         form = OrderForm(request.POST)
         if form.is_valid():
             payment = self.request.POST.get('payment')
+            shipping = self.request.POST.get('shipping')
+            if shipping == "normal":
+                shipping_charges = 6
+            else:
+                shipping_charges = 10
             print(payment)
+            price = int(total_amount(request)) + shipping_charges
+            print(price)
+            line_items = []
+            cart = Cart.objects.filter(user=self.request.user)
+            qty = 0
+            for product in cart:
+                line_items.append({
+                    'price_data': {
+                        'currency': 'usd',
+                        'unit_amount': int(product.product_version.price * 100),
+                        'product_data': {
+                            'name': product.product.name,
+                        },
+                    },
+                    "quantity": product.quantity
+                })
+                if product.product_version.version.name == 'Physical':
+                    qty += 1
+            for shipping in cart:
+                print('loop')
+                if shipping.product_version.version.name == 'Physical':
+                    print('in')
+                    line_items.append({
+                        'price_data': {
+                            'currency': 'usd',
+                            'unit_amount': int(shipping_charges * 100),
+                            'product_data': {
+                                'name': 'Shipping Charges'
+                            },
+                        },
+                        "quantity": qty
+                    })
+                    break
             host = self.request.get_host()
             customer = stripe.Customer.create(
                 name=self.request.user.username,
@@ -238,26 +276,15 @@ class OrderCreate(View):
                 payment_method_types=['card'],
                 customer=customer,
                 submit_type='pay',
-                line_items=[
-                    {
-                        'price_data': {
-                            'currency': 'usd',
-                            'unit_amount': int(total_amount(request) * 10),
-                            'product_data': {
-                                'name': 'Monogatari Store',
-                            },
-                        },
-                        'quantity': total_quantity(request)
-                    },
-                ],
+                line_items=line_items,
                 mode='payment',
                 success_url='http://' + host + reverse('website:success') \
                             + '?session_id={CHECKOUT_SESSION_ID}',
-                cancel_url='http://{}{}'.format(host, reverse(
-                    'website:cancel')),
+                cancel_url='http://' + host + reverse('website:cancel') \
+                           + '?session_id={CHECKOUT_SESSION_ID}',
+
             )
             stripe_id = checkout_session['id']
-            print(stripe_id)
             order = form.save(commit=False)
             order.user = self.request.user
             order.total = total_amount(request)
@@ -288,7 +315,7 @@ class SuccessPayment(View):
             cart_item = OrderItem(product=cart.product, product_version=cart.product_version, order=order,
                                   qty=cart.quantity)
             cart_item.save()
-        cart.delete()
+            cart.delete()
         return render(self.request, 'website/success.html')
 
 

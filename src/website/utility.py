@@ -22,3 +22,4 @@ def total_quantity(request):
     for cart in cart:
         quantity += cart.quantity
     return quantity
+
