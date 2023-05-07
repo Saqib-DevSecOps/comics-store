@@ -106,9 +106,7 @@ class OrderListView(ListView):
     context_object_name = 'objects'
 
     def get_queryset(self):
-        return self.model.objects.filter(order__user=self.request.user).exclude(Q(order__order_status='completed')
-                                                                                | Q(order__order_status='cancelled')
-                                                                                )
+        return self.model.objects.filter(order__user=self.request.user)
 
 
 @method_decorator(login_required, name='dispatch')

@@ -17,8 +17,7 @@
             <div class="col-sm-6">
                 <nav aria-label="breadcrumb" class="theme-breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li aria-current="page" class="breadcrumb-item active">product</li>
+
                     </ol>
                 </nav>
             </div>
@@ -64,7 +63,7 @@
         <h4 class="price-detail">{{version.version.name}} Version </h4>
         <hr>
         <h4 class="price-detail"> Price : ${{version.price}}</h4>
-        <h4 class="price-detail"> ISBN : ${{version.isbn}}</h4><br><br>
+        <h4 class="price-detail"> ISBN : {{version.isbn}}</h4><br><br>
         <input type="hidden" name="version_id" value="{{version.id}}">
     </div>
     {% endfor %}
@@ -114,22 +113,9 @@
                         <h6 class="product-title">shipping info</h6>
                         <ul class="shipping-info">
                             <li>100% Original Products</li>
-                            <li>Free Delivery on order above Rs. 799</li>
-                            <li>Pay on delivery is available</li>
+                            <li>Fast Delivery on order with affordable prices</li>
                             <li>Easy 30 days returns and exchanges</li>
                         </ul>
-                    </div>
-                    <div class="border-product">
-                        <h6 class="product-title">share it</h6>
-                        <div class="product-icon">
-                            <ul class="product-social">
-                                <li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
-                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                                <li><a href="#"><i class="fa fa-rss"></i></a></li>
-                            </ul>
-                        </div>
                     </div>
                     <div class="border-product">
                         <h6 class="product-title">100% secure payment</h6>
