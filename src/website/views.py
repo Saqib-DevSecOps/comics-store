@@ -306,6 +306,7 @@ class OrderCreate(View):
             form = OrderForm()
         return render(request, 'website/order.html', context={'form': OrderForm()})
 
+@method_decorator(login_required, name='dispatch')
 
 class SuccessPayment(View):
     def get(self, request, *args, **kwargs):
@@ -323,6 +324,7 @@ class SuccessPayment(View):
             cart.delete()
         return render(self.request, 'website/success.html')
 
+@method_decorator(login_required, name='dispatch')
 
 class CancelPayment(View):
     template_name = 'website/cancel.html'
@@ -366,3 +368,11 @@ class TermsAndCondition(TemplateView):
 
 class Jobs(TemplateView):
     template_name = 'website/jobs.html'
+
+
+class ReturnPolicy(TemplateView):
+    template_name = 'website/return_policy.html'
+
+
+class ShippingPolicy(TemplateView):
+    template_name = 'website/shipping_policy.html'

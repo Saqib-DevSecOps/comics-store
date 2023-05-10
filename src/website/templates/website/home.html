@@ -134,15 +134,15 @@ h2{
 </style>
 
 
-<div class="splide" id="splide">
+<div class="splide bg-image" id="splide">
     <div class="splide__track">
         <ul class="splide__list">
             {% for slide in slider %}
             <li class="splide__slide">
                 {% if slider.link %}
-                <a href="{{slide.link}}"><img alt="Slide" height="100%" src="{{slide.image.url}}"></a>
+                <a href="{{slide.link}}"><img alt="Slide" height="100%" src="{% static 'website/bg/middle.jpg' %}"></a>
                 {% else %}
-                <a href="#"><img alt="Slide" height="600px" width="100%" src="{{slide.image.url}}"></a>
+                <a href="#"><img alt="Slide" height="auto" width="auto" src="{% static 'website/bg/middle.jpg' %}"></a>
                 {% endif %}
 
             </li>
@@ -316,8 +316,7 @@ h2{
 
 <!-- Paragraph-->
 <div class="title1  section-t-space">
-    <h4>releases</h4>
-    <h2 class="title-inner1">Top Selling Series</h2>
+    <h2 class="title-inner1">Coming Soon!</h2>
 </div>
 <div class="container">
     <div class="row">
@@ -440,6 +439,7 @@ var splide = new Splide( '.splide', {
   type   : 'loop',
   padding: '5rem',
     autoplay: true,
+
 
 } );
 
