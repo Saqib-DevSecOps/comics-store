@@ -145,11 +145,11 @@
                                             {% for object in request.user.cart_set.all %}
                                             <li>
                                                 <div class="media">
-                                                    <a href="#"><img alt="Generic placeholder image"
+                                                    <a href="{% url 'website:product-detail' object.product.slug %}"><img alt="Generic placeholder image"
                                                                      class="me-3"
                                                                      src="{{object.product.thumbnail_image.url}}"></a>
                                                     <div class="media-body">
-                                                        <a href="#">
+                                                        <a href="{% url 'website:product-detail' object.product.slug %}">
                                                             <h4>{{object.product.name}}</h4>
                                                         </a>
                                                         <h4><span>{{object.quantity}} x $ {{object.product_version.price}}</span></h4>
@@ -160,7 +160,7 @@
                                             <li>
                                                 <div class="buttons"><a class="view-cart"
                                                                         href="{% url 'website:cart' %}">view
-                                                    cart</a> <a class="checkout" href="{% url 'website:cart' %}">checkout</a>
+                                                    cart</a> <a class="checkout" href="{% url 'website:order' %}">checkout</a>
                                                 </div>
 
                                             </li>

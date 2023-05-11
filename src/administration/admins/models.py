@@ -257,6 +257,10 @@ class Order(models.Model):
         ('Normal', 'Normal'),
         ('Premium', 'Premium'),
     )
+    ORDER_COUNTRY = (
+        ('USA', 'USA'),
+        ('Canada', 'Canada'),
+    )
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -264,7 +268,7 @@ class Order(models.Model):
     street_address = models.CharField(max_length=255)
     postal_code = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
-    country = models.CharField(max_length=255)
+    country = models.CharField(max_length=255,choices=ORDER_COUNTRY)
     phone = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
 
