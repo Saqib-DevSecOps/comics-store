@@ -140,9 +140,9 @@ h2{
             {% for slide in slider %}
             <li class="splide__slide">
                 {% if slider.link %}
-                <a href="{{slide.link}}"><img alt="Slide" height="100%" src="{% static 'website/bg/middle.jpg' %}"></a>
+                <a href="{{slide.link}}"><img alt="Slide" height="100%" src="{{slide.image.url}}"></a>
                 {% else %}
-                <a href="#"><img alt="Slide" height="auto" width="auto" src="{% static 'website/bg/middle.jpg' %}"></a>
+                <a href="#"><img alt="Slide" height="auto" width="auto" src="{{slide.image.url}}"></a>
                 {% endif %}
 
             </li>
