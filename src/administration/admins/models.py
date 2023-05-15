@@ -223,6 +223,24 @@ class ProductImage(models.Model):
         super(ProductImage, self).delete(*args, **kwargs)
 
 
+class OtherPlatform(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product_platform')
+    image = models.ImageField(upload_to='books/images/other_platform', null=True, blank=True)
+    url = models.URLField(null=True,blank=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['created_on']
+        verbose_name_plural = "Other Platforms"
+
+    def __str__(self):
+        return self.product.name
+
+    def delete(self, *args, **kwargs):
+        self.image.delete(save=True)
+        super(OtherPlatform, self).delete(*args, **kwargs)
+
+
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="cart_set")
     product = models.ForeignKey(Product, on_delete=models.CASCADE)

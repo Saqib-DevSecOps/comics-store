@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import HomeSliderImage, DigitalPlatforms,Banner
+from .models import HomeSliderImage, DigitalPlatforms,Banner, ComingSoon
 
 # Register your models here.
 
@@ -7,3 +7,4 @@ from .models import HomeSliderImage, DigitalPlatforms,Banner
 admin.site.register(HomeSliderImage)
 admin.site.register(DigitalPlatforms)
 admin.site.register(Banner)
+admin.site.register(ComingSoon)

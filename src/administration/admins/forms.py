@@ -2,7 +2,7 @@ from django import forms
 from django.forms import ModelForm
 
 from .models import (
-    Product, ProductVersion, Version, ProductImage, Post
+    Product, ProductVersion, Version, ProductImage, Post, OtherPlatform
 )
 from ...accounts.models import User
 
@@ -34,12 +34,18 @@ class ProductImageForm(forms.ModelForm):
         ]
 
 
-class MyProfileForm(ModelForm):
+class ProductPlatformForm(forms.ModelForm):
+    class Meta:
+        model = OtherPlatform
+        fields = [
+            'image', 'url'
+        ]
 
+
+class MyProfileForm(ModelForm):
     class Meta:
         model = User
         fields = [
             'profile_image', 'first_name', 'last_name',
             'phone_number', 'email'
         ]
-
