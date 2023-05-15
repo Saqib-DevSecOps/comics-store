@@ -19,3 +19,4 @@ django-tinymce
 
 django-browser-reload
 stripe
+django-jazzmin
