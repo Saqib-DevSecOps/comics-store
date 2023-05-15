@@ -83,6 +83,46 @@
                         {% endif %}
                     </div>
 
+                         {# Platform #}
+                                    <div class="mb-3 mt-5 row">
+                                        <div class="mb-0">
+                                            <div class="card-title">
+                                                Other Platforms
+                                            </div>
+                                        </div>
+                                        {% if other_platform %}
+
+                                        <div class="row">
+
+                                            {% for platform in other_platform %}
+                                            <div class="col-sm-3">
+                                                <div class="card card-sm">
+                                                    <div class="card-status-top bg-success"></div>
+                                                    <div class="card-body">
+                                                        <div class="mt-4">
+                                                            <div class="col">
+                                                                {% if platform.url %}
+                                                                 <div class="col-auto">
+                                                                     <a href="{{platform.url}}" target="_blank"><img style="height:150px;width:150px;" src="{{platform.image.url}}"></a>
+                                                                </div>
+                                                                {% else %}
+                                                                <div class="col-auto">
+                                                                    <img style="height:150px;width:150px;" src="{{platform.image.url}}">
+                                                                </div>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                        {% else %}
+                                        <p class="mb-0 text-danger">
+                                            <b>Other Platforms Not Offer.</b>
+                                        </p>
+                                        {% endif %}
+                                    </div>
 
                     <div class="product-count">
                         <ul>

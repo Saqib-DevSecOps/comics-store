@@ -15,11 +15,11 @@
                 </div>
                 <div class="col-lg-3 my-3">
                     <ul class="font">
-                        <li><a href="#"><img src="{% static  'website/logos/facebook.png' %}" style="width:30px"></i></a></li>
-                        <li><a href="#"><img src="{% static  'website/logos/twitter.png' %}" style="width:43px"></i></a></li>
-                        <li><a href="#"><img src="{% static  'website/logos/instagram.png' %}" style="width:26px"></i></a></li>
-                        <li><a href="#"><img  class="mx-1" src="{% static  'website/logos/youtube.png' %}" style="width:30px" ></i></a></li>
-                        <li><a href="#"><img src="{% static  'website/logos/discord.png' %}" style="width:30px" ></i></a></li>
+                        <li><a href="#"><img src="{% static  'website/logos/white_facebook.png' %}" style="width:30px"></i></a></li>
+                        <li><a href="#"><img src="{% static  'website/logos/w_twitter.png' %}" style="width:30px"></i></a></li>
+                        <li><a href="#"><img src="{% static  'website/logos/white_insta.png' %}" style="width:26px"></i></a></li>
+                        <li><a href="#"><img  class="mx-1" src="{% static  'website/logos/white_youtube.png' %}" style="width:30px" ></i></a></li>
+                        <li><a href="#"><img src="{% static  'website/logos/discord_logo.png' %}" style="width:30px" ></i></a></li>
                     </ul>
                 </div>
                 <div class="col-lg-2 my-3">
@@ -145,11 +145,11 @@
                                             {% for object in request.user.cart_set.all %}
                                             <li>
                                                 <div class="media">
-                                                    <a href="{% url 'website:product-detail' object.product.slug %}"><img alt="Generic placeholder image"
+                                                    <a href="{% url 'website:cart' %}"><img alt="Generic placeholder image"
                                                                      class="me-3"
                                                                      src="{{object.product.thumbnail_image.url}}"></a>
                                                     <div class="media-body">
-                                                        <a href="{% url 'website:product-detail' object.product.slug %}">
+                                                        <a href="{% url 'website:cart' %}">
                                                             <h4>{{object.product.name}}</h4>
                                                         </a>
                                                         <h4><span>{{object.quantity}} x $ {{object.product_version.price}}</span></h4>

@@ -14,9 +14,9 @@ from src.accounts.decorators import admin_protected
 from src.accounts.models import User
 from src.administration.admins.bll import fake_data
 from src.administration.admins.filters import UserFilter, ProductFilter, OrderFilter, PostFilter
-from src.administration.admins.forms import ProductVersionForm, ProductImageForm, MyProfileForm
+from src.administration.admins.forms import ProductVersionForm, ProductImageForm, MyProfileForm, ProductPlatformForm
 from src.administration.admins.models import Category, PostCategory, Product, ProductVersion, ProductImage, Order, Post, \
-    Language
+    Language, OtherPlatform
 
 """ MAIN """
 
@@ -98,7 +98,7 @@ class UserUpdateView(UpdateView):
     success_url = reverse_lazy('admins:user-list')
 
     def get_success_url(self):
-        return reverse_lazy('admins:user-detail', args=(self.object.pk, ))
+        return reverse_lazy('admins:user-detail', args=(self.object.pk,))
 
 
 @method_decorator(admin_protected, name='dispatch')
@@ -109,7 +109,7 @@ class UserCreateView(CreateView):
     success_url = reverse_lazy('admins:user-list')
 
     def get_success_url(self):
-        return reverse_lazy('admins:user-detail', args=(self.object.pk, ))
+        return reverse_lazy('admins:user-detail', args=(self.object.pk,))
 
 
 @method_decorator(admin_protected, name='dispatch')
@@ -251,11 +251,11 @@ class ProductListView(ListView):
 class ProductUpdateView(UpdateView):
     model = Product
     fields = [
-            'thumbnail_image', 'book_file', 'name',
-            'book_type', 'categories', 'languages', 'pages',
-            'artist', 'author', 'translator', 'illustrator',
-            'description', 'is_active'
-        ]
+        'thumbnail_image', 'book_file', 'name',
+        'book_type', 'categories', 'languages', 'pages',
+        'artist', 'author', 'translator', 'illustrator',
+        'description', 'is_active'
+    ]
     success_url = reverse_lazy('admins:product-list')
 
 
@@ -263,11 +263,11 @@ class ProductUpdateView(UpdateView):
 class ProductCreateView(CreateView):
     model = Product
     fields = [
-            'thumbnail_image', 'book_file', 'name',
-            'book_type', 'categories', 'languages', 'pages',
-            'artist', 'author', 'translator', 'illustrator',
-            'description', 'is_active'
-        ]
+        'thumbnail_image', 'book_file', 'name',
+        'book_type', 'categories', 'languages', 'pages',
+        'artist', 'author', 'translator', 'illustrator',
+        'description', 'is_active'
+    ]
     success_url = reverse_lazy('admins:product-list')
 
 
@@ -283,6 +283,7 @@ class ProductDetailView(DetailView):
 
         context['product_version_add_form'] = ProductVersionForm()
         context['product_image_add_form'] = ProductImageForm()
+        context['platform_form'] = ProductPlatformForm()
         context['product_version_forms'] = product_version_forms
         return context
 
@@ -366,6 +367,36 @@ class ProductImageDeleteView(View):
         product_image = get_object_or_404(ProductImage.objects.filter(product=product), pk=pk)
         product_image.delete()
         messages.success(request, "Product Image deleted successfully")
+        return redirect("admins:product-detail", product_id)
+
+
+@method_decorator(admin_protected, name='dispatch')
+class ProductOtherPlatformAdd(View):
+
+    def post(self, request, product_id):
+        product = get_object_or_404(Product, pk=product_id)
+        form = ProductPlatformForm(data=request.POST, files=request.FILES)
+        if form.is_valid():
+            form.instance.product = product
+            form.save()
+            messages.success(request, "Product Image added successfully")
+        return redirect("admins:product-detail", product_id)
+
+
+@method_decorator(admin_protected, name='dispatch')
+class ProductOtherPlatformDelete(View):
+
+    def get(self, request, product_id, pk):
+        product = get_object_or_404(Product, pk=product_id)
+        other_platform = get_object_or_404(OtherPlatform, pk=pk, product=product)
+        other_platform.delete()
+        messages.success(request, "Product Platform deleted successfully")
+        return redirect("admins:product-detail", product_id)
+    def post(self, request, product_id, pk):
+        product = get_object_or_404(Product, pk=product_id)
+        other_platform = get_object_or_404(OtherPlatform, pk=pk, product=product)
+        other_platform.delete()
+        messages.success(request, "Product Platform deleted successfully")
         return redirect("admins:product-detail", product_id)
 
 
