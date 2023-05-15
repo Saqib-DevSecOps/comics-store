@@ -4,6 +4,7 @@ pillow
 markdown
 python-dateutil
 pdf2image
+stripe
 
 django
 django-environ
