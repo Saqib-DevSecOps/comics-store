@@ -103,7 +103,7 @@
                                                             <div class="col">
                                                                 {% if platform.url %}
                                                                  <div class="col-auto">
-                                                                     <a href="{{platform.url}}" target="_blank"><img style="height:150px;width:150px;" src="{{platform.image.url}}"></a>
+                                                                     <a href="{{platform.url}}" target="_blank"><img style="height:120px;width:120px;" src="{{platform.image.url}}"></a>
                                                                 </div>
                                                                 {% else %}
                                                                 <div class="col-auto">
@@ -128,7 +128,7 @@
                         <ul>
                             <li>
                                 <img alt="image" class="img-fluid" src="{% static 'website/images/icon/truck.png' %}">
-                                <span class="lang">Free shipping for orders above $500 USD</span>
+                                <span class="lang">Free shipping for orders above $40 USD</span>
                             </li>
                         </ul>
                     </div>
@@ -257,14 +257,7 @@
                             <a href="{% url 'website:product-detail' product.slug %}">
                                 <h6 class="text-center">comic Title</h6>
                             </a>
-                            <div class="text-center">
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
 
-                            </div>
                             <h6 class="text-center">{% for price in product.product_version.all %}
                                 ${{price.price}}
                                 &nbsp;&nbsp;&nbsp;

@@ -17,7 +17,7 @@ from src.administration.admins.models import (
 )
 from src.website.filters import ProductFilter, PostFilter
 from src.website.forms import OrderForm
-from src.website.models import HomeSliderImage, DigitalPlatforms, Banner, ComingSoon
+from src.website.models import BackgroundImage, DigitalPlatforms, Banner, ComingSoon, HomeSliderImage, FooterImage
 from src.website.utility import total_amount, total_quantity
 
 """ BASIC PAGES ---------------------------------------------------------------------------------------------- """
@@ -36,6 +36,8 @@ class HomeTemplateView(TemplateView):
         context['digital_platform'] = DigitalPlatforms.objects.all()
         banner = Banner.objects.all()
         context['banner'] = banner.order_by('-created_on').first()
+        background = BackgroundImage.objects.all()
+        context['background'] = background.order_by('-created_on').first()
         return context
 
 
@@ -102,7 +104,7 @@ class ProductDetailView(DetailView):
         context['other_platform'] = OtherPlatform.objects.filter(product=product)
         context['related_product'] = Product.objects.filter(
             Q(categories__in=product.categories.all()) & ~Q(id=product.id)
-        ).distinct()[:4]
+                ).distinct()[:4]
         product.save()
         return context
 
