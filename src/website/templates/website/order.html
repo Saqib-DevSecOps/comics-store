@@ -34,10 +34,10 @@
                                     </ul>
 
                                     <ul class="total">
-                                        <li>Total <span class="count">${{total_amount}}</span></li>
+                                        <li>Total <span class="count" id="total_amount">{{total_amount}}</span></li>
+                                        <li hidden id="total">{{total_amount}}</li>
                                     </ul>
                                 </div>
-                                            <small class="text-secondary">Normal Delivery = 5.99$ &nbsp;&nbsp;and  &nbsp;&nbsp;Premium Delivery = 9.99$ </small>
 
                                 <div class="payment-box">
                                     <div class="upper-box">
@@ -53,7 +53,8 @@
 
                                     </div>
 
-                                </div>                             <div class="payment-box">
+                                </div>
+                                <div class="payment-box">
                                     <div class="upper-box">
                                         <div class="payment-options">
                                             <select class="form-select mb-4 mt-3" id="dropdown" name="payment"
@@ -68,10 +69,11 @@
                                 </div>
 
                                 <div class="text-end">
-    <button class="btn btn-solid hover-solid btn-animation" disabled id="seedoc"
-                                        type="submit">
-                                   Place Order
-                                </button>                                </div>
+                                    <button class="btn btn-solid hover-solid btn-animation" disabled id="seedoc"
+                                            type="submit">
+                                        Place Order
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -82,10 +84,33 @@
     </div>
 </section>
 <script>
+
+
+
+
 function enableButton() {
   var selectelem = document.getElementById('dropdown');
   var selectelem1 = document.getElementById('dropdown1');
   var btnelem = document.getElementById('seedoc');
+  let total_amount = $('#total_amount')
+  let total = $('#total')
+
+if (selectelem1.value === "normal")
+{
+         total_amount.text(total.text());
+         total_amount.text(parseInt(total_amount.text()) + 4.99);
+}
+else if(selectelem1.value === "premium")
+{
+         total_amount.text(total.text());
+
+    total_amount.text(parseInt(total_amount.text()) + 9.99);
+}
+else if(selectelem1.value === "default")
+{
+         total_amount.text(total.text());
+}
+
 
   if (selectelem.value !== "default" && selectelem1.value !== "default") {
     btnelem.disabled = false;
@@ -93,6 +118,8 @@ function enableButton() {
     btnelem.disabled = true;
   }
 }
+
+
 
 </script>
 

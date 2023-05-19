@@ -4,7 +4,7 @@ from src.website.views import HomeTemplateView, \
     ContactUsTemplateView, PostListView, CartTemplateView, AboutUsTemplateView, \
     ProductListView, ProductDetailView, PostDetailView, AddToCart, IncrementCart, DecrementCart, \
     RemoveFromCartView, OrderCreate, SuccessPayment, CancelPayment, ReadSample, CookiePolicy, PrivacyPolicy, \
-    TermsAndCondition, Jobs
+    TermsAndCondition, Jobs, ReturnPolicy, ShippingPolicy
 
 app_name = "website"
 urlpatterns = [
@@ -32,5 +32,7 @@ urlpatterns = [
     path('cookie-policy/', CookiePolicy.as_view(), name='cookie'),
     path('privacy-policy/', PrivacyPolicy.as_view(), name='privacy'),
     path('terms-and-conditions/', TermsAndCondition.as_view(), name='terms'),
-    path('jobs/', Jobs.as_view(), name='jobs')
+    path('jobs/', Jobs.as_view(), name='jobs'),
+    path('return-policy/', ReturnPolicy.as_view(), name='return_policy'),
+    path('shipping-policy/', ShippingPolicy.as_view(), name='shipping_policy')
 ]

@@ -13,11 +13,11 @@ from django.views.generic import TemplateView, ListView, DetailView
 from pdf2image import convert_from_path
 
 from src.administration.admins.models import (
-    Product, ProductVersion, Post, PostCategory, Order, Cart, OrderItem,
+    Product, ProductVersion, Post, PostCategory, Order, Cart, OrderItem, OtherPlatform,
 )
 from src.website.filters import ProductFilter, PostFilter
 from src.website.forms import OrderForm
-from src.website.models import HomeSliderImage, DigitalPlatforms, Banner
+from src.website.models import HomeSliderImage, DigitalPlatforms, Banner, ComingSoon
 from src.website.utility import total_amount, total_quantity
 
 """ BASIC PAGES ---------------------------------------------------------------------------------------------- """
@@ -32,6 +32,7 @@ class HomeTemplateView(TemplateView):
         context['blogs'] = Post.objects.order_by('-created_on')[:10]
         context['top'] = Product.objects.order_by('-sales', '-likes', )[:5]
         context['slider'] = HomeSliderImage.objects.all()
+        context['coming_soon'] = ComingSoon.objects.all()[:10]
         context['digital_platform'] = DigitalPlatforms.objects.all()
         banner = Banner.objects.all()
         context['banner'] = banner.order_by('-created_on').first()
@@ -98,6 +99,7 @@ class ProductDetailView(DetailView):
         context = super(ProductDetailView, self).get_context_data(**kwargs)
         product = Product.objects.get(slug=self.kwargs['slug'])
         product.clicks += 1
+        context['other_platform'] = OtherPlatform.objects.filter(product=product)
         context['related_product'] = Product.objects.filter(
             Q(categories__in=product.categories.all()) & ~Q(id=product.id)
         ).distinct()[:4]
@@ -261,10 +263,10 @@ class OrderCreate(View):
                             'currency': 'usd',
                             'unit_amount': int(shipping_charges * 100),
                             'product_data': {
-                                'name': 'Shipping Charges'
+                                'name': 'Tax'
                             },
                         },
-                        "quantity": qty
+                        "quantity": '1'
                     })
                     break
             host = self.request.get_host()
@@ -307,6 +309,7 @@ class OrderCreate(View):
         return render(request, 'website/order.html', context={'form': OrderForm()})
 
 
+@method_decorator(login_required, name='dispatch')
 class SuccessPayment(View):
     def get(self, request, *args, **kwargs):
         stripe_id = self.request.GET.get('session_id')
@@ -324,6 +327,7 @@ class SuccessPayment(View):
         return render(self.request, 'website/success.html')
 
 
+@method_decorator(login_required, name='dispatch')
 class CancelPayment(View):
     template_name = 'website/cancel.html'
 
@@ -366,3 +370,11 @@ class TermsAndCondition(TemplateView):
 
 class Jobs(TemplateView):
     template_name = 'website/jobs.html'
+
+
+class ReturnPolicy(TemplateView):
+    template_name = 'website/return_policy.html'
+
+
+class ShippingPolicy(TemplateView):
+    template_name = 'website/shipping_policy.html'

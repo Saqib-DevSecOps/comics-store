@@ -131,10 +131,12 @@ h2{
 
 
 
+
+
 </style>
 
 
-<div class="splide" id="splide">
+<div class="splide bg-image" id="splide">
     <div class="splide__track">
         <ul class="splide__list">
             {% for slide in slider %}
@@ -142,7 +144,7 @@ h2{
                 {% if slider.link %}
                 <a href="{{slide.link}}"><img alt="Slide" height="100%" src="{{slide.image.url}}"></a>
                 {% else %}
-                <a href="#"><img alt="Slide" height="600px" width="100%" src="{{slide.image.url}}"></a>
+                <a href="#"><img alt="Slide" height="auto" src="{{slide.image.url}}" width="auto"></a>
                 {% endif %}
 
             </li>
@@ -316,8 +318,7 @@ h2{
 
 <!-- Paragraph-->
 <div class="title1  section-t-space">
-    <h4>releases</h4>
-    <h2 class="title-inner1">Top Selling Series</h2>
+    <h2 class="title-inner1">Coming Soon!</h2>
 </div>
 <div class="container">
     <div class="row">
@@ -335,25 +336,18 @@ h2{
     <div class="container">
         <div class="row">
             <div class="col">
+                            {% if coming_soon %}
+
                 <div class="product-slider-5 product-m no-arrow">
-                    {% for top in top %}
+                    {% for top in coming_soon %}
                     <div class="product-box">
                         <div class="img-wrapper">
-                            <div class="front">
-                                <a href="{% url 'website:product-detail' top.slug %}"><img
-                                        alt=""
-                                        class="img-fluid bg-img blur-up lazyload"
-                                        src="{{top.thumbnail_image.url}}"></a>
+                            <div class="front"><img
+                                    alt=""
+                                    class="img-fluid bg-img blur-up lazyload"
+                                    src="{{top.image.url}}">
                             </div>
-                            <div class="cart-info cart-wrap">
-                                <a href="javascript:void(0)" title="Add to Wishlist"><i aria-hidden="true"
-                                                                                        class="ti-heart"></i></a>
 
-                            </div>
-                            <div class="add-button" data-bs-target="#addtocart" data-bs-toggle="modal"><a
-                                    href="{% url 'website:product-detail' top.slug %}"> View</a>
-
-                            </div>
                         </div>
                         <div class="product-detail">
                             <div class="rating">
@@ -363,17 +357,22 @@ h2{
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
                             </div>
+                            {% if top.link %}
+                            <a href="{{top.link}}">
+                                <h6>{{top.name}}</h6>
+                            </a>
+                            {% else %}
                             <a href="#">
                                 <h6>{{top.name}}</h6>
                             </a>
-                            <h6>{% for price in top.product_version.all %}
-                                ${{price.price}}
-                                &nbsp;&nbsp;&nbsp;
-                                {% endfor %}</h6>
+                            {% endif %}
                         </div>
                     </div>
                     {% endfor %}
                 </div>
+                {% else %}
+        <h3 class="text-danger text-center">Not Available</h3>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -388,9 +387,15 @@ h2{
 
 <div class="container">
     <section class="customer-logos slider">
-        <div class="slide"><a href="#"><img src="{% static 'website/images/home/Kobo-logo.jpg' %}"
-                                            style="height:150px;width:150px;"></a></div>
-
+        {% for digital in digital_platform%}
+        {% if digital.link %}
+        <div class="slide"><a href="{{digital.link}}"><img src="{{digital.image.url}}"
+                                                           style="height:150px;width:150px;"></a></div>
+        {% else %}
+        <div class="slide"><img src="{{digital.image.url}}"
+                                style="height:150px;width:150px;"></div>
+        {% endif %}
+        {% endfor %}
 
     </section>
 </div>
@@ -433,6 +438,8 @@ function showSlides() {
 
 
 
+
+
 </script>
 
 <script>
@@ -441,9 +448,12 @@ var splide = new Splide( '.splide', {
   padding: '5rem',
     autoplay: true,
 
+
 } );
 
 splide.mount();
+
+
 
 
 </script>
@@ -471,6 +481,8 @@ splide.mount();
         }]
     });
 });
+
+
 
 </script>
 

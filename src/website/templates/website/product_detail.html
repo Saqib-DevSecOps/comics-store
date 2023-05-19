@@ -5,69 +5,52 @@
 .checked {
   color: orange;
 }
-</style>
-<div class="breadcrumb-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="page-title">
-                    <h2>product</h2>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <nav aria-label="breadcrumb" class="theme-breadcrumb">
-                    <ol class="breadcrumb">
 
-                    </ol>
-                </nav>
-            </div>
-        </div>
-    </div>
-</div>
+</style>
 <section>
     <div class="collection-wrapper">
         <div class="container">
             <div class="row">
-                    <div class="col-lg-5">
-                        <div class="product-slick">
+                <div class="col-lg-5">
+                    <div class="product-slick">
 
-                            <div><img src="{{object.thumbnail_image.url}}" width="" height="550px" alt=""
-                                    ></div>
-                            {% for object in object.product_image.all %}
-                            <div><img src="{{object.image.url}}" alt=""
-                                    width="fixed" height="550px"></div>
-                            {% endfor %}
-                        </div>
-                        <div class="row">
-                            <div class="col-10 p-0">
-                                <div class="slider-nav">
+                        <div><img alt="" height="550px" src="{{object.thumbnail_image.url}}" width=""
+                        ></div>
+                        {% for object in object.product_image.all %}
+                        <div><img alt="" height="550px"
+                                  src="{{object.image.url}}" width="fixed"></div>
+                        {% endfor %}
+                    </div>
+                    <div class="row">
+                        <div class="col-10 p-0">
+                            <div class="slider-nav">
 
-                                    <div><img src="{{object.thumbnail_image.url}}" alt=""
-                                            class="img-fluid"></div>
-                                                                {% for object in object.product_image.all %}
+                                <div><img alt="" class="img-fluid"
+                                          src="{{object.thumbnail_image.url}}"></div>
+                                {% for object in object.product_image.all %}
 
-                                    <div><img src="{{object.image.url}}" alt=""
-                                            class="img-fluid" ></div>
-                                                                {% endfor %}
+                                <div><img alt="" class="img-fluid"
+                                          src="{{object.image.url}}"></div>
+                                {% endfor %}
 
-                                </div>
                             </div>
                         </div>
                     </div>
+                </div>
                 <div class="col-lg-7 rtl-text">
                     <div class="product-right">
                         <h2>{{object.name}}</h2>
-                 <div class="row" id="version_detail" style="display:none">
-    {% for version in object.get_versions %}
-    <div class="col-sm-6">
-        <h4 class="price-detail">{{version.version.name}} Version </h4>
-        <hr>
-        <h4 class="price-detail"> Price : ${{version.price}}</h4>
-        <h4 class="price-detail"> ISBN : {{version.isbn}}</h4><br><br>
-        <input type="hidden" name="version_id" value="{{version.id}}">
-    </div>
-    {% endfor %}
-</div>
+                        <div class="row" id="version_detail" style="display:none">
+                            {% for version in object.get_versions %}
+                            <div class="col-sm-6">
+                                <h4 class="price-detail">{{version.version.name}} Version </h4>
+                                <hr>
+                                <h4 class="price-detail"> Price : ${{version.price}}</h4>
+                                <h4 class="price-detail"> ISBN : {{version.isbn}}</h4><br><br>
+                                <input name="version_id" type="hidden" value="{{version.id}}">
+                            </div>
+                            {% endfor %}
+                        </div>
 
                         <h4>Version</h4>
                         <form action="{% url 'website:add-to-cart' %}" method="post">
@@ -100,6 +83,46 @@
                         {% endif %}
                     </div>
 
+                         {# Platform #}
+                                    <div class="mb-3 mt-5 row">
+                                        <div class="mb-0">
+                                            <div class="card-title">
+                                                Other Platforms
+                                            </div>
+                                        </div>
+                                        {% if other_platform %}
+
+                                        <div class="row">
+
+                                            {% for platform in other_platform %}
+                                            <div class="col-sm-3">
+                                                <div class="card card-sm">
+                                                    <div class="card-status-top bg-success"></div>
+                                                    <div class="card-body">
+                                                        <div class="mt-4">
+                                                            <div class="col">
+                                                                {% if platform.url %}
+                                                                 <div class="col-auto">
+                                                                     <a href="{{platform.url}}" target="_blank"><img style="height:150px;width:150px;" src="{{platform.image.url}}"></a>
+                                                                </div>
+                                                                {% else %}
+                                                                <div class="col-auto">
+                                                                    <img style="height:150px;width:150px;" src="{{platform.image.url}}">
+                                                                </div>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                        {% else %}
+                                        <p class="mb-0 text-danger">
+                                            <b>Other Platforms Not Offer.</b>
+                                        </p>
+                                        {% endif %}
+                                    </div>
 
                     <div class="product-count">
                         <ul>
@@ -113,8 +136,10 @@
                         <h6 class="product-title">shipping info</h6>
                         <ul class="shipping-info">
                             <li>100% Original Products</li>
-                            <li>Fast Delivery on order with affordable prices</li>
-                            <li>Easy 30 days returns and exchanges</li>
+                            <li>Free shipping for orders
+                                above $40
+                            </li>
+                            <li>Only available for USA & Canada</li>
                         </ul>
                     </div>
                     <div class="border-product">
@@ -141,21 +166,21 @@
                 <div class="tab-content nav-material" id="top-tabContent">
                     <div aria-labelledby="top-home-tab" class="tab-pane fade show active" id="top-home" role="tabpanel">
                         <div class="product-tab-discription">
-                       {{object.description}}
+                            {{object.description}}
                         </div>
-                                                <div class="single-product-tables">
+                        <div class="single-product-tables">
                             <table>
                                 <tbody>
                                 <tr>
-                                    <td>Artist</td>
+                                    <td class="text-white">Artist</td>
                                     <td>{{object.artist}}</td>
                                 </tr>
                                 <tr>
-                                    <td>Author</td>
+                                    <td class="text-white">Author</td>
                                     <td>{{object.author}}</td>
                                 </tr>
                                 <tr>
-                                    <td>Translator</td>
+                                    <td class="text-white">Translator</td>
                                     <td>{{object.translator}}</td>
                                 </tr>
                                 </tbody>
@@ -163,15 +188,15 @@
                             <table>
                                 <tbody>
                                 <tr>
-                                    <td>Editor</td>
+                                    <td class="text-white">Editor</td>
                                     <td>{{object.illustrator}}</td>
                                 </tr>
                                 <tr>
-                                    <td>Book Type</td>
+                                    <td class="text-white">Book Type</td>
                                     <td>{{object.book_type}}</td>
                                 </tr>
                                 <tr>
-                                    <td>Book Pages</td>
+                                    <td class="text-white">Book Pages</td>
                                     <td>{{object.pages}}</td>
                                 </tr>
                                 </tbody>
@@ -179,16 +204,16 @@
                             <table>
                                 <tbody>
                                 <tr>
-                                    <td>Genres</td>
+                                    <td class="text-white">Genres</td>
                                     {% for category in object.categories.all %}
                                     <td class="text-white">{{category.name}}</td>
                                     {% endfor %}
                                 </tr>
                                 <tr>
-                                    <td>Languages</td>
+                                    <td class="text-white">Languages</td>
                                     {% for language in object.languages.all %}
 
-                                    <td>{{language.name}}</td>
+                                    <td class="text-white">{{language.name}}</td>
                                     {% endfor %}
                                 </tr>
                                 </tbody>
@@ -203,59 +228,59 @@
     </div>
 </section>
 <section class="section-b-space ratio_asos">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 product-related">
-                    <h2>related products</h2>
-                </div>
-            </div>
-            <div class="row search-product">
-                {% if related_product %}
-                {% for product in related_product %}
-                                                                <div class="col-xl-2 col-4 col-grid-box">
-                                                    <div class="product-box">
-                                                        <div class="img-wrapper">
-                                                            <div class="front">
-                                                                <a href="#"><img alt=""
-                                                                                 class="img-fluid blur-up lazyload bg-img"
-                                                                                 src="{{product.thumbnail_image.url}}"></a>
-                                                            </div>
-                                                            <div class="back">
-                                                                <a href="#"><img alt=""
-                                                                                 class="img-fluid blur-up lazyload bg-img"
-                                                                                 src="{{product.thumbnail_image.url}}"></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="product-detail">
-                                                            <div>
-
-                                                                <a href="{% url 'website:product-detail' product.slug %}">
-                                                                    <h6 class="text-center">comic Title</h6>
-                                                                </a>
-                                                                <div class="text-center">
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-
-                                        </div>
-                                        <h6 class="text-center">{% for price in product.product_version.all %}
-                                            ${{price.price}}
-                                            &nbsp;&nbsp;&nbsp;
-                                            {% endfor %}</h6>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                {% endfor %}
-                {% else %}
-                <h3 class="text-danger">Related Items Not Found</h3>
-                {% endif %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12 product-related">
+                <h2>related products</h2>
             </div>
         </div>
-    </section>
+        <div class="row search-product">
+            {% if related_product %}
+            {% for product in related_product %}
+            <div class="col-xl-2 col-4 col-grid-box">
+                <div class="product-box">
+                    <div class="img-wrapper">
+                        <div class="front">
+                            <a href="#"><img alt=""
+                                             class="img-fluid blur-up lazyload bg-img"
+                                             src="{{product.thumbnail_image.url}}"></a>
+                        </div>
+                        <div class="back">
+                            <a href="#"><img alt=""
+                                             class="img-fluid blur-up lazyload bg-img"
+                                             src="{{product.thumbnail_image.url}}"></a>
+                        </div>
+                    </div>
+                    <div class="product-detail">
+                        <div>
+
+                            <a href="{% url 'website:product-detail' product.slug %}">
+                                <h6 class="text-center">comic Title</h6>
+                            </a>
+                            <div class="text-center">
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+
+                            </div>
+                            <h6 class="text-center">{% for price in product.product_version.all %}
+                                ${{price.price}}
+                                &nbsp;&nbsp;&nbsp;
+                                {% endfor %}</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+            {% else %}
+            <h3 class="text-danger">Related Items Not Found</h3>
+            {% endif %}
+        </div>
+    </div>
+</section>
 <script>
 function enableButton() {
   var selectelem = document.getElementById('dropdown');
@@ -281,6 +306,7 @@ function enableButton() {
     });
   }
 }
+
 
 
 
