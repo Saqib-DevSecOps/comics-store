@@ -133,6 +133,7 @@ h2{
 
 
 
+
 </style>
 
 
@@ -142,9 +143,9 @@ h2{
             {% for slide in slider %}
             <li class="splide__slide">
                 {% if slider.link %}
-                <a href="{{slide.link}}"><img alt="Slide" height="100%" src="{{slide.image.url}}"></a>
+                <a href="{{slide.link}}"><img alt="Slide" style="height:550px;width:100%"  src="{{slide.image.url}}"></a>
                 {% else %}
-                <a href="#"><img alt="Slide" height="auto" src="{{slide.image.url}}" width="auto"></a>
+                <a href="#"><img alt="Slide" style="height:550px;width:100%" src="{{slide.image.url}}" ></a>
                 {% endif %}
 
             </li>
@@ -209,6 +210,7 @@ h2{
                             <div class="front">
                                 <a href="{% url 'website:product-detail' top.slug %}"><img
                                         alt=""
+
                                         class="img-fluid bg-img blur-up lazyload"
                                         src="{{top.thumbnail_image.url}}"></a>
                             </div>
@@ -223,13 +225,7 @@ h2{
                             </div>
                         </div>
                         <div class="product-detail">
-                            <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
+
                             <a href="#">
                                 <h6>{{top.name}}</h6>
                             </a>
@@ -299,7 +295,11 @@ h2{
 <!-- Parallax section start -->
 <section class="p-0 game-parallax effect-cls ">
     <div class="full-banner parallax text-center p-center text-center">
+        {% if background.image %}
+        <img alt="" class="bg-img blur-up lazyload" src="{{background.image.url}}">
+        {% else %}
         <img alt="" class="bg-img blur-up lazyload" src="{% static 'website/bg/image1.png' %}">
+        {% endif %}
         <div class="container">
             <div class="row">
                 <div class="col">
@@ -336,7 +336,7 @@ h2{
     <div class="container">
         <div class="row">
             <div class="col">
-                            {% if coming_soon %}
+                {% if coming_soon %}
 
                 <div class="product-slider-5 product-m no-arrow">
                     {% for top in coming_soon %}
@@ -350,13 +350,7 @@ h2{
 
                         </div>
                         <div class="product-detail">
-                            <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
+
                             {% if top.link %}
                             <a href="{{top.link}}">
                                 <h6>{{top.name}}</h6>
@@ -371,7 +365,7 @@ h2{
                     {% endfor %}
                 </div>
                 {% else %}
-        <h3 class="text-danger text-center">Not Available</h3>
+                <h3 class="text-danger text-center">Not Available</h3>
                 {% endif %}
             </div>
         </div>
@@ -440,6 +434,7 @@ function showSlides() {
 
 
 
+
 </script>
 
 <script>
@@ -452,9 +447,8 @@ var splide = new Splide( '.splide', {
 } );
 
 splide.mount();
-
-
-
+var splide = new Splide( '.splide' );
+splide.mount();
 
 </script>
 
@@ -481,6 +475,7 @@ splide.mount();
         }]
     });
 });
+
 
 
 

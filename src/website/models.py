@@ -13,6 +13,22 @@ class HomeSliderImage(models.Model):
         return f"website image  {str(self.id)}"
 
 
+class BackgroundImage(models.Model):
+    image = models.ImageField(upload_to='background/images/')
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"website image  {str(self.id)}"
+
+
+class FooterImage(models.Model):
+    image = models.ImageField(upload_to='background/images/')
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"website image  {str(self.id)}"
+
+
 class Banner(models.Model):
     image = models.ImageField(upload_to='background/images/')
     link = models.URLField(null=True, blank=True)
